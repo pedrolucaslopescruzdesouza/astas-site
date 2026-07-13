@@ -3,113 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAS | Soluções e Inovação</title>
-    <!-- O arquivo CSS que vamos criar na Mensagem 2 será conectado aqui -->
+    <title>ASTAS | Inovação e Excelência em Design</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- CABEÇALHO / MENU -->
+    <!-- CABEÇALHO / MENU GERAL -->
     <header class="header">
         <div class="container header-content">
-            <a href="#" class="logo">ASTAS<span>.</span></a>
+            <!-- Logo oficial em imagem -->
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo ASTAS" class="logo-img">
+            </a>
             
             <nav class="nav-menu">
                 <ul>
-                    <li><a href="#inicio">Início</a></li>
-                    <li><a href="#servicos">Serviços</a></li>
-                    <li><a href="#sobre">Sobre</a></li>
-                    <li><a href="#contato">Contato</a></li>
+                    <li><a href="index.html" class="active">Início</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="portfolio.html">Portfólio</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contato.html">Contato</a></li>
                 </ul>
             </nav>
 
-            <a href="#contato" class="btn-cta">Falar Conosco</a>
+            <a href="contato.html" class="btn-cta">Falar Conosco</a>
         </div>
     </header>
 
     <main>
         <!-- SEÇÃO PRINCIPAL (HERO) -->
-        <section id="inicio" class="hero">
+        <section class="hero">
             <div class="container hero-content">
-                <h1>Inovação e Excelência para o seu Negócio</h1>
-                <p>A ASTAS entrega soluções modernas e focadas em resultados. Transformamos ideias em realidade com eficiência e qualidade.</p>
+                <h1>Transformamos Ideias em Identidades Marcantes</h1>
+                <p>A ASTAS combina design de alta precisão e estratégias modernas para elevar o nível da sua marca no mercado.</p>
                 <div class="hero-buttons">
-                    <a href="#servicos" class="btn-primary">Conheça Nossos Serviços</a>
-                    <a href="#sobre" class="btn-secondary">Saiba Mais</a>
+                    <a href="portfolio.html" class="btn-primary">Explorar Portfólio</a>
+                    <a href="servicos.html" class="btn-secondary">Nossos Serviços</a>
                 </div>
             </div>
         </section>
 
-        <!-- SEÇÃO DE SERVIÇOS -->
-        <section id="servicos" class="services">
+        <!-- DESTAQUE RÁPIDO (DEPOIMENTO / DESTAQUE DA HOME) -->
+        <section class="home-highlights">
             <div class="container">
-                <h2 class="section-title">O que fazemos</h2>
-                <p class="section-subtitle">Soluções pensadas para impulsionar o seu crescimento</p>
-                
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-icon">⚡</div>
-                        <h3>Alta Performance</h3>
-                        <p>Desenvolvemos projetos rápidos, seguros e eficientes para garantir a melhor experiência.</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">🎯</div>
-                        <h3>Foco em Resultados</h3>
-                        <p>Estratégias direcionadas para atingir os objetivos da sua empresa com máxima precisão.</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">💡</div>
-                        <h3>Soluções Modernas</h3>
-                        <p>Utilizamos as melhores tecnologias do mercado para manter o seu negócio sempre à frente.</p>
-                    </div>
+                <div class="highlight-box">
+                    <h2>Por que escolher a ASTAS?</h2>
+                    <p>Trabalhamos com foco total na qualidade visual, alta resolução e soluções personalizadas. Cada projeto é pensado de forma única para gerar impacto visual e conexão real com o seu público.</p>
+                    <br>
+                    <a href="sobre.html" class="btn-cta">Conheça Nossa História</a>
                 </div>
-            </div>
-        </section>
-
-        <!-- SEÇÃO SOBRE -->
-        <section id="sobre" class="about">
-            <div class="container about-content">
-                <div class="about-text">
-                    <h2 class="section-title">Sobre a ASTAS</h2>
-                    <p>Nascemos com o propósito de simplificar processos e criar conexões fortes de alto valor. Nosso compromisso é entregar excelência em cada detalhe, combinando visão estratégica com execução impecável.</p>
-                    <p>Trabalhamos de forma colaborativa para entender a sua real necessidade e propor o caminho mais inteligente.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- SEÇÃO DE CONTATO -->
-        <section id="contato" class="contact">
-            <div class="container">
-                <h2 class="section-title">Entre em Contato</h2>
-                <p class="section-subtitle">Pronto para dar o próximo passo? Fale com a nossa equipe.</p>
-
-                <form class="contact-form">
-                    <div class="input-group">
-                        <input type="text" placeholder="Seu Nome" required>
-                        <input type="email" placeholder="Seu E-mail" required>
-                    </div>
-                    <input type="text" placeholder="Assunto">
-                    <textarea rows="5" placeholder="Sua Mensagem" required></textarea>
-                    <button type="submit" class="btn-primary">Enviar Mensagem</button>
-                </form>
             </div>
         </section>
     </main>
 
-    <!-- RODAPÉ -->
+    <!-- RODAPÉ GERAL -->
     <footer class="footer">
         <div class="container footer-content">
             <p>&copy; 2026 ASTAS. Todos os direitos reservados.</p>
             <div class="footer-links">
-                <a href="#inicio">Topo</a>
-                <a href="#contato">Suporte</a>
+                <a href="index.html">Início</a>
+                <a href="portfolio.html">Portfólio</a>
+                <a href="contato.html">Suporte</a>
             </div>
         </div>
     </footer>
 
-    <!-- O arquivo JavaScript que vamos criar na Mensagem 3 será conectado aqui -->
     <script src="script.js"></script>
 </body>
 </html>

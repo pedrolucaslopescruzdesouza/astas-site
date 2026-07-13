@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTAS | Entre em Contato</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="header">
+        <div class="container header-content">
+            <!-- A imagem da sua logo foi inserida aqui -->
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo ASTAS" class="logo-img">
+            </a>
+            
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="portfolio.html">Portfólio</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contato.html" class="active">Contato</a></li>
+                </ul>
+            </nav>
+            
+            <a href="contato.html" class="btn-cta">Falar Conosco</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="contact" style="padding-top: 120px;">
+            <div class="container">
+                <h1 class="section-title">Vamos conversar?</h1>
+                <p class="section-subtitle">Preencha os campos abaixo e entraremos em contato o mais breve possível.</p>
+
+                <!-- O link abaixo é onde a conexão de e-mail acontece. 
+                Substitua o trecho 'SEU_ID_DO_FORMSPREE' pelo ID que você receberá ao cadastrar seu e-mail no site formspree.io -->
+                <form class="contact-form" action="https://formspree.io/f/SEU_ID_DO_FORMSPREE" method="POST">
+                    <div class="input-group">
+                        <input type="text" name="nome" placeholder="Seu Nome" required>
+                        <input type="email" name="email" placeholder="Seu E-mail" required>
+                    </div>
+                    <input type="text" name="assunto" placeholder="Assunto do Projeto">
+                    <textarea name="mensagem" rows="6" placeholder="Como podemos ajudar?" required></textarea>
+                    <button type="submit" class="btn-primary">Enviar Mensagem</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 ASTAS. Todos os direitos reservados.</p>
+            <div class="footer-links">
+                <a href="index.html">Início</a>
+                <a href="portfolio.html">Portfólio</a>
+                <a href="contato.html">Suporte</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

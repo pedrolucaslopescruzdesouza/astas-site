@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTAS | Portfólio de Alta Resolução</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="protected-content">
+
+    <!-- CABEÇALHO / MENU -->
+    <header class="header">
+        <div class="container header-content">
+            <!-- Logo oficial em imagem -->
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo ASTAS" class="logo-img">
+            </a>
+            
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="portfolio.html" class="active">Portfólio</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </nav>
+
+            <a href="contato.html" class="btn-cta">Falar Conosco</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- CABEÇALHO DO PORTFÓLIO -->
+        <section class="portfolio-hero">
+            <div class="container">
+                <h1 class="section-title">Nosso Portfólio</h1>
+                <p class="section-subtitle">Explore nossos projetos de identidade visual, design estratégico e animações. Clique em qualquer arte para expandir em zoom de alta fidelidade.</p>
+                
+                <!-- BARRA DE FILTROS PARA O USUÁRIO -->
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="todos">Todos os Projetos</button>
+                    <button class="filter-btn" data-filter="branding">Branding & Identidade</button>
+                    <button class="filter-btn" data-filter="editorial">Design Editorial</button>
+                    <button class="filter-btn" data-filter="motion">Art & Motion Design</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- GRADE DE PROJETOS -->
+        <section class="portfolio-gallery">
+            <div class="container">
+                <div class="portfolio-grid">
+                    
+                    <!-- PROJETO 1: BRANDING -->
+                    <div class="portfolio-card" data-category="branding">
+                        <div class="portfolio-img-wrapper">
+                            <!-- Quando conectarmos o ADM, as imagens enviadas cairão exatamente nesta estrutura -->
+                            <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1200&q=80" alt="Heisen Tech - Identidade Visual">
+                            <div class="portfolio-overlay">
+                                <span class="portfolio-tag">Branding / Identidade</span>
+                                <h3>HEISEN TECH</h3>
+                                <span class="zoom-action">🔍 Clique para Ampliar em Alta Resolução</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROJETO 2: DESIGN EDITORIAL -->
+                    <div class="portfolio-card" data-category="editorial">
+                        <div class="portfolio-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1542744094-3a3e22035383?auto=format&fit=crop&w=1200&q=80" alt="Jantar Com Amigos 2026">
+                            <div class="portfolio-overlay">
+                                <span class="portfolio-tag">Design Editorial / Eventos</span>
+                                <h3>Jantar com Amigos 2026</h3>
+                                <span class="zoom-action">🔍 Clique para Ampliar em Alta Resolução</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROJETO 3: BRANDING VETORIAL -->
+                    <div class="portfolio-card" data-category="branding">
+                        <div class="portfolio-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=80" alt="Maria Excursões">
+                            <div class="portfolio-overlay">
+                                <span class="portfolio-tag">Branding Vetorial</span>
+                                <h3>Maria - Excursões & Turismo</h3>
+                                <span class="zoom-action">🔍 Clique para Ampliar em Alta Resolução</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROJETO 4: MOTION & ANIMAÇÃO -->
+                    <div class="portfolio-card" data-category="motion">
+                        <div class="portfolio-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80" alt="Animação Vetorial">
+                            <div class="portfolio-overlay">
+                                <span class="portfolio-tag">Art & Motion Design</span>
+                                <h3>Conceito Vetorial & Animação 2D</h3>
+                                <span class="zoom-action">🔍 Clique para Ampliar em Alta Resolução</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 ASTAS. Todos os direitos reservados.</p>
+            <div class="footer-links">
+                <a href="index.html">Início</a>
+                <a href="servicos.html">Serviços</a>
+                <!-- Link discreto preparando o terreno para o seu futuro painel ADM -->
+                <a href="#" class="adm-link" title="Área Restrita para Gestão de Portfólio">🔒 Acesso ADM</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SISTEMA DE ZOOM / LIGHTBOX EM TELA CHEIA (SEM DOWNLOAD) -->
+    <div id="zoom-lightbox" class="lightbox">
+        <span class="close-lightbox">&times;</span>
+        <div class="lightbox-container">
+            <img id="lightbox-img" src="" alt="Zoom do Projeto ASTAS">
+        </div>
+        <div class="lightbox-info">
+            <p id="lightbox-title"></p>
+            <span>Dica: Use a roda do mouse ou o gesto de pinça no celular para aproximar e ver os detalhes.</span>
+        </div>
+    </div>
+
+    <!-- ALERTA DE DIREITOS AUTORAIS -->
+    <div id="protection-toast" class="toast">
+        ⚠️ Proteção ASTAS: As imagens deste portfólio possuem direitos autorais controlados. O download direto foi desativado.
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
