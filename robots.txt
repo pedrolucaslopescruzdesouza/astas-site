@@ -1,0 +1,9 @@
+# robots.txt para ASTAS
+
+User-agent: *
+# Bloqueia o rastreamento das páginas do painel administrativo por segurança e privacidade
+Disallow: /login.html
+Disallow: /admin.html
+
+# Indica aos motores de busca onde encontrar o mapa do seu site
+Sitemap: https://www.astas.com.br/sitemap.xml
