@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTAS | Painel de Controle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="protected-content" style="background-color: var(--bg-main); min-height: 100vh; padding-bottom: 50px;">
+
+    <!-- CABEÇALHO ADM -->
+    <header class="header" style="position: sticky; top: 0; background-color: rgba(7, 17, 31, 0.95);">
+        <div class="container header-content" style="height: 70px;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="logo.png" alt="Logo ASTAS" style="max-height: 35px;">
+                <span style="color: var(--primary); font-weight: 700; font-size: 0.9rem; border-left: 1px solid rgba(159,178,195,0.3); padding-left: 15px;">PAINEL DO GESTOR</span>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="portfolio.html" target="_blank" style="color: var(--text-light); text-decoration: none; font-size: 0.9rem;">👁️ Ver Site ao Vivo</a>
+                <button id="btn-logout" class="btn-secondary" style="padding: 0.5rem 1.2rem; font-size: 0.85rem; border-color: #ff6b6b; color: #ff6b6b;">Sair / Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" style="margin-top: 40px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start;">
+            
+            <!-- CAIXA 1: FORMULÁRIO DE CADASTRO -->
+            <div style="background-color: var(--bg-secondary); padding: 2.5rem; border-radius: 12px; border: 1px solid rgba(159, 178, 195, 0.15); box-shadow: var(--shadow);">
+                <h2 style="font-size: 1.4rem; color: var(--text-light); margin-bottom: 0.5rem;">✨ Publicar Novo Projeto</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">A imagem será enviada para o storage e o card aparecerá automaticamente na galeria.</p>
+
+                <form id="form-novo-projeto" style="display: flex; flex-direction: column; gap: 1.2rem;">
+                    <div>
+                        <label style="display: block; color: var(--text-light); font-size: 0.85rem; margin-bottom: 5px; font-weight: 600;">TÍTULO DO PROJETO</label>
+                        <input type="text" id="proj-title" required placeholder="Ex: Heisen Tech ou Maria Excursões" style="width: 100%; padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid rgba(159, 178, 195, 0.2); background-color: var(--bg-main); color: var(--text-light); outline: none;">
+                    </div>
+
+                    <div>
+                        <label style="display: block; color: var(--text-light); font-size: 0.85rem; margin-bottom: 5px; font-weight: 600;">CATEGORIA / FILTRO</label>
+                        <select id="proj-category" required style="width: 100%; padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid rgba(159, 178, 195, 0.2); background-color: var(--bg-main); color: var(--text-light); outline: none; cursor: pointer;">
+                            <option value="branding">Branding & Identidade</option>
+                            <option value="editorial">Design Editorial</option>
+                            <option value="motion">Art & Motion Design</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label style="display: block; color: var(--text-light); font-size: 0.85rem; margin-bottom: 5px; font-weight: 600;">LEGENDA / SUBTÍTULO</label>
+                        <input type="text" id="proj-tag" required placeholder="Ex: Identidade Visual & Vetor" style="width: 100%; padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid rgba(159, 178, 195, 0.2); background-color: var(--bg-main); color: var(--text-light); outline: none;">
+                    </div>
+
+                    <div>
+                        <label style="display: block; color: var(--text-light); font-size: 0.85rem; margin-bottom: 5px; font-weight: 600;">ARQUIVO DA IMAGEM (PNG, JPG, WEBP)</label>
+                        <input type="file" id="proj-image" required accept="image/*" style="width: 100%; padding: 0.6rem; border-radius: 8px; border: 1px dashed rgba(105, 213, 195, 0.5); background-color: rgba(7, 17, 31, 0.5); color: var(--text-muted); cursor: pointer;">
+                    </div>
+
+                    <!-- Mensagem de Status -->
+                    <div id="form-status" style="display: none; padding: 10px; border-radius: 6px; font-size: 0.85rem; text-align: center; font-weight: 600;"></div>
+
+                    <button type="submit" id="btn-salvar" class="btn-primary" style="width: 100%; margin-top: 0.5rem; font-size: 1rem; font-weight: 700;">
+                        🚀 Publicar no Portfólio
+                    </button>
+                </form>
+            </div>
+
+            <!-- CAIXA 2: LISTA DE PROJETOS ATIVOS -->
+            <div style="background-color: var(--bg-secondary); padding: 2.5rem; border-radius: 12px; border: 1px solid rgba(159, 178, 195, 0.15); box-shadow: var(--shadow);">
+                <h2 style="font-size: 1.4rem; color: var(--text-light); margin-bottom: 0.5rem;">📂 Projetos Ativos (<span id="total-projetos">0</span>)</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Gerencie o que aparece no seu site em tempo real.</p>
+
+                <!-- Onde o JS vai desenhar a lista de projetos para gerenciar -->
+                <div id="lista-projetos" style="display: flex; flex-direction: column; gap: 12px; max-height: 500px; overflow-y: auto; padding-right: 5px;">
+                    <p style="color: var(--text-muted); text-align: center;">Carregando...</p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- IMPORTAÇÕES SUPABASE E SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    <script src="auth.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

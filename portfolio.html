@@ -11,7 +11,6 @@
     <!-- CABEÇALHO / MENU -->
     <header class="header">
         <div class="container header-content">
-            <!-- Logo oficial em imagem -->
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo ASTAS" class="logo-img">
             </a>
@@ -47,61 +46,16 @@
             </div>
         </section>
 
-        <!-- GRADE DE PROJETOS -->
+        <!-- GRADE DE PROJETOS DINÂMICA (Conectada ao Supabase) -->
         <section class="portfolio-gallery">
             <div class="container">
-                <div class="portfolio-grid">
-                    
-                    <!-- PROJETO 1: BRANDING -->
-                    <div class="portfolio-card" data-category="branding">
-                        <div class="portfolio-img-wrapper">
-                            <!-- Quando conectarmos o ADM, as imagens enviadas cairão exatamente nesta estrutura -->
-                            <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=1200&q=80" alt="Heisen Tech - Identidade Visual">
-                            <div class="portfolio-overlay">
-                                <span class="portfolio-tag">Branding / Identidade</span>
-                                <h3>HEISEN TECH</h3>
-                                <span class="zoom-action">🔍 Clique para Ampliar em Alta Resolução</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PROJETO 2: DESIGN EDITORIAL -->
-                    <div class="portfolio-card" data-category="editorial">
-                        <div class="portfolio-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1542744094-3a3e22035383?auto=format&fit=crop&w=1200&q=80" alt="Jantar Com Amigos 2026">
-                            <div class="portfolio-overlay">
-                                <span class="portfolio-tag">Design Editorial / Eventos</span>
-                                <h3>Jantar com Amigos 2026</h3>
-                                <span class="zoom-action">🔍 Clique para Ampliar em Alta Resolução</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PROJETO 3: BRANDING VETORIAL -->
-                    <div class="portfolio-card" data-category="branding">
-                        <div class="portfolio-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&w=1200&q=80" alt="Maria Excursões">
-                            <div class="portfolio-overlay">
-                                <span class="portfolio-tag">Branding Vetorial</span>
-                                <h3>Maria - Excursões & Turismo</h3>
-                                <span class="zoom-action">🔍 Clique para Ampliar em Alta Resolução</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PROJETO 4: MOTION & ANIMAÇÃO -->
-                    <div class="portfolio-card" data-category="motion">
-                        <div class="portfolio-img-wrapper">
-                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80" alt="Animação Vetorial">
-                            <div class="portfolio-overlay">
-                                <span class="portfolio-tag">Art & Motion Design</span>
-                                <h3>Conceito Vetorial & Animação 2D</h3>
-                                <span class="zoom-action">🔍 Clique para Ampliar em Alta Resolução</span>
-                            </div>
-                        </div>
-                    </div>
-
+                <!-- Estado de carregamento -->
+                <div id="loading-spinner" style="text-align: center; padding: 40px 0; color: var(--primary); font-size: 1.2rem; font-weight: 600;">
+                    ⏳ Carregando projetos de alta resolução da nuvem...
                 </div>
+
+                <!-- Onde o JavaScript vai desenhar os cartões automaticamente -->
+                <div id="portfolio-grid" class="portfolio-grid" style="display: none;"></div>
             </div>
         </section>
     </main>
@@ -113,13 +67,12 @@
             <div class="footer-links">
                 <a href="index.html">Início</a>
                 <a href="servicos.html">Serviços</a>
-                <!-- Link discreto preparando o terreno para o seu futuro painel ADM -->
-                <a href="#" class="adm-link" title="Área Restrita para Gestão de Portfólio">🔒 Acesso ADM</a>
+                <a href="login.html" class="adm-link" title="Área Restrita para Gestão de Portfólio">🔒 Acesso ADM</a>
             </div>
         </div>
     </footer>
 
-    <!-- SISTEMA DE ZOOM / LIGHTBOX EM TELA CHEIA (SEM DOWNLOAD) -->
+    <!-- SISTEMA DE ZOOM / LIGHTBOX EM TELA CHEIA -->
     <div id="zoom-lightbox" class="lightbox">
         <span class="close-lightbox">&times;</span>
         <div class="lightbox-container">
@@ -136,6 +89,12 @@
         ⚠️ Proteção ASTAS: As imagens deste portfólio possuem direitos autorais controlados. O download direto foi desativado.
     </div>
 
+    <!-- IMPORTAÇÃO DA BIBLIOTECA DO SUPABASE VIA CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- NOSSOS SCRIPTS -->
+    <script src="supabase.js"></script>
     <script src="script.js"></script>
+    <script src="portfolio-dynamic.js"></script>
 </body>
 </html>
