@@ -8,6 +8,9 @@
     <!-- ÍCONE DA ABA DO NAVEGADOR (FAVICON) -->
     <link rel="icon" type="image/png" href="favicon.png">
     
+    <!-- BIBLIOTECA DE ÍCONES MINIMALISTAS (FONT AWESOME) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="protected-content">
@@ -53,9 +56,9 @@
         <!-- GRADE DE PROJETOS DINÂMICA (Conectada ao Supabase) -->
         <section class="portfolio-gallery">
             <div class="container">
-                <!-- Estado de carregamento -->
+                <!-- Estado de carregamento com ícone animado -->
                 <div id="loading-spinner" style="text-align: center; padding: 40px 0; color: var(--primary); font-size: 1.2rem; font-weight: 600;">
-                    ⏳ Carregando projetos de alta resolução da nuvem...
+                    <i class="fa-solid fa-spinner fa-spin" style="margin-right: 8px;"></i> Carregando projetos de alta resolução da nuvem...
                 </div>
 
                 <!-- Onde o JavaScript vai desenhar os cartões automaticamente -->
@@ -64,14 +67,16 @@
         </section>
     </main>
 
-    <!-- RODAPÉ -->
+    <!-- RODAPÉ COM REDES SOCIAIS CLICÁVEIS -->
     <footer class="footer">
         <div class="container footer-content">
             <p>&copy; 2026 ASTAS. Todos os direitos reservados.</p>
             <div class="footer-links">
                 <a href="index.html">Início</a>
                 <a href="servicos.html">Serviços</a>
-                <a href="login.html" class="adm-link" title="Área Restrita para Gestão de Portfólio">🔒 Acesso ADM</a>
+                <a href="login.html" class="adm-link" title="Área Restrita para Gestão de Portfólio"><i class="fa-solid fa-lock" style="margin-right: 4px;"></i> Acesso ADM</a>
+                <a href="https://www.instagram.com/astasdesigner/" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                <a href="https://www.youtube.com/@Astas_Creators" target="_blank"><i class="fa-brands fa-youtube"></i> YouTube</a>
             </div>
         </div>
     </footer>
@@ -90,7 +95,7 @@
 
     <!-- ALERTA DE DIREITOS AUTORAIS CENTRALIZADO COM BOTÃO FECHAR -->
     <div id="protection-toast" class="toast" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
-        <span>⚠️ <strong>Proteção ASTAS:</strong> As imagens deste portfólio possuem direitos autorais controlados.</span>
+        <span><i class="fa-solid fa-shield-halved" style="color: var(--primary); margin-right: 6px;"></i> <strong>Proteção ASTAS:</strong> As imagens deste portfólio possuem direitos autorais controlados.</span>
         <span onclick="document.getElementById('protection-toast').style.display='none'" style="cursor: pointer; font-size: 1.3rem; font-weight: bold; color: var(--primary); padding: 0 4px; line-height: 1;" title="Fechar aviso">&times;</span>
     </div>
 

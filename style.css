@@ -56,7 +56,10 @@ body {
 }
 
 .btn-primary, .btn-secondary, .btn-cta {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     padding: 0.85rem 1.8rem;
     border-radius: 8px;
     font-weight: 600;
@@ -161,7 +164,6 @@ body {
     border-radius: 2px;
 }
 
-/* BOTÃO HAMBURGUER (INVISÍVEL NO PC) */
 .mobile-menu-btn {
     display: none;
     background: none;
@@ -247,13 +249,31 @@ body {
     box-shadow: 0 20px 40px rgba(7, 17, 31, 0.8);
 }
 
+/* --- NOVO VISUAL PARA ÍCONES MINIMALISTAS MONOCROMÁTICOS --- */
 .service-icon {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
+    color: var(--primary);
     margin-bottom: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    background-color: rgba(105, 213, 195, 0.08);
+    border-radius: 12px;
+    border: 1px solid rgba(105, 213, 195, 0.2);
+    transition: var(--transition);
+}
+
+.service-card:hover .service-icon {
+    background-color: var(--primary);
+    color: var(--bg-main);
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(105, 213, 195, 0.3);
 }
 
 .service-card h3, .highlight-box h2 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin-bottom: 1rem;
     color: var(--text-light);
 }
@@ -496,13 +516,18 @@ body {
 
 .footer-links {
     display: flex;
-    gap: 1.8rem;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .footer-links a {
     color: var(--text-muted);
     text-decoration: none;
     transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .footer-links a:hover {
@@ -530,14 +555,12 @@ body {
     to { opacity: 1; }
 }
 
-/* ==========================================================================
-   AVISO DE PROTEÇÃO ASTAS (TOAST CENTRALIZADO E INTELIGENTE)
-   ========================================================================== */
+/* --- AVISO DE PROTEÇÃO ASTAS CENTRALIZADO E INTELIGENTE --- */
 .toast {
     position: fixed;
     bottom: 25px;
     left: 50%;
-    transform: translateX(-50%); /* Garante o centro exato da tela em qualquer dispositivo */
+    transform: translateX(-50%);
     width: 90%;
     max-width: 460px;
     background-color: var(--bg-secondary);
@@ -549,27 +572,23 @@ body {
     z-index: 99999;
     font-size: 0.85rem;
     line-height: 1.4;
-    display: none; /* O JavaScript gerencia a exibição */
+    display: none;
     animation: subirRodape 0.4s ease-out forwards;
 }
 
 @keyframes subirRodape {
-    from { 
-        bottom: -100px; 
-        opacity: 0; 
-        transform: translateX(-50%); 
-    }
-    to { 
-        bottom: 25px; 
-        opacity: 1; 
-        transform: translateX(-50%); 
-    }
+    from { bottom: -100px; opacity: 0; transform: translateX(-50%); }
+    to { bottom: 25px; opacity: 1; transform: translateX(-50%); }
 }
 
 /* ==========================================================================
-   RESPONSIVIDADE E GAVETA MOBILE (TELA < 768px)
+   OTIMIZAÇÃO MOBILE COMPACTA E MODERNA (TELA < 768px)
    ========================================================================== */
 @media (max-width: 768px) {
+    body {
+        font-size: 0.92rem; /* Escala de texto mais limpa para telas menores */
+    }
+
     .mobile-menu-btn {
         display: block;
     }
@@ -599,28 +618,93 @@ body {
     .nav-menu ul {
         flex-direction: column;
         text-align: center;
-        gap: 2.5rem;
+        gap: 2rem;
     }
 
     .nav-menu a {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
+    }
+
+    /* Redução proporcional do topo para não ocupar a tela inteira à toa no celular */
+    .hero {
+        min-height: 78vh;
+        padding-top: 100px;
     }
 
     .hero h1 {
-        font-size: 2.3rem;
+        font-size: 2.1rem;
+        line-height: 1.25;
+        margin-bottom: 1rem;
+    }
+
+    .hero p {
+        font-size: 1.05rem;
+        margin-bottom: 1.8rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.95rem;
+        margin-bottom: 2.2rem;
+    }
+
+    .services, .home-highlights, .about, .portfolio-gallery {
+        padding: 50px 0; /* Menos espaço vazio no celular */
+    }
+
+    .portfolio-hero {
+        padding: 110px 0 20px 0;
+    }
+
+    .service-card, .highlight-box {
+        padding: 1.6rem; /* Mais elegante na tela estreita */
+        border-radius: 10px;
+    }
+
+    .service-icon {
+        width: 46px;
+        height: 46px;
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
     }
 
     .hero-buttons, .input-group {
         flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        padding: 0.8rem 1rem;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .portfolio-img-wrapper {
+        height: 240px;
+    }
+
+    .footer {
+        padding: 2.2rem 0;
     }
 
     .footer-content {
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 1.2rem;
         text-align: center;
     }
-    
-    /* Ajuste extra para o aviso no celular ficar um pouco mais afastado das bordas */
+
+    .footer-links {
+        justify-content: center;
+        gap: 1.2rem;
+    }
+
     .toast {
         bottom: 15px;
         width: 92%;
