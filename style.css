@@ -1,3 +1,6 @@
+/* ==========================================================================
+   ASTAS - DESIGN SYSTEM & ESTILOS GERAIS
+   ========================================================================== */
 :root {
     --bg-main: #07111F;
     --primary: #69D5C3;
@@ -445,26 +448,6 @@ body {
     color: var(--text-muted);
 }
 
-.toast {
-    position: fixed;
-    bottom: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--bg-secondary);
-    color: var(--text-light);
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    border: 1px solid var(--primary);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    z-index: 3000;
-    font-weight: 600;
-    transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.toast.show {
-    bottom: 30px;
-}
-
 .contact-form {
     max-width: 650px;
     margin: 0 auto;
@@ -548,22 +531,57 @@ body {
 }
 
 /* ==========================================================================
+   AVISO DE PROTEÇÃO ASTAS (TOAST CENTRALIZADO E INTELIGENTE)
+   ========================================================================== */
+.toast {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%); /* Garante o centro exato da tela em qualquer dispositivo */
+    width: 90%;
+    max-width: 460px;
+    background-color: var(--bg-secondary);
+    color: var(--text-light);
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--primary);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.75);
+    z-index: 99999;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    display: none; /* O JavaScript gerencia a exibição */
+    animation: subirRodape 0.4s ease-out forwards;
+}
+
+@keyframes subirRodape {
+    from { 
+        bottom: -100px; 
+        opacity: 0; 
+        transform: translateX(-50%); 
+    }
+    to { 
+        bottom: 25px; 
+        opacity: 1; 
+        transform: translateX(-50%); 
+    }
+}
+
+/* ==========================================================================
    RESPONSIVIDADE E GAVETA MOBILE (TELA < 768px)
    ========================================================================== */
 @media (max-width: 768px) {
     .mobile-menu-btn {
-        display: block; /* Revela o ícone ☰ no celular */
+        display: block;
     }
 
     .btn-cta {
-        display: none; /* Esconde o botão superior para dar espaço ao menu */
+        display: none;
     }
 
-    /* Transformamos o menu numa gaveta fluida */
     .nav-menu {
         position: fixed;
         top: 80px;
-        left: -100%; /* Começa escondida para fora da tela */
+        left: -100%;
         width: 100%;
         height: calc(100vh - 80px);
         background-color: rgba(7, 17, 31, 0.98);
@@ -575,7 +593,7 @@ body {
     }
 
     .nav-menu.open {
-        left: 0; /* Desliza para dentro quando o JS ativar */
+        left: 0;
     }
 
     .nav-menu ul {
@@ -600,5 +618,13 @@ body {
         flex-direction: column;
         gap: 1.5rem;
         text-align: center;
+    }
+    
+    /* Ajuste extra para o aviso no celular ficar um pouco mais afastado das bordas */
+    .toast {
+        bottom: 15px;
+        width: 92%;
+        padding: 12px 15px;
+        font-size: 0.8rem;
     }
 }

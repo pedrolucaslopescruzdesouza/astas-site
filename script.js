@@ -148,3 +148,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+/* --- GERENCIAMENTO DO AVISO DE PROTEÇÃO --- */
+document.addEventListener('DOMContentLoaded', () => {
+    const toast = document.getElementById('protection-toast');
+    
+    if (toast) {
+        // Mostra o aviso
+        toast.style.display = 'block';
+        
+        // Esconde o aviso automaticamente após 5 segundos
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.5s';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 500);
+        }, 5000);
+    }
+});

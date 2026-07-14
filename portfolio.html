@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASTAS | Portfólio de Alta Resolução</title>
+    
+    <!-- ÍCONE DA ABA DO NAVEGADOR (FAVICON) -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="protected-content">
@@ -84,9 +88,10 @@
         </div>
     </div>
 
-    <!-- ALERTA DE DIREITOS AUTORAIS -->
-    <div id="protection-toast" class="toast">
-        ⚠️ Proteção ASTAS: As imagens deste portfólio possuem direitos autorais controlados. O download direto foi desativado.
+    <!-- ALERTA DE DIREITOS AUTORAIS CENTRALIZADO COM BOTÃO FECHAR -->
+    <div id="protection-toast" class="toast" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <span>⚠️ <strong>Proteção ASTAS:</strong> As imagens deste portfólio possuem direitos autorais controlados.</span>
+        <span onclick="document.getElementById('protection-toast').style.display='none'" style="cursor: pointer; font-size: 1.3rem; font-weight: bold; color: var(--primary); padding: 0 4px; line-height: 1;" title="Fechar aviso">&times;</span>
     </div>
 
     <!-- IMPORTAÇÃO DA BIBLIOTECA DO SUPABASE VIA CDN -->
