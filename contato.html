@@ -3,15 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAS | Entre em Contato</title>
+    <title>ASTAS | Vamos Conversar</title>
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    
+    <!-- Estilos exclusivos para os efeitos de brilho do formulário ASTAS -->
+    <style>
+        .contact-hero {
+            padding: 60px 0 20px;
+            text-align: center;
+        }
+        
+        .contact-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid rgba(159, 178, 195, 0.15);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 680px;
+            margin: 0 auto 80px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
 
-    <!-- CABEÇALHO -->
+        /* Efeito de luz sutil no topo do card */
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            background-color: var(--bg-main);
+            border: 1px solid rgba(159, 178, 195, 0.2);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        /* O brilho Verde Aurora quando o cliente clica para digitar */
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 12px rgba(105, 213, 195, 0.25);
+            background-color: rgba(7, 17, 31, 0.8);
+        }
+
+        .form-control::placeholder {
+            color: rgba(159, 178, 195, 0.4);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .contact-card {
+                padding: 2rem 1.5rem;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body class="protected-content">
+
+    <!-- CABEÇALHO / MENU -->
     <header class="header">
         <div class="container header-content">
-            <!-- A imagem da sua logo foi inserida aqui -->
             <a href="index.html" class="logo">
                 <img src="logo.png" alt="Logo ASTAS" class="logo-img">
             </a>
@@ -25,28 +111,59 @@
                     <li><a href="contato.html" class="active">Contato</a></li>
                 </ul>
             </nav>
-            
+
             <a href="contato.html" class="btn-cta">Falar Conosco</a>
         </div>
     </header>
 
     <main>
-        <section class="contact" style="padding-top: 120px;">
+        <!-- TÍTULO DA PÁGINA -->
+        <section class="contact-hero">
             <div class="container">
-                <h1 class="section-title">Vamos conversar?</h1>
-                <p class="section-subtitle">Preencha os campos abaixo e entraremos em contato o mais breve possível.</p>
+                <h1 class="section-title">Inicie seu Projeto</h1>
+                <p class="section-subtitle">Tem uma ideia incrível ou precisa reposicionar sua marca? Preencha o formulário abaixo e vamos transformar sua visão em design de alta fidelidade.</p>
+            </div>
+        </section>
 
-                <!-- O link abaixo é onde a conexão de e-mail acontece. 
-                Substitua o trecho 'SEU_ID_DO_FORMSPREE' pelo ID que você receberá ao cadastrar seu e-mail no site formspree.io -->
-                <form class="contact-form" action="https://formspree.io/f/SEU_ID_DO_FORMSPREE" method="POST">
-                    <div class="input-group">
-                        <input type="text" name="nome" placeholder="Seu Nome" required>
-                        <input type="email" name="email" placeholder="Seu E-mail" required>
+        <!-- CARTÃO DO FORMULÁRIO DE LUXO -->
+        <section class="container">
+            <div class="contact-card">
+                
+                <!-- O Formulário conectado ao seu Formspree -->
+                <form action="https://formspree.io/f/xbdnjvep" method="POST">
+                    
+                    <!-- Linha com Nome e E-mail lado a lado -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nome">Seu Nome</label>
+                            <input type="text" id="nome" name="Nome" class="form-control" placeholder="Ex: Pedro Lucas" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Seu E-mail</label>
+                            <input type="email" id="email" name="E-mail" class="form-control" placeholder="contato@empresa.com" required>
+                        </div>
                     </div>
-                    <input type="text" name="assunto" placeholder="Assunto do Projeto">
-                    <textarea name="mensagem" rows="6" placeholder="Como podemos ajudar?" required></textarea>
-                    <button type="submit" class="btn-primary">Enviar Mensagem</button>
+
+                    <!-- Assunto -->
+                    <div class="form-group">
+                        <label for="assunto">Assunto do Projeto</label>
+                        <input type="text" id="assunto" name="Assunto" class="form-control" placeholder="Ex: Identidade Visual para Heisen Tech">
+                    </div>
+
+                    <!-- Mensagem -->
+                    <div class="form-group">
+                        <label for="mensagem">Como podemos ajudar?</label>
+                        <textarea id="mensagem" name="Mensagem" rows="5" class="form-control" placeholder="Conte um pouco sobre os objetivos da sua marca, prazos e referências..." required style="resize: vertical;"></textarea>
+                    </div>
+
+                    <!-- Botão Principal -->
+                    <button type="submit" class="btn-primary" style="width: 100%; padding: 1.1rem; font-size: 1.05rem; font-weight: 700; margin-top: 0.5rem; letter-spacing: 0.5px;">
+                        🚀 Enviar Mensagem para a ASTAS
+                    </button>
+
                 </form>
+
             </div>
         </section>
     </main>
@@ -57,12 +174,13 @@
             <p>&copy; 2026 ASTAS. Todos os direitos reservados.</p>
             <div class="footer-links">
                 <a href="index.html">Início</a>
-                <a href="portfolio.html">Portfólio</a>
-                <a href="contato.html">Suporte</a>
+                <a href="servicos.html">Serviços</a>
+                <a href="login.html" class="adm-link" title="Área Restrita para Gestão de Portfólio">🔒 Acesso ADM</a>
             </div>
         </div>
     </footer>
 
+    <!-- SCRIPTS -->
     <script src="script.js"></script>
 </body>
 </html>
