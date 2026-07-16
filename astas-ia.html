@@ -139,15 +139,16 @@
 </head>
 <body class="protected-content">
 
+    <!-- CABEÇALHO COM A LOGO EM GIF E ATALHO PARA O PERFIL -->
     <header class="header">
         <div class="container header-content">
             <a href="index.html" class="logo">
-                <img src="logo.png" alt="Logo ASTAS" class="logo-img">
+                <img src="logo.gif" alt="Logo ASTAS" class="logo-img">
             </a>
             
             <div style="display: flex; align-items: center; gap: 15px;">
-                <span style="color: var(--text-muted); font-size: 0.9rem;"><i class="fa-solid fa-sparkles" style="color: var(--primary);"></i> ASTAS CLUB</span>
-                <a href="index.html" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">Sair</a>
+                <a href="minha-conta.html" style="color: var(--primary); font-size: 0.9rem; font-weight: 700; text-decoration: none;"><i class="fa-solid fa-cloud" style="margin-right: 4px;"></i> MINHA CONTA</a>
+                <button onclick="fazerLogoutIA()" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem; cursor: pointer;">Sair</button>
             </div>
         </div>
     </header>
@@ -159,7 +160,6 @@
                 <i class="fa-solid fa-sparkles" style="margin-right: 5px;"></i> Inteligência Artificial de Elite
             </span>
             
-            <!-- GIF COM BRILHO ORIGINAL DA ANIMAÇÃO -->
             <img src="astasia.gif" alt="ASTAS IA 1.0" style="max-width: 420px; width: 100%; height: auto; margin: 0 auto; display: block;">
             
             <p style="color: var(--text-muted); font-size: 1.05rem; max-width: 600px; margin: 15px auto 0;">
@@ -219,9 +219,9 @@
             </form>
         </div>
 
-        <!-- TELA DE CARREGAMENTO COM APENAS A LOGO LIMPA DA AGÊNCIA -->
+        <!-- TELA DE CARREGAMENTO COM A LOGO EM GIF -->
         <div id="loading-section" style="display: none; text-align: center; padding: 60px 20px;">
-            <img src="logo.png" alt="ASTAS Processando..." style="width: 100px; height: auto; margin-bottom: 20px;">
+            <img src="logo.gif" alt="ASTAS Processando..." style="width: 100px; height: auto; margin-bottom: 20px;">
             <h3 style="font-size: 1.5rem; color: var(--text-light); margin-bottom: 10px;">A ASTAS IA está processando seu projeto...</h3>
             <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">Analisando o segmento, construindo psicologia das cores e definindo a direção de art & motion.</p>
         </div>
@@ -308,6 +308,30 @@
             </div>
         </div>
     </main>
+
+    <!-- BIBLIOTECA OFICIAL DO SUPABASE E NOSSOS SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    
+    <!-- TRAVA DE SEGURANÇA NA NUVEM -->
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Verifica se o usuário está autenticado no banco de dados
+            const { data: { user }, error } = await window.supabaseClient.auth.getUser();
+
+            if (!user || error) {
+                alert("⚠️ Acesso Restrito: Você precisa estar logado na sua conta do ASTAS CLUB para utilizar a Inteligência Artificial.");
+                window.location.href = "login-club.html";
+            }
+        });
+
+        async function fazerLogoutIA() {
+            await window.supabaseClient.auth.signOut();
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = "login-club.html";
+        }
+    </script>
 
     <script src="ai-engine.js"></script>
 </body>

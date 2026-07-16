@@ -48,10 +48,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function chamarAstasIA(dados) {
-    // SUA CHAVE DA API CONECTADA E ATIVA
-    const GEMINI_API_KEY = "AQ.Ab8RN6JUf9f1fpzy-4eVK_r3TzKYGJw0VedUsVY50KAYmtwmBg"; 
+    // SUA CHAVE API OFICIAL CONECTADA
+    const GEMINI_API_KEY = "AQ.Ab8RN6KVmTIsEL59iW3Mf66F6-21mevYVPrwRlFay_GmYGYcEg"; 
 
-    // O PROMPT OFICIAL DA ASTAS IA 1.0 (BLINDADO E ESTRUTURADO)
+    // O PROMPT OFICIAL DA ASTAS IA 1.0 (COM BLINDAGEM DE SINTAXE JSON)
     const systemInstruction = `
     Você é a ASTAS IA 1.0, atuando estritamente como um "Diretor Criativo especializado em Branding e Identidade Visual".
     Sua única missão é analisar os dados fornecidos pelo usuário e desenvolver um briefing profissional de posicionamento de marca, design estratégico e direção criativa.
@@ -60,6 +60,10 @@ async function chamarAstasIA(dados) {
     Você NÃO deve responder perguntas sobre programação, matemática, história, política, religião ou assuntos aleatórios fora do design e branding.
     Se o usuário tentar desviar o assunto ou preencher os campos com perguntas aleatórias, recuse imediatamente respondendo APENAS com um JSON contendo a frase de segurança no campo de erro:
     {"erro": "A ASTAS IA foi desenvolvida exclusivamente para auxiliar projetos relacionados ao Branding, Design e Identidade Visual."}
+
+    REGRA ESTRUTURAL DE SINTAXE (MUITO IMPORTANTE):
+    - Nunca utilize aspas duplas ("") dentro do texto dos valores JSON. Se precisar destacar uma palavra, utilize sempre aspas simples ('').
+    - Não insira quebras de linha reais ou caracteres especiais não escapados dentro das strings.
 
     FORMATO DE SAÍDA OBRIGATÓRIO:
     Se os dados forem válidos para um projeto de marca, retorne ESTRICTAMENTE um objeto JSON válido (sem tags markdown como \`\`\`json ou textos adicionais) contendo exatamente estas chaves:
@@ -92,8 +96,8 @@ async function chamarAstasIA(dados) {
     Por favor, gere a Direção Criativa e o Posicionamento de Marca para este projeto em formato JSON.
     `;
 
-    // 1. SISTEMA DE CASCATA: Monta uma lista inteligente combinando modelos modernos padrão e modelos dinâmicos da nuvem
     let modelosParaTestar = [
+        "gemini-2.5-flash",
         "gemini-1.5-flash",
         "gemini-1.5-pro",
         "gemini-pro"
@@ -104,13 +108,11 @@ async function chamarAstasIA(dados) {
         if (resLista.ok) {
             const dataLista = await resLista.json();
             if (dataLista.models && Array.isArray(dataLista.models)) {
-                // Filtra modelos geradores de texto, remove o prefixo 'models/' e inverte para pegar os mais recentes primeiro
                 const modelosDinamicos = dataLista.models
                     .filter(m => m.supportedGenerationMethods && m.supportedGenerationMethods.includes("generateContent") && m.name.toLowerCase().includes("gemini"))
                     .map(m => m.name.replace("models/", ""))
                     .reverse();
                 
-                // Une os modelos da nuvem com os modelos padrão sem deixar nomes repetidos
                 modelosParaTestar = [...new Set([...modelosDinamicos, ...modelosParaTestar])];
             }
         }
@@ -121,7 +123,6 @@ async function chamarAstasIA(dados) {
     let data = null;
     let erroAnterior = "";
 
-    // 2. REVEZAMENTO AUTOMÁTICO: Tenta os modelos sequencialmente até um aceitar a conexão!
     try {
         for (const nomeModelo of modelosParaTestar) {
             try {
@@ -139,12 +140,10 @@ async function chamarAstasIA(dados) {
 
                 data = await response.json();
                 
-                // Se a resposta foi bem-sucedida e trouxe o conteúdo, quebra o loop na hora e vai para o resultado!
                 if (response.ok && data.candidates && data.candidates[0].content) {
                     console.log(`Conexão estabelecida com sucesso usando o modelo: ${nomeModelo}`);
                     break;
                 } else {
-                    // Se o modelo deu erro (ex: não disponível para novos usuários), guarda o erro e tenta o PRÓXIMO do loop!
                     erroAnterior = data.error && data.error.message ? data.error.message : "Modelo recusou a conexão.";
                     data = null;
                 }
@@ -154,12 +153,16 @@ async function chamarAstasIA(dados) {
             }
         }
 
-        // Se o loop terminou e nenhum modelo conseguiu responder, exibe o diagnóstico
         if (!data || !data.candidates || !data.candidates[0].content) {
             throw new Error(`Nenhum modelo da nuvem aceitou a conexão. Último aviso do servidor: ${erroAnterior}`);
         }
 
-        const textoResposta = data.candidates[0].content.parts[0].text;
+        // LIMPEZA E SANITIZAÇÃO DA RESPOSTA ANTES DE PARSAR
+        let textoResposta = data.candidates[0].content.parts[0].text;
+        
+        // Remove possíveis blocos de marcação markdown (```json e ```) caso o modelo adicione
+        textoResposta = textoResposta.replace(/^```json\s*/i, "").replace(/\s*```$/, "").trim();
+
         const jsonResposta = JSON.parse(textoResposta);
 
         if (jsonResposta.erro) {

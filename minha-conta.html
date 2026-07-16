@@ -104,7 +104,6 @@
             <p style="color: var(--text-muted);">Gerencie suas informações de acesso e seus projetos salvos no Supabase.</p>
         </div>
 
-        <!-- CARTÃO DE DADOS DO USUÁRIO -->
         <div class="profile-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h3 style="color: var(--primary); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">
@@ -138,7 +137,6 @@
             </div>
         </div>
 
-        <!-- ZONA DE PERIGO: EXCLUIR CONTA -->
         <div class="danger-zone">
             <h4 style="color: #EA4335; font-size: 1.2rem; margin-bottom: 10px;">
                 <i class="fa-solid fa-triangle-exclamation" style="margin-right: 6px;"></i> Zona de Risco: Gerenciamento de Dados
@@ -163,26 +161,26 @@
     
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
-            // TRAVA DE SEGURANÇA: Verifica se há uma sessão ativa real no Supabase
-            const { data: { session }, error } = await window.supabaseClient.auth.getSession();
+            // TRAVA DE SEGURANÇA NA NUVEM: getUser() força a busca em tempo real no servidor
+            const { data: { user }, error } = await window.supabaseClient.auth.getUser();
 
-            if (!session || error) {
+            if (!user || error) {
                 alert("⚠️ Você precisa estar logado no ASTAS CLUB para acessar sua conta.");
                 window.location.href = "login-club.html";
                 return;
             }
 
-            // Pega os dados reais do usuário logado na nuvem
-            const usuario = session.user;
-            const nomeUsuario = usuario.user_metadata && usuario.user_metadata.nome_usuario ? usuario.user_metadata.nome_usuario : "Membro ASTAS CLUB";
+            const nomeUsuario = user.user_metadata && user.user_metadata.nome_usuario ? user.user_metadata.nome_usuario : "Membro ASTAS CLUB";
 
             document.getElementById("user-display-name").innerText = nomeUsuario;
-            document.getElementById("user-display-email").innerText = usuario.email;
-            document.getElementById("user-display-id").innerText = usuario.id;
+            document.getElementById("user-display-email").innerText = user.email;
+            document.getElementById("user-display-id").innerText = user.id;
         });
 
         async function fazerLogout() {
             await window.supabaseClient.auth.signOut();
+            localStorage.clear();
+            sessionStorage.clear();
             alert("🔒 Você saiu da sua conta. Até logo!");
             window.location.href = "login-club.html";
         }
@@ -192,14 +190,10 @@
             
             if (confirmacao) {
                 try {
-                    // Pega a sessão atual
-                    const { data: { session } } = await window.supabaseClient.auth.getSession();
+                    await window.supabaseClient.auth.signOut();
+                    localStorage.clear();
+                    sessionStorage.clear();
                     
-                    if (session) {
-                        // Desloga do sistema
-                        await window.supabaseClient.auth.signOut();
-                    }
-
                     alert("🗑️ Sua conta e sessão foram removidas deste dispositivo.\n\nNOTA TÉCNICA: Para exclusão total do registro na tabela 'auth.users' do Supabase, o comando de limpeza automática já foi registrado nos servidores.");
                     window.location.href = "club.html";
 

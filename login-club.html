@@ -269,7 +269,6 @@
 
             try {
                 if (modoAtual === 'signup') {
-                    // 1. CRIAR CONTA REAL NO SUPABASE
                     if (!nome) {
                         alert("⚠️ Por favor, digite seu nome ou nome da empresa para o cadastro.");
                         btnAction.disabled = false;
@@ -277,23 +276,27 @@
                         return;
                     }
 
+                    // Cria a conta e conecta sem precisar confirmar e-mail
                     const { data, error } = await window.supabaseClient.auth.signUp({
                         email: email,
                         password: password,
                         options: {
-                            data: {
-                                nome_usuario: nome
-                            }
+                            data: { nome_usuario: nome }
                         }
                     });
 
                     if (error) throw error;
 
-                    alert("🎉 Conta criada com sucesso na nuvem! Você será redirecionado para a sua área de membro.");
-                    window.location.href = "minha-conta.html";
+                    if (data.session) {
+                        window.location.href = "minha-conta.html";
+                    } else {
+                        alert("⚠️ Conta criada com sucesso! Se você não for redirecionado, clique em 'Entrar' e acesse com sua nova senha.");
+                        alternarAba('login');
+                        btnAction.disabled = false;
+                        btnAction.innerHTML = 'ACESSAR ASTAS CLUB <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>';
+                    }
 
                 } else {
-                    // 2. ENTRAR NA CONTA EXISTENTE NO SUPABASE
                     const { data, error } = await window.supabaseClient.auth.signInWithPassword({
                         email: email,
                         password: password
@@ -301,7 +304,6 @@
 
                     if (error) throw error;
 
-                    // Sucesso! Redireciona para a ferramenta de Inteligência Artificial
                     window.location.href = "astas-ia.html";
                 }
 
