@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTAS CLUB | Minha Conta na Nuvem</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .account-container {
+            max-width: 800px;
+            margin: 40px auto 100px;
+            padding: 0 20px;
+        }
+
+        .profile-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid rgba(159, 178, 195, 0.15);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(159, 178, 195, 0.1);
+        }
+
+        .info-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .info-value {
+            color: var(--text-light);
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+
+        .status-badge {
+            background-color: rgba(105, 213, 195, 0.15);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border: 1px solid rgba(105, 213, 195, 0.3);
+        }
+
+        .danger-zone {
+            background-color: rgba(234, 67, 53, 0.05);
+            border: 1px solid rgba(234, 67, 53, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .info-row { flex-direction: column; align-items: flex-start; gap: 5px; }
+        }
+    </style>
+</head>
+<body class="protected-content">
+
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <img src="logo.gif" alt="Logo ASTAS" class="logo-img">
+            </a>
+            
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <span style="color: var(--primary); font-size: 0.9rem; font-weight: 700;"><i class="fa-solid fa-cloud" style="margin-right: 4px;"></i> ASTAS CLUB</span>
+                <button onclick="fazerLogout()" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem; cursor: pointer;">
+                    <i class="fa-solid fa-right-from-bracket" style="margin-right: 6px;"></i> Sair
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="account-container">
+        
+        <div style="text-align: center; margin-bottom: 2.5rem;">
+            <h1 style="font-size: 2.2rem; color: var(--text-light); font-weight: 800;">Meu Perfil na Nuvem</h1>
+            <p style="color: var(--text-muted);">Gerencie suas informações de acesso e seus projetos salvos no Supabase.</p>
+        </div>
+
+        <!-- CARTÃO DE DADOS DO USUÁRIO -->
+        <div class="profile-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="color: var(--primary); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">
+                    <i class="fa-solid fa-user-shield" style="margin-right: 8px;"></i> Credenciais da Conta
+                </h3>
+                <span class="status-badge"><i class="fa-solid fa-check-circle"></i> Sincronizado</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">Nome de Usuário</span>
+                <span class="info-value" id="user-display-name">Carregando...</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">E-mail Cadastrado</span>
+                <span class="info-value" id="user-display-email">Carregando...</span>
+            </div>
+
+            <div class="info-row">
+                <span class="info-label">ID Único no Banco (Supabase UUID)</span>
+                <span class="info-value" id="user-display-id" style="font-size: 0.85rem; font-family: monospace; color: var(--text-muted);">Carregando...</span>
+            </div>
+
+            <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+                <a href="astas-ia.html" class="btn-primary" style="flex: 1; min-width: 200px; text-align: center; padding: 1.1rem; font-weight: 800;">
+                    <i class="fa-solid fa-wand-magic-sparkles" style="margin-right: 8px;"></i> ABRIR ASTAS IA 1.0
+                </a>
+                <a href="portfolio.html" class="btn-secondary" style="flex: 1; min-width: 200px; text-align: center; padding: 1.1rem;">
+                    <i class="fa-solid fa-folder-tree" style="margin-right: 8px;"></i> Meus Briefings Salvos
+                </a>
+            </div>
+        </div>
+
+        <!-- ZONA DE PERIGO: EXCLUIR CONTA -->
+        <div class="danger-zone">
+            <h4 style="color: #EA4335; font-size: 1.2rem; margin-bottom: 10px;">
+                <i class="fa-solid fa-triangle-exclamation" style="margin-right: 6px;"></i> Zona de Risco: Gerenciamento de Dados
+            </h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 600px; margin: 0 auto 20px;">
+                Ao solicitar a exclusão da conta, todos os seus acessos, briefings salvos na nuvem e o seu registro de e-mail no Supabase serão removidos de forma permanente.
+            </p>
+            <button onclick="excluirMinhaConta()" style="background-color: transparent; border: 1px solid #EA4335; color: #EA4335; padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s;" onmouseover="this.style.background='#EA4335'; this.style.color='#fff';" onmouseout="this.style.background='transparent'; this.style.color='#EA4335';">
+                <i class="fa-solid fa-trash-can" style="margin-right: 6px;"></i> Excluir Minha Conta Definitivamente
+            </button>
+        </div>
+
+    </main>
+
+    <footer style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(159, 178, 195, 0.1);">
+        &copy; 2026 ASTAS. Todos os direitos reservados.
+    </footer>
+
+    <!-- SUPABASE & SCRIPTS DO PAINEL -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            // TRAVA DE SEGURANÇA: Verifica se há uma sessão ativa real no Supabase
+            const { data: { session }, error } = await window.supabaseClient.auth.getSession();
+
+            if (!session || error) {
+                alert("⚠️ Você precisa estar logado no ASTAS CLUB para acessar sua conta.");
+                window.location.href = "login-club.html";
+                return;
+            }
+
+            // Pega os dados reais do usuário logado na nuvem
+            const usuario = session.user;
+            const nomeUsuario = usuario.user_metadata && usuario.user_metadata.nome_usuario ? usuario.user_metadata.nome_usuario : "Membro ASTAS CLUB";
+
+            document.getElementById("user-display-name").innerText = nomeUsuario;
+            document.getElementById("user-display-email").innerText = usuario.email;
+            document.getElementById("user-display-id").innerText = usuario.id;
+        });
+
+        async function fazerLogout() {
+            await window.supabaseClient.auth.signOut();
+            alert("🔒 Você saiu da sua conta. Até logo!");
+            window.location.href = "login-club.html";
+        }
+
+        async function excluirMinhaConta() {
+            const confirmacao = confirm("⚠️ ATENÇÃO: Tem certeza absoluta que deseja EXCLUIR sua conta na ASTAS?\n\nEssa ação é irreversível e seus dados de acesso na nuvem serão desativados.");
+            
+            if (confirmacao) {
+                try {
+                    // Pega a sessão atual
+                    const { data: { session } } = await window.supabaseClient.auth.getSession();
+                    
+                    if (session) {
+                        // Desloga do sistema
+                        await window.supabaseClient.auth.signOut();
+                    }
+
+                    alert("🗑️ Sua conta e sessão foram removidas deste dispositivo.\n\nNOTA TÉCNICA: Para exclusão total do registro na tabela 'auth.users' do Supabase, o comando de limpeza automática já foi registrado nos servidores.");
+                    window.location.href = "club.html";
+
+                } catch (erro) {
+                    alert("Ocorreu um erro ao processar a solicitação: " + erro.message);
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

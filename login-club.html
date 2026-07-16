@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTAS CLUB | Acesso Real à Nuvem</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .auth-container {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .auth-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid rgba(159, 178, 195, 0.15);
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 460px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: var(--bg-main);
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(159, 178, 195, 0.1);
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            user-select: none;
+        }
+
+        .auth-tab.active {
+            background-color: rgba(105, 213, 195, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(105, 213, 195, 0.3);
+            box-shadow: 0 0 10px rgba(105, 213, 195, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            background-color: var(--bg-main);
+            border: 1px solid rgba(159, 178, 195, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(105, 213, 195, 0.2);
+        }
+
+        .social-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 0.9rem;
+            background: transparent;
+            border: 1px solid rgba(159, 178, 195, 0.2);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 15px;
+        }
+
+        .social-login:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--text-light);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin: 20px 0;
+        }
+
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(159, 178, 195, 0.15);
+        }
+
+        .divider:not(:empty)::before { margin-right: .75em; }
+        .divider:not(:empty)::after { margin-left: .75em; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <img src="logo.gif" alt="Logo ASTAS" class="logo-img">
+            </a>
+            
+            <a href="club.html" class="btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+                <i class="fa-solid fa-arrow-left" style="margin-right: 6px;"></i> Voltar ao Clube
+            </a>
+        </div>
+    </header>
+
+    <main class="auth-container">
+        <div class="auth-card">
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span style="color: var(--primary); font-weight: 700; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;">
+                    <i class="fa-solid fa-cloud" style="margin-right: 4px;"></i> Conectado ao Supabase
+                </span>
+                <h1 style="font-size: 1.8rem; color: var(--text-light); font-weight: 800; margin-top: 5px;">ASTAS CLUB</h1>
+            </div>
+
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="tab-login" onclick="alternarAba('login')">Entrar</div>
+                <div class="auth-tab" id="tab-signup" onclick="alternarAba('signup')">Criar Conta</div>
+            </div>
+
+            <form id="auth-form" onsubmit="return false;">
+                
+                <div class="form-group" id="group-nome" style="display: none;">
+                    <label for="user-name">Nome Completo / Empresa</label>
+                    <input type="text" id="user-name" placeholder="Ex: Pedro Lucas" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="user-email">E-mail Profissional</label>
+                    <input type="email" id="user-email" required placeholder="seunome@empresa.com" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <label for="user-pass" style="margin-bottom: 0;">Senha (Mínimo 6 caracteres)</label>
+                        <a href="#" id="forgot-pass" style="color: var(--primary); font-size: 0.8rem; text-decoration: none;">Esqueceu a senha?</a>
+                    </div>
+                    <input type="password" id="user-pass" required placeholder="••••••••" class="form-control" minlength="6">
+                </div>
+
+                <button type="button" id="btn-auth-action" onclick="executarAutenticacaoReal()" class="btn-primary" style="width: 100%; padding: 1.1rem; font-size: 1rem; font-weight: 800; margin-top: 10px; letter-spacing: 1px;">
+                    ACESSAR ASTAS CLUB <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
+                </button>
+
+                <div class="divider">OU CONTINUAR COM</div>
+
+                <button type="button" onclick="loginComGoogle()" class="social-login">
+                    <i class="fa-brands fa-google" style="color: #EA4335; font-size: 1.1rem;"></i> Conta do Google
+                </button>
+
+            </form>
+
+            <div style="text-align: center; margin-top: 25px;">
+                <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5;">
+                    Ambiente seguro e criptografado na nuvem. Seus dados estão sob a proteção da ASTAS.
+                </p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer style="text-align: center; padding: 20px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid rgba(159, 178, 195, 0.1);">
+        &copy; 2026 ASTAS. Todos os direitos reservados.
+    </footer>
+
+    <!-- BIBLIOTECA OFICIAL DO SUPABASE E NOSSOS SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
+    
+    <script>
+        let modoAtual = 'login';
+
+        function alternarAba(aba) {
+            modoAtual = aba;
+            const tabLogin = document.getElementById("tab-login");
+            const tabSignup = document.getElementById("tab-signup");
+            const groupNome = document.getElementById("group-nome");
+            const btnAction = document.getElementById("btn-auth-action");
+            const forgotPass = document.getElementById("forgot-pass");
+
+            if (aba === 'login') {
+                tabLogin.classList.add("active");
+                tabSignup.classList.remove("active");
+                groupNome.style.display = "none";
+                btnAction.innerHTML = 'ACESSAR ASTAS CLUB <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>';
+                forgotPass.style.display = "inline";
+            } else {
+                tabSignup.classList.add("active");
+                tabLogin.classList.remove("active");
+                groupNome.style.display = "block";
+                btnAction.innerHTML = 'CRIAR MINHA CONTA NA NUVEM <i class="fa-solid fa-rocket" style="margin-left: 8px;"></i>';
+                forgotPass.style.display = "none";
+            }
+        }
+
+        async function executarAutenticacaoReal() {
+            const email = document.getElementById("user-email").value.trim();
+            const password = document.getElementById("user-pass").value.trim();
+            const nome = document.getElementById("user-name").value.trim();
+            const btnAction = document.getElementById("btn-auth-action");
+
+            if (!email || !password) {
+                alert("⚠️ Por favor, preencha o e-mail e a senha para continuar.");
+                return;
+            }
+
+            if (password.length < 6) {
+                alert("⚠️ A segurança do Supabase exige que a senha tenha pelo menos 6 caracteres.");
+                return;
+            }
+
+            btnAction.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Conectando à Nuvem...';
+            btnAction.disabled = true;
+
+            try {
+                if (modoAtual === 'signup') {
+                    // 1. CRIAR CONTA REAL NO SUPABASE
+                    if (!nome) {
+                        alert("⚠️ Por favor, digite seu nome ou nome da empresa para o cadastro.");
+                        btnAction.disabled = false;
+                        btnAction.innerHTML = 'CRIAR MINHA CONTA NA NUVEM <i class="fa-solid fa-rocket" style="margin-left: 8px;"></i>';
+                        return;
+                    }
+
+                    const { data, error } = await window.supabaseClient.auth.signUp({
+                        email: email,
+                        password: password,
+                        options: {
+                            data: {
+                                nome_usuario: nome
+                            }
+                        }
+                    });
+
+                    if (error) throw error;
+
+                    alert("🎉 Conta criada com sucesso na nuvem! Você será redirecionado para a sua área de membro.");
+                    window.location.href = "minha-conta.html";
+
+                } else {
+                    // 2. ENTRAR NA CONTA EXISTENTE NO SUPABASE
+                    const { data, error } = await window.supabaseClient.auth.signInWithPassword({
+                        email: email,
+                        password: password
+                    });
+
+                    if (error) throw error;
+
+                    // Sucesso! Redireciona para a ferramenta de Inteligência Artificial
+                    window.location.href = "astas-ia.html";
+                }
+
+            } catch (erro) {
+                console.error("Erro no Supabase Auth:", erro);
+                
+                let mensagem = erro.message;
+                if (mensagem.includes("Invalid login credentials")) mensagem = "E-mail ou senha incorretos.";
+                if (mensagem.includes("User already registered")) mensagem = "Este e-mail já está cadastrado no ASTAS CLUB.";
+                
+                alert("⚠️ Ocorreu um erro no acesso:\n\n" + mensagem);
+                btnAction.disabled = false;
+                btnAction.innerHTML = modoAtual === 'login' ? 'ACESSAR ASTAS CLUB <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>' : 'CRIAR MINHA CONTA NA NUVEM <i class="fa-solid fa-rocket" style="margin-left: 8px;"></i>';
+            }
+        }
+
+        async function loginComGoogle() {
+            try {
+                const { data, error } = await window.supabaseClient.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: window.location.origin + '/minha-conta.html'
+                    }
+                });
+                if (error) throw error;
+            } catch (erro) {
+                alert("⚠️ Não foi possível conectar ao Google: " + erro.message);
+            }
+        }
+    </script>
+
+</body>
+</html>
