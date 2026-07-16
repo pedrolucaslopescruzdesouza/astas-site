@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function chamarAstasIA(dados) {
     // SUA CHAVE API OFICIAL CONECTADA
-    const GEMINI_API_KEY = "AQ.Ab8RN6KVmTIsEL59iW3Mf66F6-21mevYVPrwRlFay_GmYGYcEg"; 
+    const GEMINI_API_KEY = "AQ.Ab8RN6LB4tRQ0G9s6Owy5x22d1h1qxMfORggOUGiihKrYUx5sA"; 
 
     // O PROMPT OFICIAL DA ASTAS IA 1.0 (COM BLINDAGEM DE SINTAXE JSON)
     const systemInstruction = `
