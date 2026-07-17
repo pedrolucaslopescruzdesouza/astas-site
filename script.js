@@ -1,168 +1,118 @@
-document.addEventListener('DOMContentLoaded', () => {
+// --- MOTOR DAS ESTRELAS NA TELA INTEIRA (CANVAS) ---
+const canvas = document.getElementById('space-canvas');
+const ctx = canvas.getContext('2d');
 
-    /* 1. ANIMAÇÃO SUAVE AO ROLAR (SCROLL REVEAL) */
-    const observerOptions = { threshold: 0.1 };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
+let stars = [];
+const numStars = 150; // Mais estrelas brilhando no fundo!
 
-    const elementsToAnimate = document.querySelectorAll('.service-card, .portfolio-card, .highlight-box, .about-text, .contact-form');
-    elementsToAnimate.forEach(el => {
-        el.classList.add('fade-in');
-        observer.observe(el);
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+for (let i = 0; i < numStars; i++) {
+    stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.8 + 0.5,
+        alpha: Math.random(),
+        speed: (Math.random() * 0.015 + 0.005) * (Math.random() > 0.5 ? 1 : -1)
     });
+}
 
-
-    /* 2. MENU MOBILE INTELIGENTE (GAVETA PARA SMARTPHONES) */
-    const headerContent = document.querySelector('.header-content');
-    const navMenu = document.querySelector('.nav-menu');
-
-    if (headerContent && navMenu) {
-        // Cria o botão hamburguer automaticamente via JS sem precisar editar os HTMLs
-        let mobileBtn = document.querySelector('.mobile-menu-btn');
-        if (!mobileBtn) {
-            mobileBtn = document.createElement('button');
-            mobileBtn.className = 'mobile-menu-btn';
-            mobileBtn.innerHTML = '☰';
-            mobileBtn.setAttribute('aria-label', 'Abrir ou Fechar Menu');
-            headerContent.appendChild(mobileBtn);
-        }
-
-        // Alterna entre abrir/fechar a gaveta e mudar o ícone (☰ para ✕)
-        mobileBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            navMenu.classList.toggle('open');
-            mobileBtn.innerHTML = navMenu.classList.contains('open') ? '✕' : '☰';
-        });
-
-        // Fecha a gaveta automaticamente quando o usuário clica em um link
-        const navLinks = navMenu.querySelectorAll('a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('open');
-                mobileBtn.innerHTML = '☰';
-            });
-        });
-
-        // Fecha a gaveta se o usuário tocar em qualquer área fora do menu
-        document.addEventListener('click', (e) => {
-            if (!navMenu.contains(e.target) && !mobileBtn.contains(e.target) && navMenu.classList.contains('open')) {
-                navMenu.classList.remove('open');
-                mobileBtn.innerHTML = '☰';
-            }
-        });
-    }
-
-
-    /* 3. SISTEMA DE FILTROS DO PORTFÓLIO */
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const portfolioCards = document.querySelectorAll('.portfolio-card');
-
-    if (filterButtons.length > 0) {
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                const filterValue = btn.getAttribute('data-filter');
-
-                portfolioCards.forEach(card => {
-                    const cardCategory = card.getAttribute('data-category');
-                    
-                    if (filterValue === 'todos' || filterValue === cardCategory) {
-                        card.style.display = 'block';
-                        setTimeout(() => card.style.opacity = '1', 50);
-                    } else {
-                        card.style.opacity = '0';
-                        setTimeout(() => card.style.display = 'none', 300);
-                    }
-                });
-            });
-        });
-    }
-
-
-    /* 4. SISTEMA DE ZOOM / LIGHTBOX (SEM DOWNLOAD) */
-    const lightbox = document.getElementById('zoom-lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxTitle = document.getElementById('lightbox-title');
-    const closeBtn = document.querySelector('.close-lightbox');
-
-    if (lightbox && portfolioCards.length > 0) {
-        portfolioCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const img = card.querySelector('img');
-                const title = card.querySelector('h3').innerText;
-                
-                lightboxImg.src = img.src;
-                if (lightboxTitle) lightboxTitle.innerText = title;
-                
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            });
-        });
-
-        const closeLightbox = () => {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        };
-
-        if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox || e.target.classList.contains('lightbox-container')) {
-                closeLightbox();
-            }
-        });
-    }
-
-
-    /* 5. BLINDAGEM CONTRA CLIQUE DIREITO E DOWNLOADS */
-    const protectedContent = document.querySelector('.protected-content');
-    const toast = document.getElementById('protection-toast');
-
-    const showProtectionToast = () => {
-        if (toast) {
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 4000);
-        }
-    };
-
-    if (protectedContent) {
-        protectedContent.addEventListener('contextmenu', (e) => {
-            if (e.target.tagName === 'IMG' || e.target.closest('.portfolio-card')) {
-                e.preventDefault();
-                showProtectionToast();
-            }
-        });
-
-        protectedContent.addEventListener('dragstart', (e) => {
-            if (e.target.tagName === 'IMG') {
-                e.preventDefault();
-                showProtectionToast();
-            }
-        });
-    }
-});
-/* --- GERENCIAMENTO DO AVISO DE PROTEÇÃO --- */
-document.addEventListener('DOMContentLoaded', () => {
-    const toast = document.getElementById('protection-toast');
+function animateStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     
-    if (toast) {
-        // Mostra o aviso
-        toast.style.display = 'block';
-        
-        // Esconde o aviso automaticamente após 5 segundos
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transition = 'opacity 0.5s';
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 500);
-        }, 5000);
+    for (let i = 0; i < stars.length; i++) {
+        let s = stars[i];
+        s.alpha += s.speed;
+        if (s.alpha <= 0.1 || s.alpha >= 0.9) {
+            s.speed = -s.speed;
+        }
+
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+        ctx.fill();
     }
+    
+    requestAnimationFrame(animateStars);
+}
+
+animateStars();
+
+
+// --- ESTRELA CADENTE COM MAIS PRESENÇA E BRILHO ---
+const shootingStar = document.getElementById('shooting-star');
+
+function triggerShootingStar() {
+    const startX = Math.random() * (window.innerWidth - 300) + 200;
+    const startY = Math.random() * (window.innerHeight / 3);
+    
+    shootingStar.style.left = `${startX}px`;
+    shootingStar.style.top = `${startY}px`;
+    
+    shootingStar.classList.add('shoot');
+    
+    setTimeout(() => {
+        shootingStar.classList.remove('shoot');
+    }, 1100);
+
+    // Aparece com muito mais presença: intervalo rápido entre 5s e 15s!
+    const nextInterval = Math.random() * (15000 - 5000) + 5000;
+    setTimeout(triggerShootingStar, nextInterval);
+}
+
+setTimeout(triggerShootingStar, 2000);
+
+
+// --- SISTEMA INTERATIVO: AS 5 EMOÇÕES DO ASTRO ---
+const astroImg = document.getElementById('astro-img');
+const emocoesAstro = [
+    'assets/astro-neutro.png',
+    'assets/astro-curioso.png',
+    'assets/astro-pensativo.png',
+    'assets/astro-surpreso.png',
+    'assets/astro-feliz.png'
+];
+let indiceAtual = 0;
+
+astroImg.addEventListener('click', () => {
+    indiceAtual = (indiceAtual + 1) % emocoesAstro.length;
+    astroImg.src = emocoesAstro[indiceAtual];
+    
+    astroImg.style.transform = 'scale(1.15) translateY(-10px)';
+    setTimeout(() => {
+        astroImg.style.transform = '';
+    }, 250);
+});
+
+
+// --- MENU GAVETA MOBILE COM ANIMAÇÃO SUAVE (IMAGEM 2) ---
+const btnOpenMenu = document.getElementById('btn-open-menu');
+const btnCloseMenu = document.getElementById('btn-close-menu');
+const mobileDrawer = document.getElementById('mobile-drawer');
+const drawerOverlay = document.getElementById('drawer-overlay');
+
+function openDrawer() {
+    mobileDrawer.classList.add('open');
+    drawerOverlay.classList.add('open');
+}
+
+function closeDrawer() {
+    mobileDrawer.classList.remove('open');
+    drawerOverlay.classList.remove('open');
+}
+
+btnOpenMenu.addEventListener('click', openDrawer);
+btnCloseMenu.addEventListener('click', closeDrawer);
+drawerOverlay.addEventListener('click', closeDrawer);
+
+// Fecha a gaveta automaticamente quando o usuário clica em algum link
+const drawerLinks = document.querySelectorAll('.drawer-links a');
+drawerLinks.forEach(link => {
+    link.addEventListener('click', closeDrawer);
 });
