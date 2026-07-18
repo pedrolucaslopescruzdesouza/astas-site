@@ -1,4 +1,4 @@
-// --- MOTOR DA GALÁXIA DE MARCAS (FILTROS COMPLETOS + BUSCA POR LUPA) ---
+// --- MOTOR DA GALÁXIA DE MARCAS (MODAL INTELIGENTE + FILTROS + BUSCA) ---
 let todosOsProjetos = [];
 let filtroAtivo = { tipo: 'all', valor: 'all' };
 let textoPesquisa = '';
@@ -10,15 +10,75 @@ document.addEventListener('DOMContentLoaded', async () => {
     const btnSearch = document.getElementById('btn-search');
     const btnToggleFilters = document.getElementById('btn-toggle-filters');
     const filtersDropdown = document.getElementById('filters-dropdown');
+    
+    // Elementos do Modal Lightbox
+    const modalOverlay = document.getElementById('modal-missao');
+    const btnCloseModal = document.getElementById('btn-close-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalTag = document.getElementById('modal-tag');
+    const modalTitulo = document.getElementById('modal-titulo');
+    const modalDesc = document.getElementById('modal-desc');
+    const modalExtras = document.getElementById('modal-extras');
+
     const db = window.supabaseClient;
 
     // 1. Abrir e Fechar o menu de filtros
-    btnToggleFilters.addEventListener('click', () => {
-        const isOpen = filtersDropdown.classList.toggle('open');
-        btnToggleFilters.classList.toggle('active', isOpen);
+    if (btnToggleFilters) {
+        btnToggleFilters.addEventListener('click', () => {
+            const isOpen = filtersDropdown.classList.toggle('open');
+            btnToggleFilters.classList.toggle('active', isOpen);
+        });
+    }
+
+    // 2. Sistema do Modal (Abrir e Fechar)
+    function abrirModal(proj) {
+        const catNomes = { 'branding': 'Identidade Visual', 'logos': 'Logotipo', 'motion': 'Motion Design', 'uiux': 'UI/UX Design', 'webdesign': 'Web Design', 'socialmedia': 'Social Media' };
+        const nomeCat = catNomes[proj.categoria] || proj.categoria;
+
+        modalImg.src = proj.capa_url;
+        modalTag.textContent = `✦ ${nomeCat} • ${proj.segmento || 'Geral'}`;
+        modalTitulo.textContent = proj.titulo;
+        modalDesc.textContent = proj.descricao_completa || proj.descricao_curta || 'Sem descrição detalhada disponível para esta missão.';
+
+        // Renderizar extras (estilo, tipografia e paleta de cores visual)
+        modalExtras.innerHTML = '';
+        
+        if (proj.estilo_visual) {
+            modalExtras.innerHTML += `<div class="extra-item"><span class="extra-label">Estilo:</span> <span>${proj.estilo_visual}</span></div>`;
+        }
+        if (proj.tipografia && proj.tipografia.length > 0) {
+            modalExtras.innerHTML += `<div class="extra-item"><span class="extra-label">Tipografia:</span> <span>${proj.tipografia.join(', ')}</span></div>`;
+        }
+        if (proj.paleta_cores && proj.paleta_cores.length > 0) {
+            let coresHtml = proj.paleta_cores.map(c => {
+                const hex = c.trim();
+                return `<span class="color-dot" style="background-color: ${hex};" title="${hex}"></span><strong>${hex}</strong>`;
+            }).join(' &nbsp; ');
+            modalExtras.innerHTML += `<div class="extra-item" style="flex-wrap: wrap;"><span class="extra-label">Paleta:</span> <span>${coresHtml}</span></div>`;
+        }
+
+        modalOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Trava a rolagem da página ao fundo
+    }
+
+    function fecharModal() {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Libera a rolagem da página
+    }
+
+    if (btnCloseModal) btnCloseModal.addEventListener('click', fecharModal);
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) fecharModal(); // Fecha clicando fora da caixa
+        });
+    }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modalOverlay && modalOverlay.classList.contains('active')) {
+            fecharModal(); // Fecha no ESC
+        }
     });
 
-    // 2. Buscar projetos na nuvem
+    // 3. Buscar projetos na nuvem
     async function carregarProjetosDaNuvem() {
         try {
             if (projectsGrid) {
@@ -34,17 +94,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // 3. Sistema de Filtro Combinado (Categoria/Segmento/Estilo + Lupa)
+    // 4. Sistema de Filtro Combinado
     function executarFiltros() {
         if (!projectsGrid) return;
         let filtrados = todosOsProjetos;
 
-        // Filtra pelo botão selecionado na gaveta
         if (filtroAtivo.tipo !== 'all') {
             filtrados = filtrados.filter(p => p[filtroAtivo.tipo] === filtroAtivo.valor);
         }
 
-        // Filtra pelo que foi digitado na barra de pesquisa
         if (textoPesquisa.trim() !== '') {
             const termo = textoPesquisa.toLowerCase().trim();
             filtrados = filtrados.filter(p => 
@@ -57,7 +115,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         renderizarProjetos(filtrados);
     }
 
-    // 4. Desenhar cards na tela
+    // 5. Desenhar cards com clique habilitado para o Modal
     function renderizarProjetos(listaProj) {
         projectsGrid.style.opacity = '0';
         setTimeout(() => {
@@ -82,6 +140,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <p>${proj.descricao_curta}</p>
                     </div>
                 `;
+
+                // ADICIONA O CLIQUE PARA ABRIR O MODAL DO PROJETO
+                card.addEventListener('click', () => abrirModal(proj));
+
                 projectsGrid.appendChild(card);
             });
             projectsGrid.style.opacity = '1';
@@ -89,7 +151,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }, 150);
     }
 
-    // 5. Ouve os cliques em QUALQUER botão de filtro das 3 seções
+    // 6. Cliques nos botões de filtro
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             filterButtons.forEach(btn => btn.classList.remove('active'));
@@ -101,24 +163,28 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    // 6. Ativa a pesquisa clicando no Botão Redondo da Lupa ou dando Enter
-    btnSearch.addEventListener('click', () => {
-        textoPesquisa = searchInput.value;
-        executarFiltros();
-        btnSearch.classList.add('active');
-        setTimeout(() => btnSearch.classList.remove('active'), 300);
-    });
-
-    searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') { btnSearch.click(); }
-    });
-
-    searchInput.addEventListener('input', (e) => {
-        if (e.target.value === '') {
-            textoPesquisa = '';
+    // 7. Eventos de pesquisa na Lupa
+    if (btnSearch) {
+        btnSearch.addEventListener('click', () => {
+            textoPesquisa = searchInput.value;
             executarFiltros();
-        }
-    });
+            btnSearch.classList.add('active');
+            setTimeout(() => btnSearch.classList.remove('active'), 300);
+        });
+    }
+
+    if (searchInput) {
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && btnSearch) { btnSearch.click(); }
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            if (e.target.value === '') {
+                textoPesquisa = '';
+                executarFiltros();
+            }
+        });
+    }
 
     carregarProjetosDaNuvem();
 });

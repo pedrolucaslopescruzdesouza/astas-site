@@ -3,156 +3,384 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAS | Nossos Serviços e Soluções</title>
-    
-    <!-- ÍCONE DA ABA DO NAVEGADOR (FAVICON) -->
-    <link rel="icon" type="image/png" href="favicon.png">
-    
-    <!-- BIBLIOTECA DE ÍCONES MINIMALISTAS (FONT AWESOME) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <title>ASTAS — Missões & Serviços</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* ==========================================================================
+           MOTOR APPLE LIQUID GLASS & TRANSIÇÕES DE TELA (60 FPS)
+           ========================================================================== */
+
+        :root {
+            --apple-ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --liquid-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+            --liquid-border: 1px solid rgba(255, 255, 255, 0.18);
+            --liquid-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            --liquid-blur: blur(30px) saturate(180%);
+        }
+
+        /* 1. ANIMAÇÕES DE ENTRADA E SAÍDA DA PÁGINA */
+        @keyframes appleFadeIn {
+            0% { opacity: 0; transform: translate3d(0, 25px, 0) scale(0.97); filter: blur(12px); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0px); }
+        }
+        
+        .stage-container {
+            animation: appleFadeIn 0.7s var(--apple-ease) forwards;
+            transition: all 0.5s var(--apple-ease);
+            transform: translateZ(0);
+        }
+
+        .stage-container.page-exit {
+            opacity: 0 !important;
+            transform: translate3d(0, -20px, 0) scale(0.96) !important;
+            filter: blur(15px) !important;
+        }
+
+        /* 2. BARRA DE NAVEGAÇÃO EM VIDRO LÍQUIDO */
+        .nav-links-desktop {
+            background: rgba(10, 20, 35, 0.55) !important;
+            backdrop-filter: var(--liquid-blur) !important;
+            -webkit-backdrop-filter: var(--liquid-blur) !important;
+            border: var(--liquid-border) !important;
+            box-shadow: var(--liquid-shadow) !important;
+            padding: 0.5rem 0.8rem !important;
+            border-radius: 50px !important;
+            display: flex !important;
+            gap: 0.5rem !important;
+            transform: translateZ(0);
+        }
+
+        .nav-links-desktop .nav-item {
+            color: var(--cinza-claro) !important;
+            padding: 0.6rem 1.4rem !important;
+            border-radius: 40px !important;
+            font-weight: 600 !important;
+            transition: all 0.4s var(--apple-ease) !important;
+            position: relative !important;
+            overflow: hidden !important;
+            text-decoration: none !important;
+        }
+
+        .nav-links-desktop .nav-item::after { display: none !important; }
+
+        .nav-links-desktop .nav-item:hover,
+        .nav-links-desktop .nav-item.active {
+            color: #FFFFFF !important;
+            background: linear-gradient(135deg, rgba(105, 213, 195, 0.25) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 4px 15px rgba(105, 213, 195, 0.2) !important;
+            transform: translate3d(0, -2px, 0);
+        }
+
+        /* 3. BOTÃO "ENTRE" MAIOR, EM VERDE AURORA COM ÍCONE NÍTIDO */
+        .btn-top-entre {
+            background: linear-gradient(135deg, var(--verde-aurora) 0%, #4bc2ad 100%) !important;
+            backdrop-filter: var(--liquid-blur) !important;
+            -webkit-backdrop-filter: var(--liquid-blur) !important;
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
+            box-shadow: 0 10px 25px rgba(105, 213, 195, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.7) !important;
+            color: var(--preto-espacial) !important;
+            transition: all 0.4s var(--apple-ease) !important;
+            border-radius: 50px !important;
+            padding: 0.8rem 2.2rem !important;
+            font-size: 1.05rem !important;
+            font-weight: 800 !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.6rem !important;
+            transform: translateZ(0);
+        }
+
+        .btn-top-entre:hover {
+            background: linear-gradient(135deg, #8de6d8 0%, var(--verde-aurora) 100%) !important;
+            color: var(--preto-espacial) !important;
+            transform: translate3d(0, -4px, 0) scale(1.05) !important;
+            box-shadow: 0 15px 35px rgba(105, 213, 195, 0.75), inset 0 1px 1px #FFFFFF !important;
+        }
+
+        /* --- CABEÇALHO DA PÁGINA COM O ASTRO --- */
+        @keyframes flutuar {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+        .services-hero {
+            max-width: 1000px; margin: 2.5rem auto 3rem auto; padding: 0 1.5rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 2rem;
+        }
+        .hero-text h1 { font-size: 2.8rem; color: var(--branco-suave); font-weight: 800; margin-bottom: 0.8rem; }
+        .hero-text p { color: var(--cinza-claro); font-size: 1.1rem; max-width: 550px; line-height: 1.6; }
+        
+        .hero-astro {
+            display: flex; align-items: center; gap: 1rem;
+            background: linear-gradient(135deg, rgba(15, 28, 48, 0.65) 0%, rgba(7, 14, 25, 0.75) 100%);
+            border: 1px solid rgba(105, 213, 195, 0.3);
+            padding: 1.2rem 1.8rem; border-radius: 24px;
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.3);
+            transition: transform 0.4s var(--apple-ease);
+        }
+        .hero-astro:hover { transform: translate3d(0, -4px, 0); border-color: var(--verde-aurora); }
+        .hero-astro img { width: 70px; height: auto; animation: flutuar 4s ease-in-out infinite; }
+        .astro-speech span { color: var(--verde-aurora); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.3rem; }
+        .astro-speech p { color: var(--branco-suave); font-size: 0.95rem; margin: 0; font-weight: 600; }
+
+        /* --- GRADE DE MISSÕES (VISUAL & COM ÍCONES) --- */
+        .services-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem; max-width: 1200px; margin: 0 auto 4rem auto; padding: 0 1.5rem;
+        }
+        .service-card {
+            background: rgba(10, 20, 35, 0.5); border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 28px; padding: 2.5rem 2rem;
+            backdrop-filter: var(--liquid-blur); -webkit-backdrop-filter: var(--liquid-blur);
+            transition: all 0.4s var(--apple-ease); display: flex; flex-direction: column;
+            position: relative; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            transform: translateZ(0);
+        }
+        .service-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        }
+        .service-card:hover {
+            transform: translate3d(0, -8px, 0); border-color: var(--verde-aurora);
+            box-shadow: 0 25px 50px rgba(4, 7, 13, 0.9), 0 0 30px rgba(105, 213, 195, 0.2), inset 0 1px 1px rgba(255,255,255,0.4);
+        }
+        
+        .icon-wrapper {
+            width: 70px; height: 70px; border-radius: 20px; background: rgba(105, 213, 195, 0.12);
+            border: 1px solid rgba(105, 213, 195, 0.3); display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.8rem; color: var(--verde-aurora); transition: all 0.4s var(--apple-ease);
+        }
+        .service-card:hover .icon-wrapper {
+            background: var(--verde-aurora); color: var(--preto-espacial); transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 0 20px rgba(105, 213, 195, 0.5);
+        }
+
+        .service-card h3 { color: var(--branco-suave); font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .service-card .subtitle { color: var(--verde-aurora); font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem; }
+        
+        .service-features { list-style: none; padding: 0; margin: 0 0 2rem 0; flex-grow: 1; display: flex; flex-direction: column; gap: 0.8rem; }
+        .service-features li { color: var(--cinza-claro); font-size: 0.95rem; display: flex; align-items: center; gap: 0.6rem; }
+        .service-features li::before { content: "✦"; color: var(--verde-aurora); font-weight: bold; font-size: 0.8rem; }
+
+        .btn-service {
+            width: 100%; padding: 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);
+            color: var(--branco-suave); font-weight: 700; font-size: 0.95rem; border-radius: 50px;
+            cursor: pointer; transition: all 0.3s var(--apple-ease); text-align: center; text-decoration: none;
+            display: inline-block;
+        }
+        .service-card:hover .btn-service { background: var(--verde-aurora); color: var(--preto-espacial); border-color: var(--verde-aurora); font-weight: 800; box-shadow: 0 5px 15px rgba(105, 213, 195, 0.4); }
+
+        /* --- BANNER FINAL INTERATIVO COM O ASTRO (VISION PRO STYLE) --- */
+        .astro-cta-banner {
+            max-width: 1100px; margin: 0 auto 5rem auto; padding: 3rem;
+            background: linear-gradient(135deg, rgba(15, 28, 48, 0.7) 0%, rgba(7, 14, 25, 0.85) 100%);
+            backdrop-filter: blur(40px) saturate(200%); -webkit-backdrop-filter: blur(40px) saturate(200%);
+            border: 1px solid rgba(105, 213, 195, 0.4); border-radius: 32px;
+            display: flex; align-items: center; justify-content: space-between; gap: 3rem;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.8), 0 0 40px rgba(105, 213, 195, 0.15), inset 0 1px 2px rgba(255,255,255,0.3);
+            position: relative; overflow: hidden; transition: transform 0.4s var(--apple-ease);
+        }
+        .astro-cta-banner:hover { transform: translate3d(0, -5px, 0); }
+        .astro-cta-banner::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+        }
+        .astro-cta-content h2 { color: var(--branco-suave); font-size: 2.2rem; font-weight: 800; margin-bottom: 0.8rem; }
+        .astro-cta-content p { color: var(--cinza-claro); font-size: 1.05rem; margin-bottom: 2rem; max-width: 550px; line-height: 1.6; }
+        .btn-cta-astro {
+            display: inline-flex; align-items: center; gap: 0.8rem; padding: 1.2rem 2.5rem;
+            background: var(--verde-aurora); color: var(--preto-espacial); font-size: 1.1rem;
+            font-weight: 800; border-radius: 50px; text-decoration: none; transition: all 0.3s var(--apple-ease);
+            box-shadow: 0 10px 25px rgba(105, 213, 195, 0.4), inset 0 1px 1px rgba(255,255,255,0.6);
+        }
+        .btn-cta-astro:hover { transform: translate3d(0, -3px, 0) scale(1.03); background: #8DE6D8; box-shadow: 0 15px 35px rgba(141, 230, 216, 0.8), inset 0 1px 1px #FFFFFF; }
+        
+        .astro-cta-img-box { position: relative; flex-shrink: 0; }
+        .astro-cta-img-box img { width: 180px; height: auto; animation: flutuar 5s ease-in-out infinite; filter: drop-shadow(0 15px 25px rgba(105,213,195,0.25)); }
+        
+        @media (max-width: 850px) {
+            .services-hero, .astro-cta-banner { flex-direction: column; text-align: center; gap: 2rem; padding: 2rem; }
+            .hero-text p, .astro-cta-content p { margin: 0 auto 1.5rem auto; }
+            .hero-astro { text-align: left; }
+        }
+    </style>
 </head>
 <body>
+    <!-- Fundo Estrelado -->
+    <canvas id="space-canvas"></canvas>
 
-    <!-- CABEÇALHO / MENU -->
-    <header class="header">
-        <div class="container header-content">
-            <!-- Logo oficial em formato GIF animado -->
-            <a href="index.html" class="logo">
-                <img src="logo.gif" alt="Logo ASTAS" class="logo-img">
+    <!-- CABEÇALHO DESKTOP -->
+    <header class="navbar">
+        <div class="logo-container">
+            <a href="index.html" class="nav-link-liquid"><img src="assets/astas-logo.png" alt="ASTAS Logo" class="logo"></a>
+        </div>
+        <nav class="nav-links-desktop">
+            <a href="index.html" class="nav-item nav-link-liquid">Início</a>
+            <a href="astro.html" class="nav-item nav-link-liquid">Astro</a>
+            <a href="servicos.html" class="nav-item nav-link-liquid active">Serviços</a>
+            <a href="portfolio.html" class="nav-item nav-link-liquid">Portfólio</a>
+        </nav>
+        <div class="auth-top">
+            <a href="login.html" class="btn-top-entre nav-link-liquid">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <span>Entre</span>
             </a>
-            
-            <nav class="nav-menu">
-                <ul>
-                    <li><a href="index.html">Início</a></li>
-                    <li><a href="servicos.html" class="active">Serviços</a></li>
-                    <li><a href="portfolio.html">Portfólio</a></li>
-                    <li><a href="sobre.html">Sobre</a></li>
-                    <!-- NOVO BOTÃO DE DESTAQUE PARA O ASTAS CLUB -->
-                    <li><a href="club.html" style="color: var(--primary); font-weight: 700; text-shadow: 0 0 10px rgba(105, 213, 195, 0.3);"><i class="fa-solid fa-sparkles" style="margin-right: 4px;"></i> ASTAS CLUB</a></li>
-                    <li><a href="contato.html">Contato</a></li>
-                </ul>
-            </nav>
-
-            <a href="contato.html" class="btn-cta">Falar Conosco</a>
+            <button class="mobile-menu-btn" id="btn-open-menu" aria-label="Abrir Menu"><span></span><span></span><span></span></button>
         </div>
     </header>
 
-    <main>
-        <!-- CABEÇALHO DA PÁGINA DE SERVIÇOS -->
-        <section class="portfolio-hero">
-            <div class="container">
-                <h1 class="section-title">Soluções da ASTAS</h1>
-                <p class="section-subtitle">Conheça nossas áreas de atuação. Entregamos excelência visual, estratégia e tecnologia para impulsionar o seu projeto em cada etapa.</p>
+    <!-- MENU GAVETA MOBILE -->
+    <div class="mobile-drawer" id="mobile-drawer">
+        <div class="drawer-header"><img src="assets/astas-logo.png" alt="ASTAS Logo" class="drawer-logo"><button class="btn-close-drawer" id="btn-close-menu">✕</button></div>
+        <nav class="drawer-links">
+            <a href="portfolio.html" class="nav-link-liquid">Portfólio</a>
+            <a href="servicos.html" class="drawer-active nav-link-liquid">Serviços</a>
+            <a href="astro.html" class="nav-link-liquid">Astro</a>
+            <a href="index.html" class="nav-link-liquid">Início</a>
+        </nav>
+    </div>
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <main class="stage-container" id="main-stage">
+        
+        <!-- INTRODUÇÃO COM ASTRO GUIA -->
+        <section class="services-hero">
+            <div class="hero-text">
+                <h1>Missões Criativas</h1>
+                <p>Navegue pelo nosso catálogo de especialidades. Sem enrolação, sem processos complexos: apenas design de alta performance pronto para decolar.</p>
             </div>
-        </section>
-
-        <!-- GRADE DETALHADA DE SERVIÇOS -->
-        <section class="services" style="padding-top: 0;">
-            <div class="container">
-                <div class="services-grid">
-                    
-                    <!-- SERVIÇO 1 -->
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-palette"></i></div>
-                        <h3>Branding & Identidade Visual</h3>
-                        <p>Criamos marcas fortes e memoráveis do zero, conectando a essência da sua empresa com o seu público-alvo de forma moderna.</p>
-                        <ul style="list-style: none; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.8;">
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Criação de Logotipo Vetorial</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Paleta de Cores e Tipografia</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Manual de Aplicação da Marca</li>
-                        </ul>
-                    </div>
-
-                    <!-- SERVIÇO 2 -->
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-                        <h3>Art & Motion Design</h3>
-                        <p>Damos vida à sua identidade com animações fluidas e artes digitais que capturam a atenção instantaneamente nas telas.</p>
-                        <ul style="list-style: none; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.8;">
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Animação 2D de Logotipos</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Motion Graphics para Campanhas</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Elementos Visuais Interativos</li>
-                        </ul>
-                    </div>
-
-                    <!-- SERVIÇO 3 -->
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-bullhorn"></i></div>
-                        <h3>Design Editorial & Social</h3>
-                        <p>Comunicação visual de alto impacto para eventos, festivais, mídias sociais e materiais institucionais de luxo.</p>
-                        <ul style="list-style: none; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.8;">
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Identidade para Eventos</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Peças para Redes Sociais</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Banners e Cartazes de Alta Resolução</li>
-                        </ul>
-                    </div>
-
-                    <!-- SERVIÇO 4 -->
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-arrows-rotate"></i></div>
-                        <h3>Rebranding & Posicionamento</h3>
-                        <p>Sua marca já existe, mas precisa evoluir? Analisamos o seu negócio e redesenhamos sua imagem para o mercado atual.</p>
-                        <ul style="list-style: none; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.8;">
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Diagnóstico Visual da Marca</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Modernização de Logos Existentes</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Alinhamento Estratégico</li>
-                        </ul>
-                    </div>
-
-                    <!-- SERVIÇO 5 -->
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-bolt"></i></div>
-                        <h3>Soluções de Alta Performance</h3>
-                        <p>Projetos focados em agilidade, eficiência de entrega e otimização de fluxos visuais para empresas que não podem perder tempo.</p>
-                        <ul style="list-style: none; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.8;">
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Entregas Otimizadas e Ágeis</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Foco em Conversão e Clareza</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Arquivos em Todos os Formatos (SVG, PNG, EPS)</li>
-                        </ul>
-                    </div>
-
-                    <!-- SERVIÇO 6 -->
-                    <div class="service-card">
-                        <div class="service-icon"><i class="fa-regular fa-lightbulb"></i></div>
-                        <h3>Consultoria Criativa</h3>
-                        <p>Orientação estratégica para ajudar a sua equipe ou negócio a tomar as melhores decisões visuais e tecnológicas.</p>
-                        <ul style="list-style: none; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem; line-height: 1.8;">
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Análise de Portfólio e Ideias</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Diretrizes de Estilo</li>
-                            <li><i class="fa-solid fa-check" style="color: var(--primary); margin-right: 6px;"></i> Acompanhamento de Projetos</li>
-                        </ul>
-                    </div>
-
+            
+            <!-- Caixa Interativa do ASTRO -->
+            <div class="hero-astro">
+                <img src="assets/astro-neutro.png" alt="ASTRO Guia">
+                <div class="astro-speech">
+                    <span>✦ DICA DO ASTRO</span>
+                    <p>"Escolha o combustível ideal para o momento atual da sua marca!"</p>
                 </div>
             </div>
         </section>
 
-        <!-- BANNER DE CHAMADA PARA AÇÃO (CTA) -->
-        <section class="about" style="text-align: center; margin-top: 3rem;">
-            <div class="container">
-                <h2 class="section-title">Não encontrou o que procurava?</h2>
-                <p class="section-subtitle" style="margin-bottom: 2rem;">Desenvolvemos projetos sob medida para atender a necessidade exata do seu negócio.</p>
-                <a href="contato.html" class="btn-primary">Solicitar Orçamento Personalizado</a>
+        <!-- GRADE DE MISSÕES (MUITO VISUAL, POUCO TEXTO) -->
+        <section class="services-grid">
+            
+            <!-- MISSÃO 1: BRANDING & IDENTIDADE -->
+            <div class="service-card">
+                <div class="icon-wrapper">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                </div>
+                <h3>Identidade Visual</h3>
+                <span class="subtitle">A alma visual da marca</span>
+                <ul class="service-features">
+                    <li>Logotipo Principal & Variações</li>
+                    <li>Paleta de Cores & Tipografia</li>
+                    <li>Manual de Identidade Completo</li>
+                    <li>Artes para Redes Sociais</li>
+                </ul>
+                <a href="contato.html" class="btn-service nav-link-liquid">Solicitar Missão ✦</a>
+            </div>
+
+            <!-- MISSÃO 2: MOTION DESIGN & ANIMAÇÃO -->
+            <div class="service-card">
+                <div class="icon-wrapper">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </div>
+                <h3>Art & Motion Design</h3>
+                <span class="subtitle">Vida e movimento em 2D</span>
+                <ul class="service-features">
+                    <li>Animação de Logotipos (2D)</li>
+                    <li>Vinhetas e Intros de Vídeo</li>
+                    <li>Animações para Reels & TikTok</li>
+                    <li>Transições e Efeitos Visuais</li>
+                </ul>
+                <a href="contato.html" class="btn-service nav-link-liquid">Solicitar Missão ✦</a>
+            </div>
+
+            <!-- MISSÃO 3: UI/UX & WEB DESIGN -->
+            <div class="service-card">
+                <div class="icon-wrapper">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                </div>
+                <h3>UI/UX & Web Design</h3>
+                <span class="subtitle">Experiências digitais únicas</span>
+                <ul class="service-features">
+                    <li>Landing Pages de Alta Conversão</li>
+                    <li>Interfaces Futuristas e Lógicas</li>
+                    <li>Design Responsivo (Celular/PC)</li>
+                    <li>Navegação Fluida e Imersiva</li>
+                </ul>
+                <a href="contato.html" class="btn-service nav-link-liquid">Solicitar Missão ✦</a>
+            </div>
+
+            <!-- MISSÃO 4: DESIGN ESTRATÉGICO -->
+            <div class="service-card">
+                <div class="icon-wrapper">
+                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                </div>
+                <h3>Design Estratégico</h3>
+                <span class="subtitle">Posicionamento de mercado</span>
+                <ul class="service-features">
+                    <li>Criativos para Anúncios (Ads)</li>
+                    <li>Redesign Completo de Marca</li>
+                    <li>Consultoria Visual Direcionada</li>
+                    <li>Pacotes Personalizados</li>
+                </ul>
+                <a href="contato.html" class="btn-service nav-link-liquid">Solicitar Missão ✦</a>
+            </div>
+
+        </section>
+
+        <!-- BANNER DE CONSULTORIA COM ASTRO EM DESTAQUE -->
+        <section class="astro-cta-banner">
+            <div class="astro-cta-content">
+                <span style="color: var(--verde-aurora); font-weight: 800; letter-spacing: 2px; text-transform: uppercase; font-size: 0.85rem; display: block; margin-bottom: 0.5rem;">✦ MISSÃO PERSONALIZADA</span>
+                <h2>Em dúvida de qual caminho seguir?</h2>
+                <p>Cada projeto tem desafios únicos. Fale diretamente comigo no nosso canal de atendimento e vamos montar juntos um plano de voo sob medida para o seu objetivo.</p>
+                <a href="contato.html" class="btn-cta-astro nav-link-liquid">
+                    <span>Falar com o ASTRO Agora</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+            <div class="astro-cta-img-box">
+                <img src="assets/astro-neutro.png" alt="ASTRO em Destaque">
             </div>
         </section>
+
     </main>
 
-    <!-- RODAPÉ COM REDES SOCIAIS CLICÁVEIS -->
-    <footer class="footer">
-        <div class="container footer-content">
-            <p>&copy; 2026 ASTAS. Todos os direitos reservados.</p>
-            <div class="footer-links">
-                <a href="index.html">Início</a>
-                <a href="portfolio.html">Portfólio</a>
-                <a href="contato.html">Suporte</a>
-                <a href="https://www.instagram.com/astasdesigner/" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
-                <a href="https://www.youtube.com/@Astas_Creators" target="_blank"><i class="fa-brands fa-youtube"></i> YouTube</a>
-            </div>
+    <!-- RODAPÉ PROFISSIONAL DA ASTAS -->
+    <footer class="rodape-profissional">
+        <div class="rodape-inner">
+            <div class="rodape-brand"><img src="assets/astas-logo.png" alt="ASTAS Logo" class="rodape-logo"><p>O Universo Criativo onde as suas pequenas ideias se transformam em grandes marcas memoráveis.</p></div>
+            <div class="rodape-links"><h4>Explorar</h4><a href="index.html" class="nav-link-liquid">Início</a><a href="astro.html" class="nav-link-liquid">O Companheiro ASTRO</a><a href="servicos.html" class="nav-link-liquid">Nossas Missões</a><a href="portfolio.html" class="nav-link-liquid">Universo de Criadas</a></div>
+            <div class="rodape-contato"><h4>Conecte-se</h4><a href="#" target="_blank">✦ Instagram (@astas.universo)</a><a href="mailto:contato@astas.com.br">✦ contato@astas.com.br</a></div>
         </div>
+        <div class="rodape-bottom"><p>&copy; 2026 ASTAS — Universo Criativo. Todos os direitos reservados.</p></div>
     </footer>
 
     <script src="script.js"></script>
+
+    <!-- MOTOR INTERCEPTADOR DE TRANSIÇÃO LÍQUIDA ENTRE PÁGINAS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const links = document.querySelectorAll('.nav-link-liquid');
+            const mainStage = document.getElementById('main-stage');
+
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const targetUrl = link.getAttribute('href');
+                    if (targetUrl && targetUrl.endsWith('.html') && targetUrl !== window.location.pathname.split('/').pop()) {
+                        e.preventDefault();
+                        mainStage.classList.add('page-exit');
+                        setTimeout(() => {
+                            window.location.href = targetUrl;
+                        }, 400);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

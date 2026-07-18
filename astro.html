@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASTAS — O Companheiro ASTRO</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ==========================================================================
+           MOTOR APPLE LIQUID GLASS & TRANSIÇÕES DE TELA (60 FPS)
+           ========================================================================== */
+
+        :root {
+            --apple-ease: cubic-bezier(0.16, 1, 0.3, 1);
+            --liquid-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+            --liquid-border: 1px solid rgba(255, 255, 255, 0.18);
+            --liquid-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+            --liquid-blur: blur(30px) saturate(180%);
+        }
+
+        /* 1. ANIMAÇÕES DE ENTRADA E SAÍDA DA PÁGINA */
+        @keyframes appleFadeIn {
+            0% { opacity: 0; transform: translate3d(0, 25px, 0) scale(0.97); filter: blur(12px); }
+            100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0px); }
+        }
+        
+        .stage-container {
+            animation: appleFadeIn 0.7s var(--apple-ease) forwards;
+            transition: all 0.5s var(--apple-ease);
+            transform: translateZ(0);
+            max-width: 1250px;
+            margin: 3rem auto 5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .stage-container.page-exit {
+            opacity: 0 !important;
+            transform: translate3d(0, -20px, 0) scale(0.96) !important;
+            filter: blur(15px) !important;
+        }
+
+        /* 2. BARRA DE NAVEGAÇÃO EM VIDRO LÍQUIDO */
+        .nav-links-desktop {
+            background: rgba(10, 20, 35, 0.55) !important;
+            backdrop-filter: var(--liquid-blur) !important;
+            -webkit-backdrop-filter: var(--liquid-blur) !important;
+            border: var(--liquid-border) !important;
+            box-shadow: var(--liquid-shadow) !important;
+            padding: 0.5rem 0.8rem !important;
+            border-radius: 50px !important;
+            display: flex !important;
+            gap: 0.5rem !important;
+            transform: translateZ(0);
+        }
+
+        .nav-links-desktop .nav-item {
+            color: var(--cinza-claro) !important;
+            padding: 0.6rem 1.4rem !important;
+            border-radius: 40px !important;
+            font-weight: 600 !important;
+            transition: all 0.4s var(--apple-ease) !important;
+            position: relative !important;
+            overflow: hidden !important;
+            text-decoration: none !important;
+        }
+
+        .nav-links-desktop .nav-item::after { display: none !important; }
+
+        .nav-links-desktop .nav-item:hover,
+        .nav-links-desktop .nav-item.active {
+            color: #FFFFFF !important;
+            background: linear-gradient(135deg, rgba(105, 213, 195, 0.25) 0%, rgba(255, 255, 255, 0.1) 100%) !important;
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 4px 15px rgba(105, 213, 195, 0.2) !important;
+            transform: translate3d(0, -2px, 0);
+        }
+
+        /* 3. BOTÃO "ENTRE" MAIOR, EM VERDE AURORA COM ÍCONE NÍTIDO */
+        .btn-top-entre {
+            background: linear-gradient(135deg, var(--verde-aurora) 0%, #4bc2ad 100%) !important;
+            backdrop-filter: var(--liquid-blur) !important;
+            -webkit-backdrop-filter: var(--liquid-blur) !important;
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
+            box-shadow: 0 10px 25px rgba(105, 213, 195, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.7) !important;
+            color: var(--preto-espacial) !important;
+            transition: all 0.4s var(--apple-ease) !important;
+            border-radius: 50px !important;
+            padding: 0.8rem 2.2rem !important;
+            font-size: 1.05rem !important;
+            font-weight: 800 !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.6rem !important;
+            transform: translateZ(0);
+        }
+
+        .btn-top-entre:hover {
+            background: linear-gradient(135deg, #8de6d8 0%, var(--verde-aurora) 100%) !important;
+            color: var(--preto-espacial) !important;
+            transform: translate3d(0, -4px, 0) scale(1.05) !important;
+            box-shadow: 0 15px 35px rgba(105, 213, 195, 0.75), inset 0 1px 1px #FFFFFF !important;
+        }
+
+        /* 4. CENTRAL DE COMANDO DO ASTRO (LAYOUT APPLE VISION PRO) */
+        .astro-hub-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .astro-display-col {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(7, 17, 31, 0.4);
+            border: 1px solid rgba(105, 213, 195, 0.2);
+            border-radius: 36px;
+            padding: 3rem 2rem;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .astro-display-col img {
+            width: 85%;
+            max-width: 340px;
+            height: auto;
+            filter: drop-shadow(0 20px 30px rgba(105, 213, 195, 0.25));
+            animation: flutuarAstro 5s ease-in-out infinite;
+            transition: transform 0.4s var(--apple-ease);
+        }
+
+        @keyframes flutuarAstro {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+        }
+
+        .status-pill {
+            margin-top: 1.5rem;
+            background: rgba(105, 213, 195, 0.12);
+            border: 1px solid rgba(105, 213, 195, 0.4);
+            color: var(--verde-aurora);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 8px; height: 8px;
+            background: var(--verde-aurora);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--verde-aurora);
+            animation: pulseDot 1.5s infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        /* 5. CAIXA DE DIÁLOGO E CONSOLE DE MÓDULOS */
+        .dialog-box {
+            background: linear-gradient(135deg, rgba(15, 28, 48, 0.65) 0%, rgba(7, 14, 25, 0.75) 100%) !important;
+            backdrop-filter: blur(40px) saturate(200%) !important;
+            -webkit-backdrop-filter: blur(40px) saturate(200%) !important;
+            border: 1px solid rgba(105, 213, 195, 0.3) !important;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.3) !important;
+            border-radius: 32px !important;
+            padding: 3rem !important;
+            position: relative !important;
+            overflow: hidden !important;
+            transition: transform 0.5s var(--apple-ease), box-shadow 0.5s var(--apple-ease) !important;
+            transform: translateZ(0);
+        }
+
+        .dialog-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+        }
+
+        .badge-astro {
+            color: #69D5C3 !important;
+            background: rgba(105, 213, 195, 0.15) !important;
+            border: 1px solid rgba(105, 213, 195, 0.5) !important;
+            padding: 0.5rem 1.2rem !important;
+            border-radius: 30px !important;
+            font-size: 0.85rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 1.5px !important;
+            display: inline-block !important;
+            margin-bottom: 1.5rem !important;
+            box-shadow: 0 0 20px rgba(105, 213, 195, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.3) !important;
+            text-transform: uppercase !important;
+        }
+
+        .dialog-box h1 { color: #FFFFFF; font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
+        .dialog-box .intro-text { color: rgba(255, 255, 255, 0.85); font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; min-height: 80px; transition: opacity 0.3s ease; }
+        .dialog-box .intro-text strong { color: var(--verde-aurora); }
+
+        /* Módulos Interativos no Console */
+        .modules-title {
+            color: var(--cinza-claro);
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 1rem;
+            display: block;
+            border-left: 2px solid var(--verde-aurora);
+            padding-left: 8px;
+        }
+
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-module {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--branco-suave);
+            padding: 0.8rem;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s var(--apple-ease);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            text-align: center;
+        }
+
+        .btn-module svg { color: var(--verde-aurora); }
+
+        .btn-module:hover, .btn-module.active {
+            background: rgba(105, 213, 195, 0.18);
+            border-color: var(--verde-aurora);
+            color: #FFFFFF;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(105, 213, 195, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Botão inferior de Ação Principal */
+        .btn-action-hub {
+            background: linear-gradient(135deg, var(--verde-aurora) 0%, #4bc2ad 100%);
+            color: var(--preto-espacial);
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(105, 213, 195, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+            transition: all 0.4s var(--apple-ease);
+        }
+
+        .btn-action-hub:hover {
+            transform: translate3d(0, -4px, 0) scale(1.03);
+            box-shadow: 0 15px 35px rgba(105, 213, 195, 0.7), inset 0 1px 1px #FFFFFF;
+            background: linear-gradient(135deg, #8de6d8 0%, var(--verde-aurora) 100%);
+        }
+
+        @media (max-width: 900px) {
+            .astro-hub-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .modules-grid { grid-template-columns: 1fr; }
+            .dialog-box { padding: 2rem !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fundo Estrelado -->
+    <canvas id="space-canvas"></canvas>
+
+    <!-- CABEÇALHO DESKTOP -->
+    <header class="navbar">
+        <div class="logo-container">
+            <a href="index.html" class="nav-link-liquid"><img src="assets/astas-logo.png" alt="ASTAS Logo" class="logo"></a>
+        </div>
+        
+        <nav class="nav-links-desktop">
+            <a href="index.html" class="nav-item nav-link-liquid">Início</a>
+            <a href="astro.html" class="nav-item nav-link-liquid active">Astro</a>
+            <a href="servicos.html" class="nav-item nav-link-liquid">Serviços</a>
+            <a href="portfolio.html" class="nav-item nav-link-liquid">Portfólio</a>
+        </nav>
+
+        <div class="auth-top">
+            <a href="login.html" class="btn-top-entre nav-link-liquid">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <span>Entre</span>
+            </a>
+            <button class="mobile-menu-btn" id="btn-open-menu" aria-label="Abrir Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- MENU GAVETA MOBILE -->
+    <div class="mobile-drawer" id="mobile-drawer">
+        <div class="drawer-header">
+            <img src="assets/astas-logo.png" alt="ASTAS Logo" class="drawer-logo">
+            <button class="btn-close-drawer" id="btn-close-menu">✕</button>
+        </div>
+        <nav class="drawer-links">
+            <a href="portfolio.html" class="nav-link-liquid">Portfólio</a>
+            <a href="servicos.html" class="nav-link-liquid">Serviços</a>
+            <a href="astro.html" class="drawer-active nav-link-liquid">Astro</a>
+            <a href="index.html" class="nav-link-liquid">Início</a>
+        </nav>
+    </div>
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <!-- PALCO PRINCIPAL DO ASTRO -->
+    <main class="stage-container" id="main-stage">
+        
+        <div class="astro-hub-grid">
+            
+            <!-- Coluna da Esquerda: ASTRO em Destaque Visual -->
+            <div class="astro-display-col">
+                <img src="assets/astro-neutro.png" alt="ASTRO Guia" id="astro-avatar">
+                <div class="status-pill">
+                    <span class="status-dot"></span>
+                    <span>SISTEMA ONLINE • NÍVEL 1</span>
+                </div>
+            </div>
+
+            <!-- Coluna da Direita: Painel Interativo Liquid Glass -->
+            <div class="dialog-box">
+                <span class="badge-astro">✦ IA & COMPANHEIRO DE BORDO</span>
+                <h1 id="console-title">Sua mente criativa em expansão contínua.</h1>
+                <p class="intro-text" id="console-text">
+                    O <strong>ASTRO</strong> foi projetado para ser muito mais que um mascote: ele é o seu navegador estratégico nas missões da agência. Ele analisa referências, sugere direções visuais e garante que nenhuma ideia incrível se perca no vácuo do espaço.
+                </p>
+
+                <!-- Seletor Interativo de Funções do ASTRO -->
+                <span class="modules-title">Módulos de Ativação Rápida</span>
+                <div class="modules-grid">
+                    <button type="button" class="btn-module active" data-mod="identidade">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                        <span>Visão & DNA</span>
+                    </button>
+                    <button type="button" class="btn-module" data-mod="motion">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        <span>Art & Motion</span>
+                    </button>
+                    <button type="button" class="btn-module" data-mod="xp">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        <span>Futuro & XP</span>
+                    </button>
+                </div>
+
+                <a href="servicos.html" class="btn-action-hub nav-link-liquid">
+                    <span>Iniciar uma Missão com o ASTRO</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </a>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- RODAPÉ PROFISSIONAL -->
+    <footer class="rodape-profissional">
+        <div class="rodape-inner">
+            <div class="rodape-brand">
+                <img src="assets/astas-logo.png" alt="ASTAS Logo" class="rodape-logo">
+                <p>O Universo Criativo onde as suas pequenas ideias se transformam em grandes marcas memoráveis.</p>
+            </div>
+
+            <div class="rodape-links">
+                <h4>Explorar</h4>
+                <a href="index.html" class="nav-link-liquid">Início</a>
+                <a href="astro.html" class="nav-link-liquid">O Companheiro ASTRO</a>
+                <a href="servicos.html" class="nav-link-liquid">Nossas Missões</a>
+                <a href="portfolio.html" class="nav-link-liquid">Universo de Criadas</a>
+            </div>
+
+            <div class="rodape-contato">
+                <h4>Conecte-se com a ASTAS</h4>
+                <a href="#" target="_blank">✦ Instagram (@astas.universo)</a>
+                <a href="#" target="_blank">✦ YouTube (Canal ASTAS)</a>
+                <a href="mailto:contato@astas.com.br">✦ contato@astas.com.br</a>
+            </div>
+        </div>
+
+        <div class="rodape-bottom">
+            <p>&copy; 2026 ASTAS — Universo Criativo. Todos os direitos reservados @ASTAS.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <!-- MOTOR DE TRANSIÇÃO LÍQUIDA E INTERATIVIDADE DO CONSOLE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Transição Líquida de Páginas
+            const links = document.querySelectorAll('.nav-link-liquid');
+            const mainStage = document.getElementById('main-stage');
+
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const targetUrl = link.getAttribute('href');
+                    if (targetUrl && targetUrl.endsWith('.html') && targetUrl !== window.location.pathname.split('/').pop()) {
+                        e.preventDefault();
+                        mainStage.classList.add('page-exit');
+                        setTimeout(() => { window.location.href = targetUrl; }, 400);
+                    }
+                });
+            });
+
+            // 2. Interatividade do Console do ASTRO
+            const modules = document.querySelectorAll('.btn-module');
+            const titleEl = document.getElementById('console-title');
+            const textEl = document.getElementById('console-text');
+            const avatarEl = document.getElementById('astro-avatar');
+
+            const dadosConsole = {
+                identidade: {
+                    titulo: "Sua mente criativa em expansão contínua.",
+                    texto: "O <strong>ASTRO</strong> analisa o DNA do seu projeto para construir marcas com personalidade própria. Desde a escolha da paleta de cores até a tipografia, ele garante que cada detalhe visual comunique a essência do seu negócio.",
+                    avatar: "assets/astro-neutro.png"
+                },
+                motion: {
+                    titulo: "Dando vida e movimento às suas ideias.",
+                    texto: "Com o módulo de <strong>Art & Motion Design</strong>, o ASTRO ajuda a transformar logotipos estáticos em animações fluidas 2D, vinhetas impactantes e conteúdos dinâmicos que capturam a atenção instantaneamente nas redes sociais.",
+                    avatar: "assets/astro-neutro.png"
+                },
+                xp: {
+                    titulo: "Evolução constante e gamificação espacial.",
+                    texto: "Em breve, cada missão concluída no nosso ecossistema vai gerar <strong>XP e conquistas exclusivas</strong> para o seu perfil de Astronauta. O ASTRO acompanhará sua evolução desde a primeira ideia até o topo do mercado digital!",
+                    avatar: "assets/astro-neutro.png"
+                }
+            };
+
+            modules.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    modules.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const modKey = btn.getAttribute('data-mod');
+                    const info = dadosConsole[modKey];
+
+                    if (info) {
+                        textEl.style.opacity = '0';
+                        titleEl.style.opacity = '0';
+                        avatarEl.style.transform = 'scale(0.92) rotate(-3deg)';
+                        
+                        setTimeout(() => {
+                            titleEl.innerHTML = info.titulo;
+                            textEl.innerHTML = info.texto;
+                            avatarEl.src = info.avatar;
+                            
+                            titleEl.style.opacity = '1';
+                            textEl.style.opacity = '1';
+                            avatarEl.style.transform = 'scale(1) rotate(0deg)';
+                        }, 200);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
