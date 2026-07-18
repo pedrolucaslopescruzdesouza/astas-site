@@ -548,4 +548,38 @@ body {
     }
 
     .rodape-brand p { margin: 1rem auto 0 auto; }
+}/* --- TRANSICÕES SUAVES ENTRE PÁGINAS E LINKS --- */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    animation: fadeInPage 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInPage {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Efeito ao passar o mouse nos links da barra de navegação */
+.nav-links-desktop .nav-item {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links-desktop .nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: var(--verde-aurora);
+    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-links-desktop .nav-item:hover::after,
+.nav-links-desktop .nav-item.active::after {
+    width: 100%;
 }

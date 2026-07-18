@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro de Comando — Admin ASTAS</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Biblioteca Oficial Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .admin-container {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 3rem;
+            background: rgba(7, 17, 31, 0.75);
+            border: 1px solid var(--verde-aurora);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 25px 60px rgba(4, 7, 13, 0.8);
+            position: relative;
+            z-index: 2;
+        }
+        .admin-title {
+            font-size: 2.2rem;
+            color: var(--branco-suave);
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+        .admin-subtitle {
+            color: var(--cinza-claro);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .form-group label {
+            color: var(--verde-aurora);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .form-control {
+            background: rgba(4, 7, 13, 0.8);
+            border: 1px solid var(--glass-border);
+            padding: 1rem;
+            border-radius: 12px;
+            color: var(--branco-suave);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--verde-aurora);
+            box-shadow: 0 0 15px rgba(105, 213, 195, 0.2);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+        .checkbox-group input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--verde-aurora);
+        }
+        .btn-publicar {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--verde-aurora);
+            color: var(--preto-espacial);
+            font-size: 1.2rem;
+            font-weight: 800;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 25px rgba(105, 213, 195, 0.4);
+            transition: all 0.3s;
+        }
+        .btn-publicar:hover {
+            background: var(--verde-aurora-claro);
+            transform: translateY(-3px);
+            box-shadow: 0 0 35px rgba(141, 230, 216, 0.8);
+        }
+        .status-msg {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 700;
+            display: none;
+        }
+        .status-success { background: rgba(105, 213, 195, 0.2); color: var(--verde-aurora); border: 1px solid var(--verde-aurora); }
+        .status-error { background: rgba(255, 80, 80, 0.2); color: #ff6b6b; border: 1px solid #ff6b6b; }
+        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <canvas id="space-canvas"></canvas>
+
+    <header class="navbar">
+        <div class="logo-container">
+            <a href="index.html"><img src="assets/astas-logo.png" alt="ASTAS Logo" class="logo"></a>
+        </div>
+        <nav class="nav-links-desktop">
+            <a href="index.html" class="nav-item">Início</a>
+            <a href="portfolio.html" class="nav-item">Portfólio</a>
+        </nav>
+    </header>
+
+    <main class="stage-container">
+        <div class="admin-container">
+            <h1 class="admin-title">✦ Centro de Comando ASTAS</h1>
+            <p class="admin-subtitle">Cadastre novas missões e marcas diretamente na nossa nuvem relacional.</p>
+
+            <form id="form-projeto">
+                <div class="form-group">
+                    <label for="titulo">Título da Marca / Missão</label>
+                    <input type="text" id="titulo" class="form-control" placeholder="Ex: HEISEN TECH — Assistência Especializada" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="desc-curta">Descrição Curta (Para o Card)</label>
+                    <input type="text" id="desc-curta" class="form-control" placeholder="Ex: Identidade visual tecnológica para manutenção mobile" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="desc-completa">Descrição Completa (Desafio & Solução)</label>
+                    <textarea id="desc-completa" class="form-control" rows="4" placeholder="Detalhe a jornada criativa deste projeto..." required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="categoria">Tipo de Projeto</label>
+                        <select id="categoria" class="form-control" required>
+                            <option value="branding">Branding & Identidade</option>
+                            <option value="logos">Logotipos</option>
+                            <option value="motion">Motion Design</option>
+                            <option value="uiux">UI/UX Design</option>
+                            <option value="webdesign">Web Design</option>
+                            <option value="socialmedia">Social Media</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="segmento">Segmento</label>
+                        <select id="segmento" class="form-control" required>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Games">Games</option>
+                            <option value="Empresas">Empresas</option>
+                            <option value="Igrejas">Igrejas</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Educação">Educação</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="estilo">Estilo Visual</label>
+                        <select id="estilo" class="form-control" required>
+                            <option value="Futurista">Futurista</option>
+                            <option value="Minimalista">Minimalista</option>
+                            <option value="Moderno">Moderno</option>
+                            <option value="Elegante">Elegante</option>
+                            <option value="Premium">Premium</option>
+                            <option value="Divertido">Divertido</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipografia">Tipografia (Separado por vírgula)</label>
+                        <input type="text" id="tipografia" class="form-control" placeholder="Ex: Inter, Space Grotesk">
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                        <label for="cores">Paleta de Cores Hex (Separado por vírgula)</label>
+                        <input type="text" id="cores" class="form-control" placeholder="Ex: #07111F, #69D5C3, #002C7D">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="capa-file">Imagem de Capa do Projeto</label>
+                    <input type="file" id="capa-file" class="form-control" accept="image/*" required>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="destaque">
+                    <label for="destaque" style="color: var(--branco-suave); cursor: pointer;">✦ Destacar missão na página principal?</label>
+                </div>
+
+                <button type="submit" class="btn-publicar" id="btn-submit">PUBLICAR MISSÃO NO UNIVERSO ✦</button>
+
+                <div id="status-box" class="status-msg"></div>
+            </form>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+        const form = document.getElementById('form-projeto');
+        const btnSubmit = document.getElementById('btn-submit');
+        const statusBox = document.getElementById('status-box');
+
+        function showStatus(text, isError = false) {
+            statusBox.textContent = text;
+            statusBox.style.display = 'block';
+            statusBox.className = isError ? 'status-msg status-error' : 'status-msg status-success';
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = 'ENVIANDO PARA A NUVEM...';
+            showStatus('Fazendo upload da imagem de capa e processando dados...');
+
+            try {
+                // 1. Upload da Imagem de Capa para o Storage
+                const fileInput = document.getElementById('capa-file');
+                const file = fileInput.files[0];
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Date.now()}_${Math.random().toString(36).substring(2)}.${fileExt}`;
+                const filePath = `capas/${fileName}`;
+
+                const { data: uploadData, error: uploadError } = await supabase.storage
+                    .from('projetos-galaxia')
+                    .upload(filePath, file);
+
+                if (uploadError) throw uploadError;
+
+                // Obtém a URL pública da imagem recém enviada
+                const { data: urlData } = supabase.storage
+                    .from('projetos-galaxia')
+                    .getPublicUrl(filePath);
+
+                const capaUrl = urlData.publicUrl;
+
+                // 2. Processamento dos vetores de texto (Cores e Tipografia)
+                const tipografiaArr = document.getElementById('tipografia').value.split(',').map(item => item.trim()).filter(Boolean);
+                const coresArr = document.getElementById('cores').value.split(',').map(item => item.trim()).filter(Boolean);
+
+                // 3. Inserção do registro na tabela universo_projetos
+                const { error: dbError } = await supabase
+                    .from('universo_projetos')
+                    .insert([{
+                        titulo: document.getElementById('titulo').value,
+                        descricao_curta: document.getElementById('desc-curta').value,
+                        descricao_completa: document.getElementById('desc-completa').value,
+                        categoria: document.getElementById('categoria').value,
+                        segmento: document.getElementById('segmento').value,
+                        estilo_visual: document.getElementById('estilo').value,
+                        tipografia: tipografiaArr,
+                        paleta_cores: coresArr,
+                        capa_url: capaUrl,
+                        em_destaque: document.getElementById('destaque').checked
+                    }]);
+
+                if (dbError) throw dbError;
+
+                showStatus('✦ MISSÃO PUBLICADA COM SUCESSO! Ela já está visível na Galáxia de Marcas.');
+                form.reset();
+            } catch (err) {
+                console.error(err);
+                showStatus('Erro ao publicar: ' + err.message, true);
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = 'PUBLICAR MISSÃO NO UNIVERSO ✦';
+            }
+        });
+    </script>
+</body>
+</html>

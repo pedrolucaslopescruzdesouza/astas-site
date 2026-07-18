@@ -3,90 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAS | Painel de Controle</title>
-    
-    <!-- ÍCONE DA ABA DO NAVEGADOR (FAVICON) -->
-    <link rel="icon" type="image/png" href="favicon.png">
-    
+    <title>Centro de Comando — Admin ASTAS</title>
     <link rel="stylesheet" href="style.css">
-</head>
-<body class="protected-content" style="background-color: var(--bg-main); min-height: 100vh; padding-bottom: 50px;">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        /* --- TELA DE LOGIN MASTER (BLINDAGEM DO ADMIN) --- */
+        #lock-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(4, 7, 13, 0.95); backdrop-filter: blur(25px);
+            display: flex; align-items: center; justify-content: center; z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .lock-box {
+            background: rgba(7, 17, 31, 0.85); border: 1px solid var(--verde-aurora);
+            padding: 3rem 2.5rem; border-radius: 24px; text-align: center; max-width: 400px; width: 90%;
+            box-shadow: 0 0 50px rgba(105, 213, 195, 0.2);
+        }
+        .lock-box h2 { color: var(--branco-suave); font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .lock-box p { color: var(--cinza-claro); font-size: 0.9rem; margin-bottom: 2rem; }
+        .lock-input {
+            width: 100%; padding: 1rem; background: rgba(4, 7, 13, 0.9); border: 1px solid var(--glass-border);
+            border-radius: 12px; color: var(--branco-suave); font-size: 1.1rem; text-align: center;
+            letter-spacing: 3px; margin-bottom: 1.5rem; outline: none; transition: border-color 0.3s;
+        }
+        .lock-input:focus { border-color: var(--verde-aurora); }
+        .btn-unlock {
+            width: 100%; padding: 1rem; background: var(--verde-aurora); color: var(--preto-espacial);
+            font-weight: 800; font-size: 1.1rem; border: none; border-radius: 50px; cursor: pointer;
+            transition: all 0.3s; box-shadow: 0 0 20px rgba(105, 213, 195, 0.4);
+        }
+        .btn-unlock:hover { transform: translateY(-2px); background: #8DE6D8; }
+        #login-error { color: #ff6b6b; font-size: 0.85rem; margin-top: 1rem; display: none; font-weight: 700; }
 
-    <!-- CABEÇALHO ADM -->
-    <header class="header" style="position: sticky; top: 0; background-color: rgba(7, 17, 31, 0.95);">
-        <div class="container header-content" style="height: 70px;">
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <img src="logo.png" alt="Logo ASTAS" style="max-height: 35px;">
-                <span style="color: var(--primary); font-weight: 700; font-size: 0.9rem; border-left: 1px solid rgba(159,178,195,0.3); padding-left: 15px;">PAINEL DO GESTOR</span>
-            </div>
-            
-            <div style="display: flex; align-items: center; gap: 20px;">
-                <a href="portfolio.html" target="_blank" style="color: var(--text-light); text-decoration: none; font-size: 0.9rem;">👁️ Ver Site ao Vivo</a>
-                <button id="btn-logout" class="btn-secondary" style="padding: 0.5rem 1.2rem; font-size: 0.85rem; border-color: #ff6b6b; color: #ff6b6b;">Sair / Logout</button>
-            </div>
+        /* --- ESTILOS DO PAINEL ADMIN --- */
+        .admin-container {
+            max-width: 850px; margin: 4rem auto; padding: 3rem;
+            background: rgba(7, 17, 31, 0.75); border: 1px solid var(--verde-aurora);
+            border-radius: 24px; backdrop-filter: blur(20px);
+            box-shadow: 0 25px 60px rgba(4, 7, 13, 0.8); position: relative; z-index: 2;
+            display: none; /* Só aparece após o login */
+        }
+        .admin-title { font-size: 2.2rem; color: var(--branco-suave); margin-bottom: 0.5rem; font-weight: 800; }
+        .admin-subtitle { color: var(--cinza-claro); margin-bottom: 2.5rem; font-size: 1rem; }
+        .form-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+        .form-group label { color: var(--verde-aurora); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .form-control { background: rgba(4, 7, 13, 0.8); border: 1px solid var(--glass-border); padding: 1rem; border-radius: 12px; color: var(--branco-suave); font-size: 1rem; }
+        .form-control:focus { outline: none; border-color: var(--verde-aurora); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+        .checkbox-group { display: flex; align-items: center; gap: 0.8rem; margin: 1.5rem 0; }
+        .checkbox-group input { width: 20px; height: 20px; accent-color: var(--verde-aurora); }
+        .btn-publicar { width: 100%; padding: 1.2rem; background: var(--verde-aurora); color: var(--preto-espacial); font-size: 1.2rem; font-weight: 800; border: none; border-radius: 50px; cursor: pointer; transition: all 0.3s; }
+        .btn-publicar:hover { background: #8DE6D8; transform: translateY(-3px); box-shadow: 0 0 35px rgba(141, 230, 216, 0.8); }
+        .status-msg { margin-top: 1.5rem; padding: 1rem; border-radius: 12px; text-align: center; font-weight: 700; display: none; }
+        .status-success { background: rgba(105, 213, 195, 0.2); color: var(--verde-aurora); border: 1px solid var(--verde-aurora); }
+        .status-error { background: rgba(255, 80, 80, 0.2); color: #ff6b6b; border: 1px solid #ff6b6b; }
+        .missoes-list { margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+        .missao-item { display: flex; align-items: center; justify-content: space-between; background: rgba(4, 7, 13, 0.9); border: 1px solid var(--glass-border); padding: 1rem 1.5rem; border-radius: 16px; }
+        .missao-info h4 { color: var(--branco-suave); font-size: 1.1rem; margin-bottom: 0.3rem; }
+        .missao-info span { color: var(--cinza-claro); font-size: 0.85rem; }
+        .btn-del { background: rgba(255, 80, 80, 0.2); color: #ff6b6b; border: 1px solid #ff6b6b; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer; font-weight: 700; transition: all 0.2s; }
+        .btn-del:hover { background: #ff6b6b; color: var(--preto-espacial); }
+        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } .missao-item { flex-direction: column; gap: 1rem; text-align: center; } }
+    </style>
+</head>
+<body>
+    <canvas id="space-canvas"></canvas>
+
+    <!-- TELA DE LOGIN BLINDADA -->
+    <div id="lock-screen">
+        <div class="lock-box">
+            <span style="color: var(--verde-aurora); font-size: 2rem;">✦</span>
+            <h2>Acesso Restrito</h2>
+            <p>Painel de Comando exclusivo para o Astronauta Master.</p>
+            <input type="password" id="master-password" class="lock-input" placeholder="••••••••">
+            <button type="button" id="btn-login" class="btn-unlock">DESTRAVAR COMANDO ✦</button>
+            <div id="login-error">✕ Senha de comando incorreta.</div>
         </div>
+    </div>
+
+    <header class="navbar">
+        <div class="logo-container">
+            <a href="index.html"><img src="assets/astas-logo.png" alt="ASTAS Logo" class="logo"></a>
+        </div>
+        <nav class="nav-links-desktop">
+            <a href="index.html" class="nav-item">Início</a>
+            <a href="portfolio.html" class="nav-item">Portfólio</a>
+        </nav>
     </header>
 
-    <main class="container" style="margin-top: 40px;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start;">
-            
-            <!-- CAIXA 1: FORMULÁRIO DE CADASTRO -->
-            <div style="background-color: var(--bg-secondary); padding: 2.5rem; border-radius: 12px; border: 1px solid rgba(159, 178, 195, 0.15); box-shadow: var(--shadow);">
-                <h2 style="font-size: 1.4rem; color: var(--text-light); margin-bottom: 0.5rem;">✨ Publicar Novo Projeto</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">A imagem será enviada para o storage e o card aparecerá automaticamente na galeria.</p>
+    <main class="stage-container">
+        <div class="admin-container" id="admin-content">
+            <h1 class="admin-title">✦ Centro de Comando ASTAS</h1>
+            <p class="admin-subtitle">Cadastre novas missões e gerencie a órbita da Galáxia de Marcas.</p>
 
-                <form id="form-novo-projeto" style="display: flex; flex-direction: column; gap: 1.2rem;">
-                    <div>
-                        <label style="display: block; color: var(--text-light); font-size: 0.85rem; margin-bottom: 5px; font-weight: 600;">TÍTULO DO PROJETO</label>
-                        <input type="text" id="proj-title" required placeholder="Ex: Heisen Tech ou Maria Excursões" style="width: 100%; padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid rgba(159, 178, 195, 0.2); background-color: var(--bg-main); color: var(--text-light); outline: none;">
-                    </div>
-
-                    <div>
-                        <label style="display: block; color: var(--text-light); font-size: 0.85rem; margin-bottom: 5px; font-weight: 600;">CATEGORIA / FILTRO</label>
-                        <select id="proj-category" required style="width: 100%; padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid rgba(159, 178, 195, 0.2); background-color: var(--bg-main); color: var(--text-light); outline: none; cursor: pointer;">
+            <form id="form-projeto">
+                <div class="form-group">
+                    <label for="titulo">Título da Marca / Missão</label>
+                    <input type="text" id="titulo" class="form-control" placeholder="Ex: HEISEN TECH — Assistência Especializada" required>
+                </div>
+                <div class="form-group">
+                    <label for="desc-curta">Descrição Curta (Para o Card)</label>
+                    <input type="text" id="desc-curta" class="form-control" placeholder="Ex: Identidade visual tecnológica para manutenção mobile" required>
+                </div>
+                <div class="form-group">
+                    <label for="desc-completa">Descrição Completa (Desafio & Solução)</label>
+                    <textarea id="desc-completa" class="form-control" rows="4" placeholder="Detalhe a jornada criativa deste projeto..." required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="categoria">Tipo de Projeto</label>
+                        <select id="categoria" class="form-control" required>
                             <option value="branding">Branding & Identidade</option>
-                            <option value="editorial">Design Editorial</option>
-                            <option value="motion">Art & Motion Design</option>
+                            <option value="logos">Logotipos</option>
+                            <option value="motion">Motion Design</option>
+                            <option value="uiux">UI/UX Design</option>
+                            <option value="webdesign">Web Design</option>
+                            <option value="socialmedia">Social Media</option>
                         </select>
                     </div>
-
-                    <div>
-                        <label style="display: block; color: var(--text-light); font-size: 0.85rem; margin-bottom: 5px; font-weight: 600;">LEGENDA / SUBTÍTULO</label>
-                        <input type="text" id="proj-tag" required placeholder="Ex: Identidade Visual & Vetor" style="width: 100%; padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid rgba(159, 178, 195, 0.2); background-color: var(--bg-main); color: var(--text-light); outline: none;">
+                    <div class="form-group">
+                        <label for="segmento">Segmento</label>
+                        <select id="segmento" class="form-control" required>
+                            <option value="Tecnologia">Tecnologia</option>
+                            <option value="Games">Games</option>
+                            <option value="Empresas">Empresas</option>
+                            <option value="Igrejas">Igrejas</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Educação">Educação</option>
+                        </select>
                     </div>
-
-                    <div>
-                        <label style="display: block; color: var(--text-light); font-size: 0.85rem; margin-bottom: 5px; font-weight: 600;">ARQUIVO DA IMAGEM (PNG, JPG, WEBP)</label>
-                        <input type="file" id="proj-image" required accept="image/*" style="width: 100%; padding: 0.6rem; border-radius: 8px; border: 1px dashed rgba(105, 213, 195, 0.5); background-color: rgba(7, 17, 31, 0.5); color: var(--text-muted); cursor: pointer;">
+                    <div class="form-group">
+                        <label for="estilo">Estilo Visual</label>
+                        <select id="estilo" class="form-control" required>
+                            <option value="Futurista">Futurista</option>
+                            <option value="Minimalista">Minimalista</option>
+                            <option value="Moderno">Moderno</option>
+                            <option value="Elegante">Elegante</option>
+                            <option value="Premium">Premium</option>
+                            <option value="Divertido">Divertido</option>
+                        </select>
                     </div>
-
-                    <!-- Mensagem de Status -->
-                    <div id="form-status" style="display: none; padding: 10px; border-radius: 6px; font-size: 0.85rem; text-align: center; font-weight: 600;"></div>
-
-                    <button type="submit" id="btn-salvar" class="btn-primary" style="width: 100%; margin-top: 0.5rem; font-size: 1rem; font-weight: 700;">
-                        🚀 Publicar no Portfólio
-                    </button>
-                </form>
-            </div>
-
-            <!-- CAIXA 2: LISTA DE PROJETOS ATIVOS -->
-            <div style="background-color: var(--bg-secondary); padding: 2.5rem; border-radius: 12px; border: 1px solid rgba(159, 178, 195, 0.15); box-shadow: var(--shadow);">
-                <h2 style="font-size: 1.4rem; color: var(--text-light); margin-bottom: 0.5rem;">📂 Projetos Ativos (<span id="total-projetos">0</span>)</h2>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Gerencie o que aparece no seu site em tempo real.</p>
-
-                <!-- Onde o JS vai desenhar a lista de projetos para gerenciar -->
-                <div id="lista-projetos" style="display: flex; flex-direction: column; gap: 12px; max-height: 500px; overflow-y: auto; padding-right: 5px;">
-                    <p style="color: var(--text-muted); text-align: center;">Carregando...</p>
                 </div>
-            </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipografia">Tipografia (Separado por vírgula)</label>
+                        <input type="text" id="tipografia" class="form-control" placeholder="Ex: Inter, Space Grotesk">
+                    </div>
+                    <div class="form-group">
+                        <label for="cores">Paleta Hex (Separada por vírgula)</label>
+                        <input type="text" id="cores" class="form-control" placeholder="Ex: #07111F, #69D5C3">
+                    </div>
+                    <div class="form-group">
+                        <label for="ordem" style="color: #8DE6D8;">✦ Prioridade (Ordem no Topo)</label>
+                        <input type="number" id="ordem" class="form-control" value="0" placeholder="Ex: 10 para 1º lugar, 5 para 2º...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="capa-file">Imagem de Capa do Projeto</label>
+                    <input type="file" id="capa-file" class="form-control" accept="image/*" required>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="destaque">
+                    <label for="destaque" style="color: var(--branco-suave); cursor: pointer;">✦ Destacar missão na página principal?</label>
+                </div>
+                <button type="submit" class="btn-publicar" id="btn-submit">PUBLICAR MISSÃO NO UNIVERSO ✦</button>
+                <div id="status-box" class="status-msg"></div>
+            </form>
 
+            <hr style="border-color: var(--glass-border); margin: 3rem 0 2rem 0;">
+            <h2 class="admin-title" style="font-size: 1.6rem;">✦ Missões em Órbita (Cadastradas)</h2>
+            <p class="admin-subtitle" style="margin-bottom: 1.5rem;">Gerencie ou exclua missões antigas da nossa nuvem.</p>
+            <div id="lista-missoes" class="missoes-list">
+                <div style="color: var(--cinza-claro); text-align: center;">Carregando missões cadastradas...</div>
+            </div>
         </div>
     </main>
 
-    <!-- IMPORTAÇÕES SUPABASE E SCRIPTS -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase.js"></script>
-    <script src="auth.js"></script>
-    <script src="admin.js"></script>
+    <script src="script.js"></script>
+    <script src="supabase-config.js"></script>
+    <script>
+        // --- SISTEMA DE VERIFICAÇÃO MASTER ---
+        const SENHA_MASTER = "ASTAS2026"; // <-- Mude aqui para a sua senha secreta!
+        const btnLogin = document.getElementById('btn-login');
+        const inputSenha = document.getElementById('master-password');
+        const lockScreen = document.getElementById('lock-screen');
+        const adminContent = document.getElementById('admin-content');
+        const loginError = document.getElementById('login-error');
+
+        function destravado() {
+            lockScreen.style.opacity = '0';
+            setTimeout(() => {
+                lockScreen.style.display = 'none';
+                adminContent.style.display = 'block';
+                carregarMissoesAdmin();
+            }, 400);
+        }
+
+        btnLogin.addEventListener('click', () => {
+            if (inputSenha.value === SENHA_MASTER) { destravado(); } 
+            else { loginError.style.display = 'block'; }
+        });
+        inputSenha.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') { btnLogin.click(); }
+        });
+
+        // --- SISTEMA SUPABASE DE GESTÃO ---
+        const db = window.supabaseClient;
+        const form = document.getElementById('form-projeto');
+        const btnSubmit = document.getElementById('btn-submit');
+        const statusBox = document.getElementById('status-box');
+        const listaMissoes = document.getElementById('lista-missoes');
+
+        function showStatus(text, isError = false) {
+            statusBox.textContent = text;
+            statusBox.style.display = 'block';
+            statusBox.className = isError ? 'status-msg status-error' : 'status-msg status-success';
+        }
+
+        async function carregarMissoesAdmin() {
+            try {
+                const { data, error } = await db.from('universo_projetos').select('id, titulo, categoria, ordem').order('ordem', { ascending: false }).order('data_publicacao', { ascending: false });
+                if (error) throw error;
+                if (!data || data.length === 0) {
+                    listaMissoes.innerHTML = '<div style="color: var(--cinza-claro); text-align: center; padding: 1rem;">Nenhuma missão em órbita no momento.</div>'; return;
+                }
+                listaMissoes.innerHTML = '';
+                data.forEach(m => {
+                    const item = document.createElement('div');
+                    item.className = 'missao-item';
+                    item.innerHTML = `
+                        <div class="missao-info">
+                            <h4>${m.titulo}</h4>
+                            <span>Categoria: <strong>${m.categoria}</strong> • Prioridade: <strong>${m.ordem || 0}</strong></span>
+                        </div>
+                        <button class="btn-del" onclick="excluirMissao('${m.id}', '${m.titulo}')">✕ Excluir</button>
+                    `;
+                    listaMissoes.appendChild(item);
+                });
+            } catch (err) { console.error('Erro:', err); }
+        }
+
+        window.excluirMissao = async function(id, titulo) {
+            if (!confirm(`Tem certeza que deseja excluir a missão "${titulo}"?`)) return;
+            try {
+                const { error } = await db.from('universo_projetos').delete().eq('id', id);
+                if (error) throw error;
+                showStatus(`Missão "${titulo}" excluída com sucesso!`);
+                carregarMissoesAdmin();
+            } catch (err) { alert('Erro ao excluir: ' + err.message); }
+        };
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            btnSubmit.disabled = true; btnSubmit.textContent = 'ENVIANDO PARA A NUVEM...';
+            showStatus('Fazendo upload da imagem e processando dados...');
+            try {
+                const fileInput = document.getElementById('capa-file');
+                const file = fileInput.files[0];
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Date.now()}_${Math.random().toString(36).substring(2)}.${fileExt}`;
+                const filePath = `capas/${fileName}`;
+
+                const { error: uploadError } = await db.storage.from('projetos-galaxia').upload(filePath, file);
+                if (uploadError) throw uploadError;
+
+                const { data: urlData } = db.storage.from('projetos-galaxia').getPublicUrl(filePath);
+                const tipografiaArr = document.getElementById('tipografia').value.split(',').map(i => i.trim()).filter(Boolean);
+                const coresArr = document.getElementById('cores').value.split(',').map(i => i.trim()).filter(Boolean);
+                const ordemVal = parseInt(document.getElementById('ordem').value) || 0;
+
+                const { error: dbError } = await db.from('universo_projetos').insert([{
+                    titulo: document.getElementById('titulo').value, descricao_curta: document.getElementById('desc-curta').value,
+                    descricao_completa: document.getElementById('desc-completa').value, categoria: document.getElementById('categoria').value,
+                    segmento: document.getElementById('segmento').value, estilo_visual: document.getElementById('estilo').value,
+                    tipografia: tipografiaArr, paleta_cores: coresArr, ordem: ordemVal, capa_url: urlData.publicUrl, em_destaque: document.getElementById('destaque').checked
+                }]);
+                if (dbError) throw dbError;
+                showStatus('✦ MISSÃO PUBLICADA COM SUCESSO! Visível no Portfólio.');
+                form.reset(); carregarMissoesAdmin();
+            } catch (err) { showStatus('Erro: ' + err.message, true); }
+            finally { btnSubmit.disabled = false; btnSubmit.textContent = 'PUBLICAR MISSÃO NO UNIVERSO ✦'; }
+        });
+    </script>
 </body>
 </html>

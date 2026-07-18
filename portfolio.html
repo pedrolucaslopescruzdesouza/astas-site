@@ -3,111 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAS | Portfólio de Alta Resolução</title>
-    
-    <!-- ÍCONE DA ABA DO NAVEGADOR (FAVICON) -->
-    <link rel="icon" type="image/png" href="favicon.png">
-    
-    <!-- BIBLIOTECA DE ÍCONES MINIMALISTAS (FONT AWESOME) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <title>ASTAS — Galáxia de Marcas & Missões</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        @keyframes fadeInSlide {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .page-transition { animation: fadeInSlide 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+        /* --- NOVA BARRA DE PESQUISA COM DOIS BOTÕES REDONDOS --- */
+        .search-section { max-width: 900px; margin: 2rem auto 1.5rem auto; padding: 0 1.5rem; position: relative; z-index: 10; }
+        .search-bar-container {
+            display: flex; align-items: center; gap: 0.6rem;
+            background: rgba(7, 17, 31, 0.85); border: 1px solid var(--glass-border);
+            padding: 0.5rem 0.6rem 0.5rem 1.5rem; border-radius: 50px;
+            backdrop-filter: blur(20px); box-shadow: 0 10px 30px rgba(4, 7, 13, 0.7);
+            transition: border-color 0.3s ease;
+        }
+        .search-bar-container:focus-within { border-color: var(--verde-aurora); box-shadow: 0 0 25px rgba(105, 213, 195, 0.3); }
+        .search-input {
+            flex-grow: 1; background: transparent; border: none; color: var(--branco-suave);
+            font-size: 1rem; outline: none; padding: 0.4rem 0;
+        }
+        .search-input::placeholder { color: var(--cinza-claro); opacity: 0.7; }
+
+        /* Estilo dos Botões Redondos (Lupa e 3 Linhas) */
+        .btn-round {
+            width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--verde-aurora);
+            background: rgba(105, 213, 195, 0.15); color: var(--verde-aurora);
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0;
+        }
+        .btn-round:hover, .btn-round.active {
+            background: var(--verde-aurora); color: var(--preto-espacial);
+            box-shadow: 0 0 18px rgba(105, 213, 195, 0.6); transform: scale(1.06);
+        }
+
+        /* --- GAVETA COM OS FILTROS COMPLETOS --- */
+        .filters-dropdown {
+            max-height: 0; opacity: 0; overflow: hidden; transform: translateY(-10px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(4, 7, 13, 0.95); border: 1px solid transparent;
+            border-radius: 24px; margin-top: 0.8rem; padding: 0 1.5rem;
+        }
+        .filters-dropdown.open {
+            max-height: 600px; opacity: 1; transform: translateY(0);
+            border-color: var(--glass-border); padding: 1.5rem;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.9);
+        }
+        .filter-section { margin-bottom: 1.2rem; }
+        .filter-section:last-child { margin-bottom: 0; }
+        .filter-title {
+            color: var(--verde-aurora); font-size: 0.75rem; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.6rem;
+            display: block; border-left: 2px solid var(--verde-aurora); padding-left: 8px;
+        }
+        .filter-options { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        
+        .btn-filter {
+            background: rgba(7, 17, 31, 0.9); border: 1px solid var(--glass-border); color: var(--cinza-claro);
+            padding: 0.4rem 1rem; border-radius: 30px; font-size: 0.82rem; font-weight: 600;
+            cursor: pointer; transition: all 0.25s ease;
+        }
+        .btn-filter:hover { border-color: var(--verde-aurora); color: var(--branco-suave); }
+        .btn-filter.active { background: var(--verde-aurora); color: var(--preto-espacial); border-color: var(--verde-aurora); font-weight: 800; }
+
+        /* --- GRADE DE CARDS --- */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; max-width: 1250px; margin: 1.5rem auto 5rem auto; padding: 0 1.5rem; }
+        .project-card { background: rgba(7, 17, 31, 0.65); border: 1px solid var(--glass-border); border-radius: 20px; overflow: hidden; backdrop-filter: blur(15px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; animation: fadeInSlide 0.5s ease forwards; }
+        .project-card:hover { transform: translateY(-8px); border-color: var(--verde-aurora); box-shadow: 0 15px 35px rgba(4, 7, 13, 0.8), 0 0 20px rgba(105, 213, 195, 0.15); }
+        .project-image-box { width: 100%; height: 220px; overflow: hidden; position: relative; }
+        .project-image-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .project-card:hover .project-image-box img { transform: scale(1.08); }
+        .project-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+        .project-tag { color: var(--verde-aurora); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .project-info h3 { color: var(--branco-suave); font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem; }
+        .project-info p { color: var(--cinza-claro); font-size: 0.95rem; line-height: 1.5; }
+        @media (max-width: 600px) { .search-bar-container { border-radius: 25px; padding: 0.6rem 0.6rem 0.6rem 1rem; } }
+    </style>
 </head>
-<body class="protected-content">
+<body>
+    <canvas id="space-canvas"></canvas>
 
-    <!-- CABEÇALHO / MENU -->
-    <header class="header">
-        <div class="container header-content">
-            <!-- Logo oficial em formato GIF animado -->
-            <a href="index.html" class="logo">
-                <img src="logo.gif" alt="Logo ASTAS" class="logo-img">
-            </a>
-            
-            <nav class="nav-menu">
-                <ul>
-                    <li><a href="index.html">Início</a></li>
-                    <li><a href="servicos.html">Serviços</a></li>
-                    <li><a href="portfolio.html" class="active">Portfólio</a></li>
-                    <li><a href="sobre.html">Sobre</a></li>
-                    <!-- NOVO BOTÃO DE DESTAQUE PARA O ASTAS CLUB -->
-                    <li><a href="club.html" style="color: var(--primary); font-weight: 700; text-shadow: 0 0 10px rgba(105, 213, 195, 0.3);"><i class="fa-solid fa-sparkles" style="margin-right: 4px;"></i> ASTAS CLUB</a></li>
-                    <li><a href="contato.html">Contato</a></li>
-                </ul>
-            </nav>
-
-            <a href="contato.html" class="btn-cta">Falar Conosco</a>
+    <header class="navbar">
+        <div class="logo-container">
+            <a href="index.html"><img src="assets/astas-logo.png" alt="ASTAS Logo" class="logo"></a>
+        </div>
+        <nav class="nav-links-desktop">
+            <a href="index.html" class="nav-item">Início</a>
+            <a href="astro.html" class="nav-item">Astro</a>
+            <a href="servicos.html" class="nav-item">Serviços</a>
+            <a href="portfolio.html" class="nav-item active">Portfólio</a>
+        </nav>
+        <div class="auth-top">
+            <a href="login.html" class="btn-top-entre">Entre</a>
+            <button class="mobile-menu-btn" id="btn-open-menu" aria-label="Abrir Menu"><span></span><span></span><span></span></button>
         </div>
     </header>
 
-    <main>
-        <!-- CABEÇALHO DO PORTFÓLIO -->
-        <section class="portfolio-hero">
-            <div class="container">
-                <h1 class="section-title">Nosso Portfólio</h1>
-                <p class="section-subtitle">Explore nossos projetos de identidade visual, design estratégico e animações. Clique em qualquer arte para expandir em zoom de alta fidelidade.</p>
+    <main class="stage-container page-transition">
+        
+        <!-- BARRA DE BUSCA COM 2 BOTÕES REDONDOS -->
+        <section class="search-section">
+            <div class="search-bar-container">
+                <input type="text" id="search-input" class="search-input" placeholder="✦ Pesquisar por nome, segmento ou estilo...">
                 
-                <!-- BARRA DE FILTROS PARA O USUÁRIO -->
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="todos">Todos os Projetos</button>
-                    <button class="filter-btn" data-filter="branding">Branding & Identidade</button>
-                    <button class="filter-btn" data-filter="editorial">Design Editorial</button>
-                    <button class="filter-btn" data-filter="motion">Art & Motion Design</button>
+                <!-- Botão 1: LUPA DE PESQUISA -->
+                <button type="button" id="btn-search" class="btn-round" title="Pesquisar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+
+                <!-- Botão 2: 3 LINHAS (MENU DE FILTROS) -->
+                <button type="button" id="btn-toggle-filters" class="btn-round" title="Filtros e Categorias">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+                </button>
+            </div>
+
+            <!-- GAVETA COM AS 3 CATEGORIAS COMPLETAS DO ADMIN -->
+            <div id="filters-dropdown" class="filters-dropdown">
+                <div style="text-align: right; margin-bottom: 0.5rem;">
+                    <button class="btn-filter active" data-type="all" data-val="all">✦ Mostrar Todos os Projetos</button>
+                </div>
+
+                <div class="filter-section">
+                    <span class="filter-title">Tipo de Projeto</span>
+                    <div class="filter-options">
+                        <button class="btn-filter" data-type="categoria" data-val="branding">Branding & Identidade</button>
+                        <button class="btn-filter" data-type="categoria" data-val="logos">Logotipos</button>
+                        <button class="btn-filter" data-type="categoria" data-val="motion">Motion Design</button>
+                        <button class="btn-filter" data-type="categoria" data-val="uiux">UI/UX Design</button>
+                        <button class="btn-filter" data-type="categoria" data-val="webdesign">Web Design</button>
+                        <button class="btn-filter" data-type="categoria" data-val="socialmedia">Social Media</button>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <span class="filter-title">Segmento do Cliente</span>
+                    <div class="filter-options">
+                        <button class="btn-filter" data-type="segmento" data-val="Tecnologia">Tecnologia</button>
+                        <button class="btn-filter" data-type="segmento" data-val="Games">Games</button>
+                        <button class="btn-filter" data-type="segmento" data-val="Empresas">Empresas</button>
+                        <button class="btn-filter" data-type="segmento" data-val="Igrejas">Igrejas</button>
+                        <button class="btn-filter" data-type="segmento" data-val="Saúde">Saúde</button>
+                        <button class="btn-filter" data-type="segmento" data-val="Alimentação">Alimentação</button>
+                        <button class="btn-filter" data-type="segmento" data-val="Educação">Educação</button>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <span class="filter-title">Estilo Visual</span>
+                    <div class="filter-options">
+                        <button class="btn-filter" data-type="estilo_visual" data-val="Futurista">Futurista</button>
+                        <button class="btn-filter" data-type="estilo_visual" data-val="Minimalista">Minimalista</button>
+                        <button class="btn-filter" data-type="estilo_visual" data-val="Moderno">Moderno</button>
+                        <button class="btn-filter" data-type="estilo_visual" data-val="Elegante">Elegante</button>
+                        <button class="btn-filter" data-type="estilo_visual" data-val="Premium">Premium</button>
+                        <button class="btn-filter" data-type="estilo_visual" data-val="Divertido">Divertido</button>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- GRADE DE PROJETOS DINÂMICA (Conectada ao Supabase) -->
-        <section class="portfolio-gallery">
-            <div class="container">
-                <!-- Estado de carregamento com ícone animado -->
-                <div id="loading-spinner" style="text-align: center; padding: 40px 0; color: var(--primary); font-size: 1.2rem; font-weight: 600;">
-                    <i class="fa-solid fa-spinner fa-spin" style="margin-right: 8px;"></i> Carregando projetos de alta resolução da nuvem...
-                </div>
-
-                <!-- Onde o JavaScript vai desenhar os cartões automaticamente -->
-                <div id="portfolio-grid" class="portfolio-grid" style="display: none;"></div>
-            </div>
-        </section>
+        <!-- GRADE DE MISSÕES -->
+        <div class="projects-grid"></div>
     </main>
 
-    <!-- RODAPÉ COM REDES SOCIAIS CLICÁVEIS -->
-    <footer class="footer">
-        <div class="container footer-content">
-            <p>&copy; 2026 ASTAS. Todos os direitos reservados.</p>
-            <div class="footer-links">
-                <a href="index.html">Início</a>
-                <a href="servicos.html">Serviços</a>
-                <a href="login.html" class="adm-link" title="Área Restrita para Gestão de Portfólio"><i class="fa-solid fa-lock" style="margin-right: 4px;"></i> Acesso ADM</a>
-                <a href="https://www.instagram.com/astasdesigner/" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
-                <a href="https://www.youtube.com/@Astas_Creators" target="_blank"><i class="fa-brands fa-youtube"></i> YouTube</a>
-            </div>
+    <footer class="rodape-profissional">
+        <div class="rodape-inner">
+            <div class="rodape-brand"><img src="assets/astas-logo.png" alt="ASTAS Logo" class="rodape-logo"><p>O Universo Criativo onde as suas pequenas ideias se transformam em grandes marcas memoráveis.</p></div>
+            <div class="rodape-links"><h4>Explorar</h4><a href="index.html">Início</a><a href="astro.html">O Companheiro ASTRO</a><a href="servicos.html">Nossas Missões</a><a href="portfolio.html">Universo de Criadas</a></div>
+            <div class="rodape-contato"><h4>Conecte-se</h4><a href="#" target="_blank">✦ Instagram (@astas.universo)</a><a href="mailto:contato@astas.com.br">✦ contato@astas.com.br</a></div>
         </div>
+        <div class="rodape-bottom"><p>&copy; 2026 ASTAS — Universo Criativo. Todos os direitos reservados.</p></div>
     </footer>
 
-    <!-- SISTEMA DE ZOOM / LIGHTBOX EM TELA CHEIA -->
-    <div id="zoom-lightbox" class="lightbox">
-        <span class="close-lightbox">&times;</span>
-        <div class="lightbox-container">
-            <img id="lightbox-img" src="" alt="Zoom do Projeto ASTAS">
-        </div>
-        <div class="lightbox-info">
-            <p id="lightbox-title"></p>
-            <span>Dica: Use a roda do mouse ou o gesto de pinça no celular para aproximar e ver os detalhes.</span>
-        </div>
-    </div>
-
-    <!-- ALERTA DE DIREITOS AUTORAIS CENTRALIZADO COM BOTÃO FECHAR -->
-    <div id="protection-toast" class="toast" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
-        <span><i class="fa-solid fa-shield-halved" style="color: var(--primary); margin-right: 6px;"></i> <strong>Proteção ASTAS:</strong> As imagens deste portfólio possuem direitos autorais controlados.</span>
-        <span onclick="document.getElementById('protection-toast').style.display='none'" style="cursor: pointer; font-size: 1.3rem; font-weight: bold; color: var(--primary); padding: 0 4px; line-height: 1;" title="Fechar aviso">&times;</span>
-    </div>
-
-    <!-- IMPORTAÇÃO DA BIBLIOTECA DO SUPABASE VIA CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <!-- NOSSOS SCRIPTS -->
-    <script src="supabase.js"></script>
     <script src="script.js"></script>
-    <script src="portfolio-dynamic.js"></script>
+    <script src="supabase-config.js"></script>
+    <script src="portfolio.js"></script>
 </body>
 </html>
