@@ -1,12 +1,16 @@
-/* --- RESET E VARIÁVEIS DO UNIVERSO --- */
+/* --- PALETA DE CORES OFICIAL ASTAS --- */
 :root {
-    --bg-space: #060810;
-    --text-primary: #ffffff;
-    --text-secondary: #a0aec0;
-    --accent-teal: #63d4c3; /* O tom exato de verde-água da sua Imagem 1 e 2 */
-    --accent-dark: #1b263b;
-    --pill-bg: rgba(65, 78, 98, 0.65); /* Fundo cinza/azulado da Imagem 1 */
-    --glass-border: rgba(255, 255, 255, 0.12);
+    --azul-noturno: #07111F;        /* Fundo principal / Texto forte */
+    --preto-espacial: #04070D;      /* Fundos escuros e degradês */
+    --verde-aurora: #69D5C3;        /* Brilhos, botões, destaques neon */
+    --verde-aurora-claro: #8DE6D8;  /* Hover dos botões e brilhos */
+    --verde-aurora-escuro: #4AB8A5; /* Sombras luminosas */
+    --azul-profundo: #002C7D;       /* Conceitos de marca e destaques profundos */
+    --branco-suave: #F5F7FA;        /* Fundos claros / Textos em fundo escuro */
+    --cinza-claro: #B8C2CC;         /* Textos secundários */
+    
+    --pill-bg: rgba(7, 17, 31, 0.85);
+    --glass-border: rgba(245, 247, 250, 0.15);
 }
 
 * {
@@ -17,15 +21,15 @@
 }
 
 body {
-    background-color: var(--bg-space);
-    color: var(--text-primary);
+    background: linear-gradient(180deg, var(--preto-espacial) 0%, var(--azul-noturno) 100%);
+    color: var(--branco-suave);
     overflow-x: hidden;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* --- ESTRELAS DE FUNDO NA TELA INTEIRA --- */
+/* --- ESTRELAS DE FUNDO --- */
 #space-canvas {
     position: fixed;
     top: 0;
@@ -36,34 +40,33 @@ body {
     pointer-events: none;
 }
 
-/* --- ESTRELA CADENTE COM MAIS PRESENÇA E BRILHO --- */
-#shooting-star {
+/* --- ESTRELA CADENTE DINÂMICA --- */
+.shooting-star {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 350px;
-    height: 5px;
-    opacity: 0;
+    width: 360px;
+    height: 4px;
     z-index: 1;
     pointer-events: none;
     display: flex;
     align-items: center;
-    transform: rotate(-35deg);
-}
-
-.star-head {
-    width: 8px;
-    height: 8px;
-    background: #ffffff;
-    border-radius: 50%;
-    box-shadow: 0 0 20px #ffffff, 0 0 40px var(--accent-teal), 0 0 60px var(--accent-teal);
+    opacity: 0;
+    transform-origin: left center;
 }
 
 .star-tail {
     flex: 1;
-    height: 3px;
-    background: linear-gradient(90deg, rgba(255,255,255,1), rgba(99,212,195,0.8), rgba(99,212,195,0));
-    filter: drop-shadow(0 0 8px var(--accent-teal));
+    height: 2px;
+    background: linear-gradient(90deg, rgba(105, 213, 195, 0), rgba(105, 213, 195, 0.7), rgba(245, 247, 250, 0.95));
+    filter: drop-shadow(0 0 6px var(--verde-aurora));
+}
+
+.star-head {
+    width: 7px;
+    height: 7px;
+    background: var(--branco-suave);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--branco-suave), 0 0 35px var(--verde-aurora), 0 0 60px var(--verde-aurora);
+    flex-shrink: 0;
 }
 
 .shoot {
@@ -71,12 +74,12 @@ body {
 }
 
 @keyframes shootingAnimation {
-    0% { transform: translate(0, 0) rotate(-35deg) scaleX(0.3); opacity: 1; }
-    50% { opacity: 1; transform: translate(-450px, 315px) rotate(-35deg) scaleX(1.3); }
-    100% { transform: translate(-1000px, 700px) rotate(-35deg) scaleX(1.8); opacity: 0; }
+    0% { transform: rotate(var(--angle)) translateX(0) scaleX(0.2); opacity: 1; }
+    65% { opacity: 1; }
+    100% { transform: rotate(var(--angle)) translateX(1700px) scaleX(1.5); opacity: 0; }
 }
 
-/* --- CABEÇALHO DESKTOP (EXATAMENTE COMO A IMAGEM 1) --- */
+/* --- CABEÇALHO DESKTOP --- */
 .navbar {
     position: relative;
     z-index: 10;
@@ -84,50 +87,52 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 5%;
-    max-width: 1500px;
+    max-width: 1550px;
     margin: 0 auto;
     width: 100%;
 }
 
 .logo {
-    height: 45px;
+    height: 52px;
     width: auto;
     cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-/* O Menu Pílula da Imagem 1 */
+.logo:hover {
+    transform: scale(1.05);
+}
+
 .nav-links-desktop {
     display: flex;
     background: var(--pill-bg);
-    backdrop-filter: blur(12px);
-    padding: 0.4rem;
+    backdrop-filter: blur(16px);
+    padding: 0.5rem;
     border-radius: 50px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px rgba(4, 7, 13, 0.6);
 }
 
 .nav-item {
-    color: #e2e8f0;
+    color: var(--cinza-claro);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 600;
-    padding: 0.6rem 2rem;
+    padding: 0.7rem 2.5rem;
     border-radius: 50px;
     transition: all 0.3s ease;
 }
 
 .nav-item:hover {
-    color: #ffffff;
+    color: var(--branco-suave);
 }
 
-/* O botão "Início" em destaque verde-água da Imagem 1 */
 .nav-item.active {
-    background-color: var(--accent-teal);
-    color: #042f2e;
-    box-shadow: 0 0 15px rgba(99, 212, 195, 0.5);
+    background-color: var(--verde-aurora);
+    color: var(--preto-espacial);
+    box-shadow: 0 0 20px rgba(105, 213, 195, 0.5);
 }
 
-/* Botão "Entre" da Imagem 1 */
 .auth-top {
     display: flex;
     align-items: center;
@@ -137,22 +142,22 @@ body {
 .btn-top-entre {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    background-color: var(--accent-teal);
-    color: #042f2e;
-    padding: 0.6rem 1.8rem;
+    gap: 0.7rem;
+    background-color: var(--verde-aurora);
+    color: var(--preto-espacial);
+    padding: 0.8rem 2.2rem;
     border-radius: 50px;
     text-decoration: none;
     font-weight: 700;
-    font-size: 0.95rem;
-    box-shadow: 0 0 20px rgba(99, 212, 195, 0.4);
+    font-size: 1rem;
+    box-shadow: 0 0 25px rgba(105, 213, 195, 0.4);
     transition: all 0.3s ease;
 }
 
 .btn-top-entre:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 25px rgba(99, 212, 195, 0.8);
-    color: #000000;
+    background-color: var(--verde-aurora-claro);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 0 30px rgba(141, 230, 216, 0.8);
 }
 
 .mobile-menu-btn {
@@ -161,29 +166,29 @@ body {
     border: none;
     cursor: pointer;
     flex-direction: column;
-    gap: 5px;
+    gap: 6px;
     padding: 5px;
 }
 
 .mobile-menu-btn span {
-    width: 25px;
+    width: 28px;
     height: 3px;
-    background-color: var(--text-primary);
+    background-color: var(--branco-suave);
     border-radius: 3px;
     transition: 0.3s;
 }
 
-/* --- MENU GAVETA MOBILE (EXATAMENTE COMO A IMAGEM 2) --- */
+/* --- MENU GAVETA MOBILE --- */
 .mobile-drawer {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: var(--accent-teal); /* Fundo Verde-Água da Imagem 2 */
+    background-color: var(--verde-aurora);
     z-index: 100;
     transform: translateY(-100%);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(4,7,13,0.7);
 }
 
 .mobile-drawer.open {
@@ -195,19 +200,19 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem 6%;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(4,7,13,0.1);
 }
 
 .drawer-logo {
-    height: 40px;
-    filter: brightness(0.1); /* Deixa o logo escuro como na Imagem 2 */
+    height: 45px;
+    filter: brightness(0.1);
 }
 
 .btn-close-drawer {
     background: none;
     border: none;
-    font-size: 1.8rem;
-    color: #042f2e;
+    font-size: 2rem;
+    color: var(--preto-espacial);
     cursor: pointer;
     font-weight: bold;
 }
@@ -219,22 +224,22 @@ body {
 
 .drawer-links a {
     text-decoration: none;
-    color: #042f2e;
-    font-size: 1.2rem;
+    color: var(--preto-espacial);
+    font-size: 1.3rem;
     font-weight: 700;
-    padding: 1.2rem 6%;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 1.4rem 6%;
+    border-bottom: 1px solid rgba(245, 247, 250, 0.3);
     text-align: center;
     transition: background 0.2s;
 }
 
 .drawer-links a:hover {
-    background: rgba(0,0,0,0.05);
+    background: rgba(4,7,13,0.05);
 }
 
 .drawer-links a.drawer-active {
-    background-color: #3b5266; /* Tom mais escuro para o Início como na Imagem 2 */
-    color: #ffffff;
+    background-color: var(--azul-profundo);
+    color: var(--branco-suave);
 }
 
 .drawer-overlay {
@@ -243,7 +248,7 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0,0,0,0.7);
+    background: rgba(4,7,13,0.8);
     z-index: 99;
     opacity: 0;
     pointer-events: none;
@@ -253,6 +258,42 @@ body {
 .drawer-overlay.open {
     opacity: 1;
     pointer-events: all;
+}
+
+/* --- NOVA LUA DE SEGUNDO PLANO --- */
+.lua-segundo-plano {
+    position: fixed;
+    top: 15%;
+    left: -350px;
+    width: 250px;
+    height: 250px;
+    z-index: 1;
+    pointer-events: none;
+    animation: orbitaLunar 180s linear infinite;
+}
+
+@keyframes orbitaLunar {
+    0% { left: -300px; opacity: 0; }
+    2% { opacity: 0.85; }
+    66.66% { left: calc(100vw + 300px); opacity: 0.85; }
+    67% { opacity: 0; left: calc(100vw + 300px); }
+    100% { left: -300px; opacity: 0; }
+}
+
+.lua-girando {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 30px rgba(105, 213, 195, 0.15));
+    animation: luaFlutuaEGira 45s linear infinite;
+}
+
+@keyframes luaFlutuaEGira {
+    0% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-16px) rotate(90deg); }
+    50% { transform: translateY(0px) rotate(180deg); }
+    75% { transform: translateY(16px) rotate(270deg); }
+    100% { transform: translateY(0px) rotate(360deg); }
 }
 
 /* --- PALCO PRINCIPAL --- */
@@ -266,44 +307,26 @@ body {
     width: 100%;
     min-height: 85vh;
     padding-bottom: 100px;
+    z-index: 2;
 }
 
-/* --- A LUA MAIS BAIXA EM BAIXO DO ASTRO --- */
-.lua-container {
-    position: absolute;
-    bottom: -550px; /* Bem mais baixa, mostrando a curvatura perfeita */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1250px;
-    height: 1250px;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.lua-base {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 -10px 40px rgba(255, 255, 255, 0.08));
-}
-
-/* --- ASTRO EM CIMA DA LUA + DIÁLOGO --- */
+/* --- ASTRO E DIÁLOGO --- */
 .content-wrapper {
     position: relative;
-    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 3.5rem;
-    max-width: 1100px;
+    gap: 4rem;
+    max-width: 1150px;
     width: 90%;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
+/* --- ASTRO COM BRILHO NEON SUAVE E ELEGANTE (AURA ESPACIAL) --- */
 .astro-container {
     flex-shrink: 0;
-    width: 320px;
-    animation: floatingAstro 4s ease-in-out infinite;
+    width: 380px;
+    animation: zeroGravity 6s ease-in-out infinite;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -313,126 +336,132 @@ body {
 .astro {
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.7));
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* Reduzido a opacidade do brilho verde de 0.60 para 0.22! Muito mais suave e sofisticado */
+    filter: drop-shadow(0 0 15px rgba(105, 213, 195, 0.22)) drop-shadow(0 0 35px rgba(105, 213, 195, 0.08));
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
 }
 
 .astro-container:hover .astro {
     transform: scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(105, 213, 195, 0.35)) drop-shadow(0 0 45px rgba(105, 213, 195, 0.15));
 }
 
-.click-hint {
-    font-size: 0.75rem;
-    color: var(--accent-teal);
-    background: rgba(0,0,0,0.6);
-    padding: 0.3rem 0.8rem;
-    border-radius: 12px;
-    margin-top: -10px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
+@keyframes zeroGravity {
+    0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+    33% { transform: translateY(-16px) rotate(3deg) scale(1.02); }
+    66% { transform: translateY(-8px) rotate(-2deg) scale(0.99); }
 }
 
-.astro-container:hover .click-hint {
-    opacity: 1;
+/* --- COLUNA DE DIÁLOGO (GARANTE ALINHAMENTO E PROPORÇÃO 100% ASSEGURADOS) --- */
+.dialog-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem; /* Espaço simétrico entre a caixa branca e os botões abaixo */
+    width: 100%;
+    max-width: 580px;
 }
 
-@keyframes floatingAstro {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-12px); }
-}
-
-/* Caixa de Diálogo Glassmorphism */
+/* --- DIÁLOGO COM ALTA LEGIBILIDADE --- */
 .dialog-box {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(16px);
-    border: 1px solid var(--glass-border);
-    padding: 2.2rem;
-    border-radius: 24px;
-    max-width: 520px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    background: rgba(245, 247, 250, 0.92);
+    backdrop-filter: blur(25px);
+    border: 2px solid var(--verde-aurora);
+    padding: 2.8rem;
+    border-radius: 30px;
+    width: 100%;
+    box-shadow: 0 25px 60px rgba(4, 7, 13, 0.8), 0 0 30px rgba(105, 213, 195, 0.15);
 }
 
 .badge-astro {
     display: inline-block;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    color: var(--accent-teal);
-    font-weight: 700;
-    margin-bottom: 0.8rem;
+    font-size: 0.8rem;
+    letter-spacing: 2.5px;
+    color: var(--azul-profundo);
+    font-weight: 800;
+    margin-bottom: 1rem;
     text-transform: uppercase;
+    background: rgba(105, 213, 195, 0.25);
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
 }
 
 .greeting {
+    color: var(--azul-noturno);
     font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 0.8rem;
+    font-weight: 800;
+    margin-bottom: 1.2rem;
+    line-height: 1.25;
 }
 
 .intro-text {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-    line-height: 1.6;
+    color: #1e293b;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    font-weight: 500;
 }
 
 .intro-text strong {
-    color: var(--text-primary);
+    color: var(--azul-profundo);
+    font-weight: 800;
+    background: linear-gradient(180deg, transparent 60%, rgba(105, 213, 195, 0.4) 60%);
+    padding: 0 0.2rem;
 }
 
-/* --- BOTÕES NA SUPERFÍCIE DA LUA --- */
+/* --- BOTÕES ALINHADOS EM PROPORÇÃO EXATA À CAIXA DE DIÁLOGO --- */
 .moon-actions {
-    position: relative;
-    z-index: 3;
     display: flex;
-    gap: 1.5rem;
-    margin-top: 1.5rem;
+    gap: 1.2rem;
+    width: 100%; /* Ocupa 100% da largura da coluna da caixa de diálogo */
 }
 
 .btn-moon {
+    flex: 1; /* Garante que ambos os botões tenham rigorosamente o mesmo tamanho proporcional! */
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
-    padding: 1rem 2.2rem;
-    font-size: 1rem;
+    gap: 0.8rem;
+    padding: 1.1rem 1.5rem;
+    font-size: 1.05rem;
     font-weight: 700;
     border-radius: 50px;
     text-decoration: none;
     transition: all 0.3s ease;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    box-shadow: 0 12px 30px rgba(4,7,13,0.7);
+    text-align: center;
 }
 
 .btn-moon-entre {
-    background: rgba(30, 41, 59, 0.85);
-    color: var(--text-primary);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(8px);
+    background: var(--azul-noturno);
+    color: var(--branco-suave);
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 .btn-moon-entre:hover {
-    background: rgba(51, 65, 85, 0.95);
+    background: var(--azul-profundo);
+    border-color: var(--verde-aurora);
     transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(0, 44, 125, 0.5);
 }
 
 .btn-moon-criar {
-    background-color: var(--accent-teal);
-    color: #042f2e;
+    background-color: var(--verde-aurora);
+    color: var(--preto-espacial);
     border: none;
-    box-shadow: 0 0 20px rgba(99, 212, 195, 0.4);
+    box-shadow: 0 0 25px rgba(105, 213, 195, 0.4);
 }
 
 .btn-moon-criar:hover {
+    background-color: var(--verde-aurora-claro);
     transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 0 30px rgba(99, 212, 195, 0.8);
-    color: #000000;
+    box-shadow: 0 0 35px rgba(141, 230, 216, 0.8);
 }
 
-/* --- RODAPÉ PROFISSIONAL DA ASTAS --- */
+/* --- RODAPÉ PROFISSIONAL --- */
 .rodape-profissional {
     position: relative;
     z-index: 10;
-    background-color: #0d111a;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: var(--preto-espacial);
+    border-top: 1px solid rgba(245, 247, 250, 0.08);
     padding: 4rem 6% 1.5rem 6%;
     margin-top: auto;
     width: 100%;
@@ -447,7 +476,7 @@ body {
 }
 
 .rodape-brand p {
-    color: var(--text-secondary);
+    color: var(--cinza-claro);
     font-size: 0.95rem;
     line-height: 1.6;
     margin-top: 1rem;
@@ -455,11 +484,11 @@ body {
 }
 
 .rodape-logo {
-    height: 38px;
+    height: 42px;
 }
 
 .rodape-links h4, .rodape-contato h4 {
-    color: var(--text-primary);
+    color: var(--branco-suave);
     font-size: 1.1rem;
     margin-bottom: 1.2rem;
     font-weight: 700;
@@ -472,68 +501,45 @@ body {
 }
 
 .rodape-links a, .rodape-contato a {
-    color: var(--text-secondary);
+    color: var(--cinza-claro);
     text-decoration: none;
     font-size: 0.95rem;
     transition: color 0.2s;
 }
 
 .rodape-links a:hover, .rodape-contato a:hover {
-    color: var(--accent-teal);
+    color: var(--verde-aurora);
 }
 
 .rodape-bottom {
     text-align: center;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    color: var(--text-secondary);
+    border-top: 1px solid rgba(245, 247, 250, 0.05);
+    color: var(--cinza-claro);
     font-size: 0.85rem;
 }
 
-/* --- RESPONSIVIDADE (CELULAR - ATIVA A IMAGEM 2) --- */
-@media (max-width: 900px) {
-    .nav-links-desktop {
-        display: none; /* Esconde a pílula no celular */
-    }
-
-    .btn-top-entre {
-        display: none; /* Esconde o botão superior no celular */
-    }
-
-    .mobile-menu-btn {
-        display: flex; /* Mostra o botão Hambúrguer */
-    }
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 950px) {
+    .nav-links-desktop, .btn-top-entre { display: none; }
+    .mobile-menu-btn { display: flex; }
 
     .content-wrapper {
         flex-direction: column;
         text-align: center;
-        gap: 1.5rem;
+        gap: 2rem;
     }
 
-    .astro-container {
-        width: 250px;
-    }
+    .astro-container { width: 280px; }
+    .dialog-box { padding: 2rem 1.5rem; }
 
-    .dialog-box {
-        padding: 1.5rem;
-        width: 95%;
-    }
-
-    .lua-container {
-        width: 850px;
-        height: 850px;
-        bottom: -430px; /* Encaixe perfeito da lua no celular */
-    }
-
+    /* No celular, os botões empilham verticalmente para serem fáceis de clicar com o polegar! */
     .moon-actions {
         flex-direction: column;
-        width: 85%;
         gap: 0.8rem;
     }
 
-    .btn-moon {
-        width: 100%;
-    }
+    .btn-moon { width: 100%; }
 
     .rodape-inner {
         grid-template-columns: 1fr;
@@ -541,7 +547,5 @@ body {
         text-align: center;
     }
 
-    .rodape-brand p {
-        margin: 1rem auto 0 auto;
-    }
+    .rodape-brand p { margin: 1rem auto 0 auto; }
 }

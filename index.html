@@ -8,22 +8,15 @@
 </head>
 <body>
 
-    <!-- Fundo Estrelado Gerado via Código -->
+    <!-- Fundo Estrelado -->
     <canvas id="space-canvas"></canvas>
-    
-    <!-- Estrela Cadente com Rastro Espesso -->
-    <div id="shooting-star">
-        <div class="star-head"></div>
-        <div class="star-tail"></div>
-    </div>
 
-    <!-- CABEÇALHO DESKTOP (Idêntico à Imagem 1) -->
+    <!-- CABEÇALHO DESKTOP -->
     <header class="navbar">
         <div class="logo-container">
             <img src="assets/astas-logo.png" alt="ASTAS Logo" class="logo">
         </div>
         
-        <!-- Menu Pílula Cinza/Azulado com o Início em Verde-Água -->
         <nav class="nav-links-desktop">
             <a href="#inicio" class="nav-item active">Início</a>
             <a href="#astro" class="nav-item">Astro</a>
@@ -31,20 +24,18 @@
             <a href="#portfolio" class="nav-item">Portfólio</a>
         </nav>
 
-        <!-- Botão Entre no Topo (Verde-Água com Ícone) -->
         <div class="auth-top">
             <a href="login.html" class="btn-top-entre">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                 Entre
             </a>
-            <!-- Botão Hambúrguer para abrir o Menu Mobile -->
             <button class="mobile-menu-btn" id="btn-open-menu" aria-label="Abrir Menu">
                 <span></span><span></span><span></span>
             </button>
         </div>
     </header>
 
-    <!-- MENU GAVETA MOBILE (Idêntico à Imagem 2) -->
+    <!-- MENU GAVETA MOBILE -->
     <div class="mobile-drawer" id="mobile-drawer">
         <div class="drawer-header">
             <img src="assets/astas-logo.png" alt="ASTAS Logo" class="drawer-logo">
@@ -59,50 +50,53 @@
     </div>
     <div class="drawer-overlay" id="drawer-overlay"></div>
 
+    <!-- NOVA LUA DE SEGUNDO PLANO (Cruza em 2 Minutos + 1 Minuto Espera) -->
+    <div class="lua-segundo-plano">
+        <img src="assets/lua-base.png" alt="Lua no Céu" class="lua-girando">
+    </div>
+
     <!-- PALCO PRINCIPAL -->
     <main class="stage-container">
         
-        <!-- Camada 1: A Lua Posicionada Bem Mais Baixa -->
-        <div class="lua-container">
-            <img src="assets/lua-base.png" alt="Superfície da Lua" class="lua-base">
-        </div>
-
-        <!-- Camada 2: ASTRO Flutuando em Cima da Lua + Diálogo -->
+        <!-- ASTRO à Esquerda + Coluna de Diálogo à Direita -->
         <div class="content-wrapper">
             
-            <!-- O ASTRO (Clique nele para mudar de emoção!) -->
-            <div class="astro-container" title="Clique no ASTRO!">
+            <!-- Coluna 1: O ASTRO com Brilho Suave e Elegante -->
+            <div class="astro-container" title="Clique no ASTRO para mudar a emoção!">
                 <img src="assets/astro-neutro.png" alt="ASTRO" id="astro-img" class="astro">
-                <span class="click-hint">✦ Clique no ASTRO ✦</span>
             </div>
 
-            <!-- Caixa de Diálogo do Universo -->
-            <div class="dialog-box">
-                <span class="badge-astro">✦ COMPANHEIRO CRIATIVO</span>
-                <h1 class="greeting">Olá, Astronauta!</h1>
-                <p class="intro-text">
-                    Eu sou o <strong>ASTRO</strong>.<br>
-                    Toda grande marca começou como uma pequena ideia.<br>
-                    A minha missão é ajudá-lo a transformar as suas ideias em projetos memoráveis.
-                </p>
+            <!-- Coluna 2: Diálogo Branco + Botões Alinhados em Perfeita Proporção -->
+            <div class="dialog-column">
+                
+                <!-- Caixa de Diálogo Branca -->
+                <div class="dialog-box">
+                    <span class="badge-astro">✦ COMPANHEIRO CRIATIVO</span>
+                    <h1 class="greeting">Olá, Astronauta! Que bom ter você aqui.</h1>
+                    <p class="intro-text">
+                        Eu sou o <strong>ASTRO</strong>, o seu companheiro de jornada nesse universo.<br><br>
+                        Sei que toda grande marca começa como um pequeno pensamento flutuando na mente... Que tal começarmos a explorar e dar vida à sua próxima grande ideia agora mesmo?
+                    </p>
+                </div>
+
+                <!-- Botões de Ação com Largura Proporcional e Simétrica -->
+                <div class="moon-actions">
+                    <a href="login.html" class="btn-moon btn-moon-entre">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        Entre
+                    </a>
+                    <a href="cadastro.html" class="btn-moon btn-moon-criar">
+                        ✦ Criar uma conta
+                    </a>
+                </div>
+
             </div>
 
-        </div>
-
-        <!-- Camada 3: Botões na Superfície da Lua (PDF/Mobile) -->
-        <div class="moon-actions">
-            <a href="login.html" class="btn-moon btn-moon-entre">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                Entre
-            </a>
-            <a href="cadastro.html" class="btn-moon btn-moon-criar">
-                ✦ Criar uma conta
-            </a>
         </div>
 
     </main>
 
-    <!-- RODAPÉ COMPLETO E PROFISSIONAL DA ASTAS -->
+    <!-- RODAPÉ PROFISSIONAL DA ASTAS -->
     <footer class="rodape-profissional">
         <div class="rodape-inner">
             <div class="rodape-brand">
