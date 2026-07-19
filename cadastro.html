@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAS — Acessar Conta Espacial</title>
+    <title>ASTAS — Recrutamento & Alistamento Espacial</title>
     <link rel="stylesheet" href="style.css">
     <style>
         /* ==========================================================================
@@ -27,10 +27,10 @@
             animation: appleFadeIn 0.7s var(--apple-ease) forwards;
             transition: all 0.5s var(--apple-ease);
             transform: translateZ(0);
-            max-width: 1100px;
-            margin: 3rem auto 5rem auto;
+            max-width: 1150px;
+            margin: 2.5rem auto 5rem auto;
             padding: 0 1.5rem;
-            min-height: 70vh;
+            min-height: 75vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -85,11 +85,11 @@
         }
 
         /* ==========================================================================
-           LAYOUT DE LOGIN VISION PRO (ASTRO REACIONAL + FORMULÁRIO)
+           LAYOUT DE RECRUTAMENTO VISION PRO (ASTRO + FORMULÁRIO)
            ========================================================================== */
-        .login-grid {
+        .register-grid {
             display: grid;
-            grid-template-columns: 1fr 1.2fr;
+            grid-template-columns: 1fr 1.3fr;
             gap: 3.5rem;
             align-items: center;
             width: 100%;
@@ -106,8 +106,8 @@
 
         .astro-avatar-box {
             position: relative;
-            width: 240px;
-            height: 240px;
+            width: 230px;
+            height: 230px;
             margin-bottom: 1.5rem;
         }
 
@@ -169,20 +169,20 @@
             justify-content: center;
         }
 
-        /* Lado Direito: Caixa de Login em Vidro Líquido */
-        .login-glass-box {
+        /* Lado Direito: Caixa de Cadastro em Vidro Líquido */
+        .register-glass-box {
             background: linear-gradient(135deg, rgba(15, 28, 48, 0.7) 0%, rgba(7, 14, 25, 0.85) 100%);
             backdrop-filter: blur(40px) saturate(200%);
             -webkit-backdrop-filter: blur(40px) saturate(200%);
             border: 1px solid rgba(255, 255, 255, 0.18);
             border-radius: 32px;
-            padding: 3rem;
+            padding: 2.8rem 3rem;
             box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), inset 0 1px 2px rgba(255, 255, 255, 0.3);
             position: relative;
             overflow: hidden;
         }
 
-        .login-glass-box::before {
+        .register-glass-box::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
@@ -190,29 +190,53 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
         }
 
-        .login-header { margin-bottom: 2rem; }
-        .login-header h1 { color: #FFFFFF; font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
-        .login-header p { color: var(--cinza-claro); font-size: 0.95rem; margin: 0; }
+        .register-header { margin-bottom: 1.8rem; }
+        .register-header h1 { color: #FFFFFF; font-size: 2rem; font-weight: 800; margin-bottom: 0.4rem; }
+        .register-header p { color: var(--cinza-claro); font-size: 0.95rem; margin: 0; }
 
-        .form-group { margin-bottom: 1.5rem; }
+        /* Emblema de Bônus de Boas-vindas (+50 XP) */
+        .xp-bonus-badge {
+            background: rgba(105, 213, 195, 0.15);
+            border: 1px solid rgba(105, 213, 195, 0.5);
+            color: var(--verde-aurora);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(105, 213, 195, 0.2);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group { margin-bottom: 1.2rem; }
         .form-label {
             display: block;
             color: var(--branco-suave);
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
         }
 
         .input-glass {
             width: 100%;
             background: rgba(4, 7, 13, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 1rem 1.2rem;
+            padding: 0.9rem 1.2rem;
             border-radius: 16px;
             color: #FFFFFF;
-            font-size: 1rem;
+            font-size: 0.95rem;
             outline: none;
             transition: all 0.3s var(--apple-ease);
             box-sizing: border-box;
@@ -227,7 +251,7 @@
         .input-glass::placeholder { color: rgba(255, 255, 255, 0.3); }
 
         /* Botão de Envio Principal */
-        .btn-login-submit {
+        .btn-register-submit {
             width: 100%;
             background: linear-gradient(135deg, var(--verde-aurora) 0%, #4bc2ad 100%);
             color: var(--preto-espacial);
@@ -246,29 +270,28 @@
             box-shadow: 0 10px 25px rgba(105, 213, 195, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.6);
         }
 
-        .btn-login-submit:hover {
+        .btn-register-submit:hover {
             transform: translate3d(0, -3px, 0) scale(1.02);
             box-shadow: 0 15px 35px rgba(105, 213, 195, 0.7), inset 0 1px 1px #FFFFFF;
             background: linear-gradient(135deg, #8de6d8 0%, var(--verde-aurora) 100%);
         }
 
-        .btn-login-submit:disabled {
+        .btn-register-submit:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none !important;
         }
 
-        /* Rodapé do Formulário (Links de Ação) */
-        .login-footer {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
+        .register-footer {
+            margin-top: 1.8rem;
+            padding-top: 1.2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
             font-size: 0.9rem;
             color: var(--cinza-claro);
         }
 
-        .login-footer a {
+        .register-footer a {
             color: var(--verde-aurora);
             font-weight: 700;
             text-decoration: none;
@@ -276,14 +299,14 @@
             margin-left: 0.4rem;
         }
 
-        .login-footer a:hover { color: #FFFFFF; text-decoration: underline; }
+        .register-footer a:hover { color: #FFFFFF; text-decoration: underline; }
 
         /* Caixa de Alerta / Erro */
         .alert-box {
             display: none;
             padding: 0.8rem 1.2rem;
             border-radius: 12px;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             font-size: 0.85rem;
             font-weight: 600;
             text-align: center;
@@ -303,9 +326,10 @@
         }
 
         @media (max-width: 850px) {
-            .login-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .astro-guide-col { display: none; } /* Esconde o ASTRO no celular para focar no login */
-            .login-glass-box { padding: 2rem; }
+            .register-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .astro-guide-col { display: none; }
+            .register-glass-box { padding: 2rem; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
         }
     </style>
 </head>
@@ -343,10 +367,10 @@
     </div>
     <div class="drawer-overlay" id="drawer-overlay"></div>
 
-    <!-- PALCO PRINCIPAL DE LOGIN -->
+    <!-- PALCO PRINCIPAL DE RECRUTAMENTO -->
     <main class="stage-container" id="main-stage">
         
-        <div class="login-grid">
+        <div class="register-grid">
             
             <!-- Coluna Esquerda: ASTRO Guia Interativo -->
             <div class="astro-guide-col">
@@ -355,39 +379,55 @@
                 </div>
                 <div class="astro-speech-bubble" id="speech-box">
                     <span class="speech-tag">✦ TRANSMISSÃO DE BORDO</span>
-                    <p class="speech-text" id="speech-text">Pronto para decolar, Astronauta? Insira seus dados para acessar sua central!</p>
+                    <p class="speech-text" id="speech-text">Bem-vindo ao recrutamento! Preencha sua ficha de voo para iniciarmos sua jornada espacial.</p>
                 </div>
             </div>
 
             <!-- Coluna Direita: Formulário Vision Pro -->
-            <div class="login-glass-box">
-                <div class="login-header">
-                    <h1>Acesso Espacial</h1>
-                    <p>Conecte-se para sincronizar seu XP e gerenciar suas missões.</p>
+            <div class="register-glass-box">
+                <div class="register-header">
+                    <h1>Alistamento Espacial</h1>
+                    <p>Crie sua identidade para acumular XP, subir de nível e gerenciar missões.</p>
+                </div>
+
+                <div class="xp-bonus-badge">
+                    <span>✦ BÔNUS DE BOAS-VINDAS:</span>
+                    <strong>+50 XP AO CRIAR SUA CONTA</strong>
                 </div>
 
                 <div id="alert-box" class="alert-box"></div>
 
-                <form id="form-login">
+                <form id="form-cadastro">
                     <div class="form-group">
-                        <label class="form-label" for="email">E-mail de Cadastro</label>
+                        <label class="form-label" for="codinome">Codinome de Astronauta</label>
+                        <input type="text" id="codinome" class="input-glass" placeholder="Ex: Young Cover, Explorer" required autocomplete="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">E-mail para Comunicação</label>
                         <input type="email" id="email" class="input-glass" placeholder="Ex: astronauta@astas.com.br" required autocomplete="email">
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-label" for="password">Código de Segurança (Senha)</label>
-                        <input type="password" id="password" class="input-glass" placeholder="••••••••••••" required autocomplete="current-password">
+                    <div class="form-row">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" for="password">Código de Segurança</label>
+                            <input type="password" id="password" class="input-glass" placeholder="Mín. 6 caracteres" required minlength="6" autocomplete="new-password">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label class="form-label" for="confirm-password">Confirmar Código</label>
+                            <input type="password" id="confirm-password" class="input-glass" placeholder="Repita a senha" required minlength="6" autocomplete="new-password">
+                        </div>
                     </div>
 
-                    <button type="submit" id="btn-submit" class="btn-login-submit">
-                        <span>Iniciar Decolagem</span>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    <button type="submit" id="btn-submit" class="btn-register-submit">
+                        <span>Confirmar Alistamento</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                     </button>
                 </form>
 
-                <div class="login-footer">
-                    <span>Ainda não tem registro na frota?</span>
-                    <a href="cadastro.html" class="nav-link-liquid">Criar Identidade ✦</a>
+                <div class="register-footer">
+                    <span>Já possui registro na frota?</span>
+                    <a href="login.html" class="nav-link-liquid">Acessar Conta ✦</a>
                 </div>
             </div>
 
@@ -400,7 +440,7 @@
     <script src="comunidade-config.js"></script>
     <script src="auth-engine.js"></script>
 
-    <!-- MOTOR DE AUTENTICAÇÃO E REAÇÃO DO ASTRO -->
+    <!-- MOTOR DE CADASTRO NO BANCO DA COMUNIDADE E REAÇÕES DO ASTRO -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // 1. Efeito de Transição Líquida
@@ -419,8 +459,10 @@
             });
 
             // 2. Sistema Reacional do ASTRO
+            const codinomeInput = document.getElementById('codinome');
             const emailInput = document.getElementById('email');
             const passInput = document.getElementById('password');
+            const confirmPassInput = document.getElementById('confirm-password');
             const speechText = document.getElementById('speech-text');
             const astroAvatar = document.getElementById('astro-avatar');
 
@@ -433,79 +475,99 @@
                 }, 150);
             }
 
+            codinomeInput.addEventListener('focus', () => {
+                atualizarAstro("Escolha um codinome marcante para ser reconhecido em todo o nosso ecossistema!", 1.05, -4);
+            });
+
             emailInput.addEventListener('focus', () => {
-                atualizarAstro("Buscando suas coordenadas no radar espelhado da nave...", 1.05, -3);
+                atualizarAstro("Seu e-mail será nosso canal oficial para transmitir atualizações das missões e conquistas.", 1.05, 3);
             });
 
             passInput.addEventListener('focus', () => {
-                atualizarAstro("Digite seu código secreto! Meus sensores de segurança estão ativados.", 1.05, 3);
+                atualizarAstro("Crie um código de segurança forte e impenetrável! Mínimo de 6 caracteres.", 1.05, -3);
             });
 
-            emailInput.addEventListener('blur', () => {
-                if (!emailInput.value && !passInput.value) {
-                    atualizarAstro("Pronto para decolar, Astronauta? Insira seus dados para acessar sua central!", 1, 0);
-                }
+            confirmPassInput.addEventListener('focus', () => {
+                atualizarAstro("Repita o código exato para meus sensores validarem a chave de ignição!", 1.05, 4);
             });
 
-            // 3. Processamento de Login no Supabase 2
-            const formLogin = document.getElementById('form-login');
+            // 3. Processamento de Cadastro no Supabase 2
+            const formCadastro = document.getElementById('form-cadastro');
             const btnSubmit = document.getElementById('btn-submit');
             const alertBox = document.getElementById('alert-box');
 
-            formLogin.addEventListener('submit', async (e) => {
+            formCadastro.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
                 if (!window.supabaseComunidade) {
-                    mostrarAlerta("Erro interno: Nave sem conexão com o Supabase.", false);
+                    mostrarAlerta("Erro interno: Nave sem conexão com o Supabase da comunidade.", false);
                     return;
                 }
 
+                const codinome = codinomeInput.value.trim();
                 const email = emailInput.value.trim();
                 const password = passInput.value;
+                const confirmPassword = confirmPassInput.value;
+
+                // Validação de Senha
+                if (password !== confirmPassword) {
+                    mostrarAlerta("Alerta vermelho: As senhas digitadas não são idênticas!", false);
+                    atualizarAstro("Atenção! Os códigos de segurança não coincidem. Digite novamente com calma!", 0.95, 5);
+                    confirmPassInput.focus();
+                    return;
+                }
 
                 // Estado de Carregamento
                 btnSubmit.disabled = true;
-                btnSubmit.innerHTML = `<span>Sincronizando Motores...</span>`;
-                atualizarAstro("Validando credenciais na órbita central... Aguarde um instante!", 1.1, 0);
+                btnSubmit.innerHTML = `<span>Gravando Registro nas Estrelas...</span>`;
+                atualizarAstro("Enviando dados para a órbita central da nave... Gerando perfil de nível 1!", 1.1, 0);
                 alertBox.style.display = 'none';
 
                 try {
-                    // Chamada ao Supabase da Comunidade
-                    const { data, error } = await window.supabaseComunidade.auth.signInWithPassword({
+                    // Cadastra o usuário e passa o codinome no metadata para o trigger SQL capturar!
+                    const { data, error } = await window.supabaseComunidade.auth.signUp({
                         email: email,
-                        password: password
+                        password: password,
+                        options: {
+                            data: {
+                                codinome: codinome,
+                                avatar_url: 'assets/astro-neutro.png'
+                            }
+                        }
                     });
 
                     if (error) {
                         throw error;
                     }
 
-                    // Login Concluído com Sucesso!
-                    mostrarAlerta("✦ Decolagem autorizada! Redirecionando...", true);
-                    atualizarAstro("Acesso confirmado! Bem-vindo de volta à nave mãe, Astronauta.", 1.15, -5);
+                    // Sucesso no Cadastro! O gatilho SQL criou a conta na tabela perfis_astronautas
+                    mostrarAlerta("✦ Alistamento concluído com sucesso! +50 XP Adquiridos!", true);
+                    atualizarAstro(`Incrível, <strong>${codinome}</strong>! Seu perfil de Astronauta foi criado. Bem-vindo à bordo!`, 1.15, -5);
                     btnSubmit.style.background = '#69D5C3';
-                    btnSubmit.innerHTML = `<span>Acesso Liberado! ✦</span>`;
+                    btnSubmit.innerHTML = `<span>Alistamento Concluído! ✦</span>`;
 
-                    // Desfoque de saída e redirecionamento para o painel do usuário
+                    // Desfoque de saída e redirecionamento para a central da conta
                     setTimeout(() => {
                         mainStage.classList.add('page-exit');
                         setTimeout(() => {
                             window.location.href = 'conta.html';
                         }, 400);
-                    }, 1200);
+                    }, 1500);
 
                 } catch (err) {
-                    console.error("Erro no login:", err.message);
+                    console.error("Erro no cadastro:", err.message);
                     btnSubmit.disabled = false;
-                    btnSubmit.innerHTML = `<span>Iniciar Decolagem</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>`;
+                    btnSubmit.innerHTML = `<span>Confirmar Alistamento</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle></svg>`;
                     
-                    let msgErro = "Credenciais não reconhecidas no radar. Verifique e-mail e senha!";
-                    if (err.message.includes("Invalid login credentials")) {
-                        msgErro = "E-mail ou senha incorretos! Tente novamente.";
+                    let msgErro = "Não foi possível concluir o alistamento no momento.";
+                    if (err.message.includes("User already registered") || err.message.includes("already exists")) {
+                        msgErro = "Esse e-mail já possui registro na nossa frota espacial!";
+                    } else if (err.message.includes("Password should be at least")) {
+                        msgErro = "O código de segurança deve ter pelo menos 6 caracteres!";
                     }
                     
                     mostrarAlerta(msgErro, false);
-                    atualizarAstro("Alerta vermelho! Não encontrei esse registro nas estrelas. Verifique a digitação!", 0.95, 5);
+                    atualizarAstro("Tivemos uma interferência no sinal! Verifique a mensagem de erro na tela.", 0.95, -5);
                 }
             });
 

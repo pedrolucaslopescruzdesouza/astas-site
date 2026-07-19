@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* ==========================================================================
-           MOTOR APPLE LIQUID GLASS & TRANSIÇÕES DE TELA (60 FPS)
+           MOTOR APPLE LIQUID GLASS & PREVENÇÃO DE BUGS MOBILE
            ========================================================================== */
 
         :root {
@@ -18,7 +18,44 @@
             --liquid-blur: blur(30px) saturate(180%);
         }
 
-        /* 1. ANIMAÇÕES DE ENTRADA E SAÍDA DA PÁGINA */
+        /* TRAVA MOBILE: Impede rolagem horizontal e quebra de layout */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        /* 1. LUA FLUTUANTE DE FUNDO */
+        .lua-segundo-plano {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+        }
+
+        .lua-girando {
+            width: 750px;
+            max-width: 180vw;
+            animation: flutuarLua 15s ease-in-out infinite;
+            filter: drop-shadow(0 0 50px rgba(105, 213, 195, 0.15));
+        }
+
+        @keyframes flutuarLua {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(3deg); }
+        }
+
+        /* 2. ANIMAÇÕES DE ENTRADA E SAÍDA */
         @keyframes appleFadeIn {
             0% { opacity: 0; transform: translate3d(0, 25px, 0) scale(0.97); filter: blur(12px); }
             100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0px); }
@@ -39,7 +76,7 @@
             filter: blur(15px) !important;
         }
 
-        /* 2. BARRA DE NAVEGAÇÃO EM VIDRO LÍQUIDO */
+        /* 3. BARRA DE NAVEGAÇÃO EM VIDRO LÍQUIDO */
         .nav-links-desktop {
             background: rgba(10, 20, 35, 0.55) !important;
             backdrop-filter: var(--liquid-blur) !important;
@@ -74,7 +111,6 @@
             transform: translate3d(0, -2px, 0);
         }
 
-        /* 3. BOTÃO "ENTRE" MAIOR, EM VERDE AURORA COM ÍCONE NÍTIDO */
         .btn-top-entre {
             background: linear-gradient(135deg, var(--verde-aurora) 0%, #4bc2ad 100%) !important;
             backdrop-filter: var(--liquid-blur) !important;
@@ -102,7 +138,47 @@
             box-shadow: 0 15px 35px rgba(105, 213, 195, 0.75), inset 0 1px 1px #FFFFFF !important;
         }
 
-        /* 4. CENTRAL DE COMANDO DO ASTRO (LAYOUT APPLE VISION PRO) */
+        /* 4. GAVETA MOBILE (ÁREA SEGURA) */
+        .mobile-menu-btn {
+            display: none; flex-direction: column; gap: 6px;
+            background: transparent; border: none; cursor: pointer; padding: 0.5rem;
+        }
+        .mobile-menu-btn span {
+            width: 28px; height: 3px; background: var(--verde-aurora);
+            border-radius: 3px; transition: all 0.3s ease;
+        }
+
+        .mobile-drawer {
+            position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+            background: rgba(7, 14, 25, 0.98); backdrop-filter: blur(25px);
+            border-left: 1px solid rgba(105, 213, 195, 0.2); z-index: 9999;
+            transition: right 0.5s var(--apple-ease); padding: 2.5rem 2rem;
+            display: flex; flex-direction: column; box-shadow: -15px 0 40px rgba(0,0,0,0.8);
+        }
+        .mobile-drawer.open { right: 0; }
+        
+        .drawer-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 9998;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        .drawer-overlay.active { opacity: 1; pointer-events: all; }
+        
+        .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
+        .drawer-logo { width: 110px; }
+        .btn-close-drawer { background: transparent; border: none; color: #fff; font-size: 1.8rem; cursor: pointer; }
+        
+        .drawer-links { display: flex; flex-direction: column; gap: 1.2rem; }
+        .drawer-links a { color: var(--cinza-claro); text-decoration: none; font-size: 1.2rem; font-weight: 600; transition: color 0.3s ease; }
+        .drawer-links a:hover, .drawer-links a.drawer-active { color: var(--verde-aurora); }
+
+        .btn-mobile-conta {
+            background: rgba(105, 213, 195, 0.1); border: 1px solid var(--verde-aurora);
+            color: var(--verde-aurora) !important; padding: 1rem; border-radius: 30px;
+            text-align: center; font-weight: 800 !important; margin-bottom: 1rem;
+        }
+
+        /* 5. CENTRAL DE COMANDO DO ASTRO */
         .astro-hub-grid {
             display: grid;
             grid-template-columns: 1fr 1.2fr;
@@ -166,7 +242,7 @@
             50% { opacity: 0.4; transform: scale(0.8); }
         }
 
-        /* 5. CAIXA DE DIÁLOGO E CONSOLE DE MÓDULOS */
+        /* 6. CAIXA DE DIÁLOGO E MÓDULOS */
         .dialog-box {
             background: linear-gradient(135deg, rgba(15, 28, 48, 0.65) 0%, rgba(7, 14, 25, 0.75) 100%) !important;
             backdrop-filter: blur(40px) saturate(200%) !important;
@@ -204,11 +280,10 @@
             text-transform: uppercase !important;
         }
 
-        .dialog-box h1 { color: #FFFFFF; font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
+        .dialog-box h1 { color: #FFFFFF; font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; transition: all 0.4s var(--apple-ease); }
         .dialog-box .intro-text { color: rgba(255, 255, 255, 0.85); font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; min-height: 80px; transition: opacity 0.3s ease; }
         .dialog-box .intro-text strong { color: var(--verde-aurora); }
 
-        /* Módulos Interativos no Console */
         .modules-title {
             color: var(--cinza-claro);
             font-size: 0.8rem;
@@ -255,7 +330,6 @@
             box-shadow: 0 8px 20px rgba(105, 213, 195, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.4);
         }
 
-        /* Botão inferior de Ação Principal */
         .btn-action-hub {
             background: linear-gradient(135deg, var(--verde-aurora) 0%, #4bc2ad 100%);
             color: var(--preto-espacial);
@@ -277,10 +351,20 @@
             background: linear-gradient(135deg, #8de6d8 0%, var(--verde-aurora) 100%);
         }
 
-        @media (max-width: 900px) {
+        /* ==========================================================================
+           RESPONSIVIDADE CELULAR (MOBILE FIRST)
+           ========================================================================== */
+        @media (max-width: 850px) {
+            .nav-links-desktop { display: none !important; }
+            .auth-top .btn-top-entre { display: none !important; }
+            .mobile-menu-btn { display: flex !important; }
+            
             .astro-hub-grid { grid-template-columns: 1fr; gap: 2rem; }
             .modules-grid { grid-template-columns: 1fr; }
-            .dialog-box { padding: 2rem !important; }
+            .dialog-box { padding: 2rem !important; border-radius: 24px !important; }
+            .dialog-box h1 { font-size: 1.8rem; }
+            .astro-display-col { padding: 2rem 1.5rem; }
+            .btn-action-hub { width: 100%; justify-content: center; padding: 1.1rem 1.5rem; }
         }
     </style>
 </head>
@@ -289,7 +373,7 @@
     <!-- Fundo Estrelado -->
     <canvas id="space-canvas"></canvas>
 
-    <!-- CABEÇALHO DESKTOP -->
+    <!-- CABEÇALHO DESKTOP / MOBILE -->
     <header class="navbar">
         <div class="logo-container">
             <a href="index.html" class="nav-link-liquid"><img src="assets/astas-logo.png" alt="ASTAS Logo" class="logo"></a>
@@ -313,13 +397,14 @@
         </div>
     </header>
 
-    <!-- MENU GAVETA MOBILE -->
+    <!-- MENU GAVETA MOBILE BLINDADO -->
     <div class="mobile-drawer" id="mobile-drawer">
         <div class="drawer-header">
             <img src="assets/astas-logo.png" alt="ASTAS Logo" class="drawer-logo">
             <button class="btn-close-drawer" id="btn-close-menu">✕</button>
         </div>
         <nav class="drawer-links">
+            <a href="login.html" id="btn-mobile-conta" class="nav-link-liquid btn-mobile-conta">✦ Entrar na Conta</a>
             <a href="portfolio.html" class="nav-link-liquid">Portfólio</a>
             <a href="servicos.html" class="nav-link-liquid">Serviços</a>
             <a href="astro.html" class="drawer-active nav-link-liquid">Astro</a>
@@ -327,6 +412,11 @@
         </nav>
     </div>
     <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <!-- LUA DE SEGUNDO PLANO -->
+    <div class="lua-segundo-plano">
+        <img src="assets/lua-base.png" alt="Lua no Céu" class="lua-girando">
+    </div>
 
     <!-- PALCO PRINCIPAL DO ASTRO -->
     <main class="stage-container" id="main-stage">
@@ -338,7 +428,7 @@
                 <img src="assets/astro-neutro.png" alt="ASTRO Guia" id="astro-avatar">
                 <div class="status-pill">
                     <span class="status-dot"></span>
-                    <span>SISTEMA ONLINE • NÍVEL 1</span>
+                    <span id="astro-status-text">SISTEMA ONLINE • NÍVEL 1</span>
                 </div>
             </div>
 
@@ -395,9 +485,10 @@
 
             <div class="rodape-contato">
                 <h4>Conecte-se com a ASTAS</h4>
-                <a href="#" target="_blank">✦ Instagram (@astas.universo)</a>
-                <a href="#" target="_blank">✦ YouTube (Canal ASTAS)</a>
-                <a href="mailto:contato@astas.com.br">✦ contato@astas.com.br</a>
+                <a href="https://www.instagram.com/astasdesigner" target="_blank">✦ Instagram (@astasdesigner)</a>
+                <a href="https://www.youtube.com/@Astas_Creators" target="_blank">✦ YouTube (ASTAS Creators)</a>
+                <a href="https://api.whatsapp.com/send?phone=5561981052340" target="_blank">✦ WhatsApp: (61) 98105-2340</a>
+                <a href="mailto:astasdesigner@gmail.com">✦ astasdesigner@gmail.com</a>
             </div>
         </div>
 
@@ -406,11 +497,33 @@
         </div>
     </footer>
 
+    <!-- BIBLIOTECA DO SUPABASE ADICIONADA AQUI -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
 
-    <!-- MOTOR DE TRANSIÇÃO LÍQUIDA E INTERATIVIDADE DO CONSOLE -->
+    <!-- CONTROLE MANUAL DO MENU MOBILE (GARANTIA 100%) -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const btnOpen = document.getElementById('btn-open-menu');
+            const btnClose = document.getElementById('btn-close-menu');
+            const drawer = document.getElementById('mobile-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+
+            if (btnOpen && btnClose && drawer && overlay) {
+                btnOpen.addEventListener('click', () => {
+                    drawer.classList.add('open');
+                    overlay.classList.add('active');
+                });
+                
+                const fecharMenu = () => {
+                    drawer.classList.remove('open');
+                    overlay.classList.remove('active');
+                };
+                
+                btnClose.addEventListener('click', fecharMenu);
+                overlay.addEventListener('click', fecharMenu);
+            }
+
             // 1. Transição Líquida de Páginas
             const links = document.querySelectorAll('.nav-link-liquid');
             const mainStage = document.getElementById('main-stage');
@@ -420,6 +533,10 @@
                     const targetUrl = link.getAttribute('href');
                     if (targetUrl && targetUrl.endsWith('.html') && targetUrl !== window.location.pathname.split('/').pop()) {
                         e.preventDefault();
+                        if (drawer.classList.contains('open')) {
+                            drawer.classList.remove('open');
+                            overlay.classList.remove('active');
+                        }
                         mainStage.classList.add('page-exit');
                         setTimeout(() => { window.location.href = targetUrl; }, 400);
                     }
@@ -432,20 +549,20 @@
             const textEl = document.getElementById('console-text');
             const avatarEl = document.getElementById('astro-avatar');
 
-            const dadosConsole = {
+            window.dadosConsole = {
                 identidade: {
                     titulo: "Sua mente criativa em expansão contínua.",
                     texto: "O <strong>ASTRO</strong> analisa o DNA do seu projeto para construir marcas com personalidade própria. Desde a escolha da paleta de cores até a tipografia, ele garante que cada detalhe visual comunique a essência do seu negócio.",
                     avatar: "assets/astro-neutro.png"
                 },
                 motion: {
-                    titulo: "Dando vida e movimento às suas ideias.",
-                    texto: "Com o módulo de <strong>Art & Motion Design</strong>, o ASTRO ajuda a transformar logotipos estáticos em animações fluidas 2D, vinhetas impactantes e conteúdos dinâmicos que capturam a atenção instantaneamente nas redes sociais.",
+                    titulo: "Art & Motion sem ruídos na sua tela.",
+                    texto: "Com o módulo de <strong>Art & Motion Design</strong>, o ASTRO estrutura animações 2D, layouts e gera prompts descritivos precisos e vetorizados para orientar suas criações com clareza.",
                     avatar: "assets/astro-neutro.png"
                 },
                 xp: {
                     titulo: "Evolução constante e gamificação espacial.",
-                    texto: "Em breve, cada missão concluída no nosso ecossistema vai gerar <strong>XP e conquistas exclusivas</strong> para o seu perfil de Astronauta. O ASTRO acompanhará sua evolução desde a primeira ideia até o topo do mercado digital!",
+                    texto: "No ecossistema ASTAS, cada missão explorada acumula <strong>XP e conquistas exclusivas</strong>. O ASTRO acompanha seu nível de Astronauta na nossa comunidade criativa em tempo real!",
                     avatar: "assets/astro-neutro.png"
                 }
             };
@@ -456,7 +573,7 @@
                     btn.classList.add('active');
 
                     const modKey = btn.getAttribute('data-mod');
-                    const info = dadosConsole[modKey];
+                    const info = window.dadosConsole[modKey];
 
                     if (info) {
                         textEl.style.opacity = '0';
@@ -475,6 +592,72 @@
                     }
                 });
             });
+        });
+    </script>
+
+    <!-- MOTOR DE AUTENTICAÇÃO DA COMUNIDADE (SUPABASE 2) -->
+    <script src="comunidade-config.js"></script>
+    <script src="auth-engine.js"></script>
+
+    <!-- PERSONALIZAÇÃO ESPECÍFICA DO ASTRO PÓS-LOGIN -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!window.supabaseComunidade) return;
+
+            const { data: { session } } = await window.supabaseComunidade.auth.getSession();
+
+            if (session && session.user) {
+                let codinome = session.user.user_metadata?.codinome || 'Astronauta';
+                let nivel = 1;
+                try {
+                    const { data } = await window.supabaseComunidade
+                        .from('perfis_astronautas')
+                        .select('codinome, nivel')
+                        .eq('id', session.user.id)
+                        .single();
+                    if (data) {
+                        if (data.codinome) codinome = data.codinome;
+                        if (data.nivel) nivel = data.nivel;
+                    }
+                } catch (e) {}
+
+                // Atualiza Botão do Menu Mobile
+                const btnMobileConta = document.getElementById('btn-mobile-conta');
+                if (btnMobileConta) {
+                    btnMobileConta.innerHTML = `✦ Conta (Nvl. ${nivel})`;
+                    btnMobileConta.setAttribute('href', 'conta.html');
+                }
+
+                // Atualiza pílula de status do ASTRO para mostrar nível real do usuário
+                const statusEl = document.getElementById('astro-status-text');
+                if (statusEl) {
+                    statusEl.innerText = `SISTEMA ONLINE • IA CONECTADA AO NVL. ${nivel}`;
+                }
+
+                // Customiza a fala inicial se estiver logado
+                const consoleTitle = document.getElementById('console-title');
+                const consoleText = document.getElementById('console-text');
+                if (consoleTitle && consoleText) {
+                    consoleTitle.style.opacity = '0';
+                    consoleText.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        const tituloLogado = `Sua mente em expansão, <span style="color: var(--verde-aurora);">${codinome}</span>.`;
+                        const textoLogado = `O <strong>ASTRO</strong> está sincronizado à sua frequência criativa. Como um Astronauta de <strong>Nível ${nivel}</strong>, você já pode explorar nossos módulos de DNA visual e estruturar suas ideias sem perder o foco.`;
+                        
+                        consoleTitle.innerHTML = tituloLogado;
+                        consoleText.innerHTML = textoLogado;
+                        
+                        if (window.dadosConsole && window.dadosConsole.identidade) {
+                            window.dadosConsole.identidade.titulo = tituloLogado;
+                            window.dadosConsole.identidade.texto = textoLogado;
+                        }
+
+                        consoleTitle.style.opacity = '1';
+                        consoleText.style.opacity = '1';
+                    }, 200);
+                }
+            }
         });
     </script>
 </body>
