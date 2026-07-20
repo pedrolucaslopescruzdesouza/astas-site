@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* ==========================================================================
-           MOTOR APPLE LIQUID GLASS & TRANSIÇÕES DE TELA (60 FPS)
+           MOTOR APPLE LIQUID GLASS & PREVENÇÃO DE BUGS MOBILE
            ========================================================================== */
 
         :root {
@@ -18,6 +18,44 @@
             --liquid-blur: blur(35px) saturate(180%);
         }
 
+        /* TRAVA MOBILE: Impede rolagem horizontal e quebra de layout */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+
+        /* 1. LUA FLUTUANTE DE FUNDO */
+        .lua-segundo-plano {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+        }
+
+        .lua-girando {
+            width: 750px;
+            max-width: 180vw;
+            animation: flutuarLua 15s ease-in-out infinite;
+            filter: drop-shadow(0 0 50px rgba(105, 213, 195, 0.15));
+        }
+
+        @keyframes flutuarLua {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(3deg); }
+        }
+
+        /* 2. ANIMAÇÕES DE ENTRADA E SAÍDA DA PÁGINA */
         @keyframes appleFadeIn {
             0% { opacity: 0; transform: translate3d(0, 25px, 0) scale(0.97); filter: blur(12px); }
             100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0px); }
@@ -42,7 +80,7 @@
             filter: blur(15px) !important;
         }
 
-        /* BARRA DE NAVEGAÇÃO EM VIDRO LÍQUIDO */
+        /* 3. BARRA DE NAVEGAÇÃO EM VIDRO LÍQUIDO */
         .nav-links-desktop {
             background: rgba(10, 20, 35, 0.55) !important;
             backdrop-filter: var(--liquid-blur) !important;
@@ -83,6 +121,53 @@
             display: inline-flex !important;
             align-items: center !important;
             gap: 0.6rem !important;
+        }
+
+        .btn-top-entre:hover {
+            background: linear-gradient(135deg, #8de6d8 0%, var(--verde-aurora) 100%) !important;
+            color: var(--preto-espacial) !important;
+            transform: translate3d(0, -4px, 0) scale(1.05) !important;
+            box-shadow: 0 15px 35px rgba(105, 213, 195, 0.75), inset 0 1px 1px #FFFFFF !important;
+        }
+
+        /* 4. GAVETA MOBILE BLINDADA */
+        .mobile-menu-btn {
+            display: none; flex-direction: column; gap: 6px;
+            background: transparent; border: none; cursor: pointer; padding: 0.5rem;
+        }
+        .mobile-menu-btn span {
+            width: 28px; height: 3px; background: var(--verde-aurora);
+            border-radius: 3px; transition: all 0.3s ease;
+        }
+
+        .mobile-drawer {
+            position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+            background: rgba(7, 14, 25, 0.98); backdrop-filter: blur(25px);
+            border-left: 1px solid rgba(105, 213, 195, 0.2); z-index: 9999;
+            transition: right 0.5s var(--apple-ease); padding: 2.5rem 2rem;
+            display: flex; flex-direction: column; box-shadow: -15px 0 40px rgba(0,0,0,0.8);
+        }
+        .mobile-drawer.open { right: 0; }
+        
+        .drawer-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 9998;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        .drawer-overlay.active { opacity: 1; pointer-events: all; }
+        
+        .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
+        .drawer-logo { width: 110px; }
+        .btn-close-drawer { background: transparent; border: none; color: #fff; font-size: 1.8rem; cursor: pointer; }
+        
+        .drawer-links { display: flex; flex-direction: column; gap: 1.2rem; }
+        .drawer-links a { color: var(--cinza-claro); text-decoration: none; font-size: 1.2rem; font-weight: 600; transition: color 0.3s ease; }
+        .drawer-links a:hover, .drawer-links a.drawer-active { color: var(--verde-aurora); }
+
+        .btn-mobile-conta {
+            background: rgba(105, 213, 195, 0.1); border: 1px solid var(--verde-aurora);
+            color: var(--verde-aurora) !important; padding: 1rem; border-radius: 30px;
+            text-align: center; font-weight: 800 !important; margin-bottom: 1rem;
         }
 
         /* ==========================================================================
@@ -227,19 +312,9 @@
             font-family: inherit;
         }
 
-        .select-glass {
-            cursor: pointer;
-        }
-
-        .select-glass option {
-            background: #0A1423;
-            color: #FFFFFF;
-        }
-
-        .textarea-glass {
-            resize: vertical;
-            min-height: 110px;
-        }
+        .select-glass { cursor: pointer; }
+        .select-glass option { background: #0A1423; color: #FFFFFF; }
+        .textarea-glass { resize: vertical; min-height: 110px; }
 
         .input-glass:focus, .select-glass:focus, .textarea-glass:focus {
             border-color: var(--verde-aurora);
@@ -306,9 +381,13 @@
         }
 
         @media (max-width: 850px) {
+            .nav-links-desktop { display: none !important; }
+            .auth-top .btn-top-entre { display: none !important; }
+            .mobile-menu-btn { display: flex !important; }
+            
             .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
             .astro-guide-col { display: none; }
-            .contact-glass-box { padding: 2rem; }
+            .contact-glass-box { padding: 2rem; border-radius: 24px; }
             .form-row { grid-template-columns: 1fr; gap: 0; }
         }
     </style>
@@ -318,7 +397,7 @@
     <!-- Fundo Estrelado -->
     <canvas id="space-canvas"></canvas>
 
-    <!-- CABEÇALHO DESKTOP -->
+    <!-- CABEÇALHO DESKTOP / MOBILE -->
     <header class="navbar">
         <div class="logo-container">
             <a href="index.html" class="nav-link-liquid"><img src="assets/astas-logo.png" alt="ASTAS Logo" class="logo"></a>
@@ -340,12 +419,26 @@
         </div>
     </header>
 
-    <!-- MENU GAVETA MOBILE -->
+    <!-- MENU GAVETA MOBILE BLINDADO -->
     <div class="mobile-drawer" id="mobile-drawer">
-        <div class="drawer-header"><img src="assets/astas-logo.png" alt="ASTAS Logo" class="drawer-logo"><button class="btn-close-drawer" id="btn-close-menu">✕</button></div>
-        <nav class="drawer-links"><a href="portfolio.html" class="nav-link-liquid">Portfólio</a><a href="servicos.html" class="nav-link-liquid">Serviços</a><a href="astro.html" class="nav-link-liquid">Astro</a><a href="index.html" class="nav-link-liquid">Início</a></nav>
+        <div class="drawer-header">
+            <img src="assets/astas-logo.png" alt="ASTAS Logo" class="drawer-logo">
+            <button class="btn-close-drawer" id="btn-close-menu">✕</button>
+        </div>
+        <nav class="drawer-links">
+            <a href="login.html" id="btn-mobile-conta" class="nav-link-liquid btn-mobile-conta">✦ Entrar na Conta</a>
+            <a href="portfolio.html" class="nav-link-liquid">Portfólio</a>
+            <a href="servicos.html" class="nav-link-liquid">Serviços</a>
+            <a href="astro.html" class="nav-link-liquid">Astro</a>
+            <a href="index.html" class="nav-link-liquid">Início</a>
+        </nav>
     </div>
     <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <!-- LUA DE SEGUNDO PLANO -->
+    <div class="lua-segundo-plano">
+        <img src="assets/lua-base.png" alt="Lua no Céu" class="lua-girando">
+    </div>
 
     <!-- PALCO PRINCIPAL DE CONTATO -->
     <main class="stage-container" id="main-stage">
@@ -418,7 +511,7 @@
 
     </main>
 
-    <!-- RODAPÉ PROFISSIONAL -->
+    <!-- RODAPÉ PROFISSIONAL DA ASTAS -->
     <footer class="rodape-profissional">
         <div class="rodape-inner">
             <div class="rodape-brand">
@@ -434,9 +527,10 @@
             </div>
             <div class="rodape-contato">
                 <h4>Conecte-se com a ASTAS</h4>
-                <a href="#" target="_blank">✦ Instagram (@astas.universo)</a>
-                <a href="#" target="_blank">✦ YouTube (Canal ASTAS)</a>
-                <a href="mailto:contato@astas.com.br">✦ contato@astas.com.br</a>
+                <a href="https://www.instagram.com/astasdesigner" target="_blank">✦ Instagram (@astasdesigner)</a>
+                <a href="https://www.youtube.com/@Astas_Creators" target="_blank">✦ YouTube (ASTAS Creators)</a>
+                <a href="https://api.whatsapp.com/send?phone=5561981052340" target="_blank">✦ WhatsApp: (61) 98105-2340</a>
+                <a href="mailto:astasdesigner@gmail.com">✦ astasdesigner@gmail.com</a>
             </div>
         </div>
         <div class="rodape-bottom"><p>&copy; 2026 ASTAS — Universo Criativo. Todos os direitos reservados @ASTAS.</p></div>
@@ -444,6 +538,32 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="script.js"></script>
+    
+    <!-- CONTROLE MANUAL DO MENU MOBILE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnOpen = document.getElementById('btn-open-menu');
+            const btnClose = document.getElementById('btn-close-menu');
+            const drawer = document.getElementById('mobile-drawer');
+            const overlay = document.getElementById('drawer-overlay');
+
+            if (btnOpen && btnClose && drawer && overlay) {
+                btnOpen.addEventListener('click', () => {
+                    drawer.classList.add('open');
+                    overlay.classList.add('active');
+                });
+                
+                const fecharMenu = () => {
+                    drawer.classList.remove('open');
+                    overlay.classList.remove('active');
+                };
+                
+                btnClose.addEventListener('click', fecharMenu);
+                overlay.addEventListener('click', fecharMenu);
+            }
+        });
+    </script>
+
     <script src="comunidade-config.js"></script>
     <script src="auth-engine.js"></script>
 
@@ -459,6 +579,10 @@
                     const targetUrl = link.getAttribute('href');
                     if (targetUrl && targetUrl.endsWith('.html') && targetUrl !== window.location.pathname.split('/').pop()) {
                         e.preventDefault();
+                        if (document.getElementById('mobile-drawer').classList.contains('open')) {
+                            document.getElementById('mobile-drawer').classList.remove('open');
+                            document.getElementById('drawer-overlay').classList.remove('active');
+                        }
                         mainStage.classList.add('page-exit');
                         setTimeout(() => { window.location.href = targetUrl; }, 400);
                     }
@@ -470,11 +594,22 @@
                 const { data: { session } } = await window.supabaseComunidade.auth.getSession();
                 if (session && session.user) {
                     let codinome = session.user.user_metadata?.codinome || '';
+                    let nivel = 1;
                     try {
-                        const { data } = await window.supabaseComunidade.from('perfis_astronautas').select('codinome').eq('id', session.user.id).single();
-                        if (data && data.codinome) codinome = data.codinome;
+                        const { data } = await window.supabaseComunidade.from('perfis_astronautas').select('codinome, nivel').eq('id', session.user.id).single();
+                        if (data) {
+                            if (data.codinome) codinome = data.codinome;
+                            if (data.nivel) nivel = data.nivel;
+                        }
                     } catch(e){}
                     
+                    // Atualiza Botão do Menu Mobile
+                    const btnMobileConta = document.getElementById('btn-mobile-conta');
+                    if (btnMobileConta) {
+                        btnMobileConta.innerHTML = `✦ Conta (Nvl. ${nivel})`;
+                        btnMobileConta.setAttribute('href', 'conta.html');
+                    }
+
                     if (codinome) document.getElementById('nome').value = codinome;
                     if (session.user.email) document.getElementById('email').value = session.user.email;
                 }
@@ -509,8 +644,8 @@
             const btnSubmit = document.getElementById('btn-submit');
             const alertBox = document.getElementById('alert-box');
 
-            // ⚠️ ATENÇÃO MANO: COLOQUE SEU NÚMERO DE WHATSAPP AQUI (DDD + NÚMERO, SEM ESPAÇOS OU TRAÇOS)
-            const SEU_NUMERO_WHATSAPP = "5511999999999"; 
+            // CONTATO OFICIAL ASTAS SINCRONIZADO
+            const SEU_NUMERO_WHATSAPP = "5561981052340"; 
 
             formContato.addEventListener('submit', async (e) => {
                 e.preventDefault();

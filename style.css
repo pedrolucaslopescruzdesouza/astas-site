@@ -36,16 +36,16 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 0;
+    z-index: -2;
     pointer-events: none;
 }
 
-/* --- ESTRELA CADENTE DINÂMICA --- */
+/* --- ESTRELA CADENTE DINÂMICA (OTIMIZADA PARA MOBILE E DESKTOP) --- */
 .shooting-star {
     position: fixed;
     width: 360px;
     height: 4px;
-    z-index: 1;
+    z-index: -1; /* Posicionada na frente do fundo espelhado e visível no mobile */
     pointer-events: none;
     display: flex;
     align-items: center;
@@ -76,7 +76,7 @@ body {
 @keyframes shootingAnimation {
     0% { transform: rotate(var(--angle)) translateX(0) scaleX(0.2); opacity: 1; }
     65% { opacity: 1; }
-    100% { transform: rotate(var(--angle)) translateX(1700px) scaleX(1.5); opacity: 0; }
+    100% { transform: rotate(var(--angle)) translateX(1500px) scaleX(1.5); opacity: 0; }
 }
 
 /* --- CABEÇALHO DESKTOP --- */
@@ -260,40 +260,35 @@ body {
     pointer-events: all;
 }
 
-/* --- NOVA LUA DE SEGUNDO PLANO --- */
+/* --- NOVA LUA SATÉLITE (TAMANHO DO ASTRO + FLUTUAÇÃO + GIRO HORÁRIO) --- */
 .lua-segundo-plano {
     position: fixed;
-    top: 15%;
-    left: -350px;
-    width: 250px;
-    height: 250px;
-    z-index: 1;
+    top: 16%;
+    right: 8%;         /* Posicionada como satélite visível no canto superior direito */
+    width: 220px;      /* Reduzida para o tamanho aproximado do ASTRO */
+    height: 220px;
+    z-index: -1;
     pointer-events: none;
-    animation: orbitaLunar 180s linear infinite;
+    opacity: 0.85;
+    animation: flutuarLateralLua 8s ease-in-out infinite;
 }
 
-@keyframes orbitaLunar {
-    0% { left: -300px; opacity: 0; }
-    2% { opacity: 0.85; }
-    66.66% { left: calc(100vw + 300px); opacity: 0.85; }
-    67% { opacity: 0; left: calc(100vw + 300px); }
-    100% { left: -300px; opacity: 0; }
+@keyframes flutuarLateralLua {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(-35px, 20px, 0); } /* Flutua suavemente para os lados */
 }
 
 .lua-girando {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 0 30px rgba(105, 213, 195, 0.15));
-    animation: luaFlutuaEGira 45s linear infinite;
+    filter: drop-shadow(0 0 30px rgba(105, 213, 195, 0.22));
+    animation: girarHorarioLua 35s linear infinite;
 }
 
-@keyframes luaFlutuaEGira {
-    0% { transform: translateY(0px) rotate(0deg); }
-    25% { transform: translateY(-16px) rotate(90deg); }
-    50% { transform: translateY(0px) rotate(180deg); }
-    75% { transform: translateY(16px) rotate(270deg); }
-    100% { transform: translateY(0px) rotate(360deg); }
+@keyframes girarHorarioLua {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); } /* Giro contínuo no sentido horário */
 }
 
 /* --- PALCO PRINCIPAL --- */
@@ -322,7 +317,6 @@ body {
     margin-bottom: 2rem;
 }
 
-/* --- ASTRO COM BRILHO NEON SUAVE E ELEGANTE (AURA ESPACIAL) --- */
 .astro-container {
     flex-shrink: 0;
     width: 380px;
@@ -336,7 +330,6 @@ body {
 .astro {
     width: 100%;
     height: auto;
-    /* Reduzido a opacidade do brilho verde de 0.60 para 0.22! Muito mais suave e sofisticado */
     filter: drop-shadow(0 0 15px rgba(105, 213, 195, 0.22)) drop-shadow(0 0 35px rgba(105, 213, 195, 0.08));
     transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
 }
@@ -352,16 +345,14 @@ body {
     66% { transform: translateY(-8px) rotate(-2deg) scale(0.99); }
 }
 
-/* --- COLUNA DE DIÁLOGO (GARANTE ALINHAMENTO E PROPORÇÃO 100% ASSEGURADOS) --- */
 .dialog-column {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem; /* Espaço simétrico entre a caixa branca e os botões abaixo */
+    gap: 1.2rem;
     width: 100%;
     max-width: 580px;
 }
 
-/* --- DIÁLOGO COM ALTA LEGIBILIDADE --- */
 .dialog-box {
     background: rgba(245, 247, 250, 0.92);
     backdrop-filter: blur(25px);
@@ -407,15 +398,14 @@ body {
     padding: 0 0.2rem;
 }
 
-/* --- BOTÕES ALINHADOS EM PROPORÇÃO EXATA À CAIXA DE DIÁLOGO --- */
 .moon-actions {
     display: flex;
     gap: 1.2rem;
-    width: 100%; /* Ocupa 100% da largura da coluna da caixa de diálogo */
+    width: 100%;
 }
 
 .btn-moon {
-    flex: 1; /* Garante que ambos os botões tenham rigorosamente o mesmo tamanho proporcional! */
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -519,10 +509,19 @@ body {
     font-size: 0.85rem;
 }
 
-/* --- RESPONSIVIDADE --- */
+/* --- RESPONSIVIDADE CELULAR --- */
 @media (max-width: 950px) {
     .nav-links-desktop, .btn-top-entre { display: none; }
     .mobile-menu-btn { display: flex; }
+
+    /* Garante a Lua visível no celular em tamanho proporcional e sem bugar a tela */
+    .lua-segundo-plano {
+        top: 12%;
+        right: 4%;
+        width: 150px;
+        height: 150px;
+        opacity: 0.75;
+    }
 
     .content-wrapper {
         flex-direction: column;
@@ -533,7 +532,6 @@ body {
     .astro-container { width: 280px; }
     .dialog-box { padding: 2rem 1.5rem; }
 
-    /* No celular, os botões empilham verticalmente para serem fáceis de clicar com o polegar! */
     .moon-actions {
         flex-direction: column;
         gap: 0.8rem;
@@ -548,7 +546,9 @@ body {
     }
 
     .rodape-brand p { margin: 1rem auto 0 auto; }
-}/* --- TRANSICÕES SUAVES ENTRE PÁGINAS E LINKS --- */
+}
+
+/* --- TRANSICÕES SUAVES ENTRE PÁGINAS E LINKS --- */
 html {
     scroll-behavior: smooth;
 }
@@ -562,7 +562,6 @@ body {
     to { opacity: 1; }
 }
 
-/* Efeito ao passar o mouse nos links da barra de navegação */
 .nav-links-desktop .nav-item {
     transition: all 0.3s ease;
     position: relative;

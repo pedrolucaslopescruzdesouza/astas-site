@@ -27,32 +27,38 @@
             position: relative;
         }
 
-        /* 1. LUA FLUTUANTE DE FUNDO (Zero bugs de clique) */
+        /* 1. LUA FLUTUANTE DE FUNDO (TAMANHO ASTRO + GIRO HORÁRIO CONTÍNUO) */
         .lua-segundo-plano {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100vw;
-            height: 100vh;
+            top: 16%;
+            right: 8%;
+            width: 220px;
+            height: 220px;
             z-index: -1;
-            pointer-events: none; /* Não atrapalha cliques */
+            pointer-events: none;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0.8;
+            opacity: 0.85;
+            animation: flutuarLateralLua 8s ease-in-out infinite;
+        }
+
+        @keyframes flutuarLateralLua {
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(-35px, 20px, 0); }
         }
 
         .lua-girando {
-            width: 750px;
-            max-width: 180vw;
-            animation: flutuarLua 15s ease-in-out infinite;
-            filter: drop-shadow(0 0 50px rgba(105, 213, 195, 0.15));
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            animation: girarHorarioLua 35s linear infinite;
+            filter: drop-shadow(0 0 35px rgba(105, 213, 195, 0.25));
         }
 
-        @keyframes flutuarLua {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-25px) rotate(3deg); }
+        @keyframes girarHorarioLua {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         /* 2. ANIMAÇÕES DE ENTRADA */
@@ -165,7 +171,6 @@
         .drawer-links a { color: var(--cinza-claro); text-decoration: none; font-size: 1.2rem; font-weight: 600; transition: color 0.3s ease; }
         .drawer-links a:hover, .drawer-links a.drawer-active { color: var(--verde-aurora); }
 
-        /* Botão Conta Destaque Mobile */
         .btn-mobile-conta {
             background: rgba(105, 213, 195, 0.1); border: 1px solid var(--verde-aurora);
             color: var(--verde-aurora) !important; padding: 1rem; border-radius: 30px;
@@ -209,6 +214,15 @@
             .auth-top .btn-top-entre { display: none !important; }
             .mobile-menu-btn { display: flex !important; }
             
+            /* Garante que a lua fique visível no celular em escala proporcional */
+            .lua-segundo-plano {
+                top: 12%;
+                right: 4%;
+                width: 150px;
+                height: 150px;
+                opacity: 0.75;
+            }
+
             .content-wrapper { flex-direction: column; text-align: center; gap: 2rem; }
             .astro { width: 230px; margin-top: 1rem; }
             .dialog-box { padding: 2rem !important; border-radius: 24px; }
