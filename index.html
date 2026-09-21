@@ -1,459 +1,961 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASTAS — O Universo das Ideias</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* ==========================================================================
-           MOTOR APPLE LIQUID GLASS & PREVENÇÃO DE BUGS MOBILE
-           ========================================================================== */
+    <title>Botafogo SAF: Diagnóstico Financeiro & Estratégia Corporativa (2024-2029)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Font Awesome Webfont CSS for Icons (No SVG tags used) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        :root {
-            --apple-ease: cubic-bezier(0.16, 1, 0.3, 1);
-            --liquid-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
-            --liquid-border: 1px solid rgba(255, 255, 255, 0.18);
-            --liquid-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.3);
-            --liquid-blur: blur(30px) saturate(180%);
-        }
-
-        /* TRAVA MOBILE: Impede a lua e o conteúdo de vazarem a tela */
-        html, body {
-            overflow-x: hidden;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            position: relative;
-        }
-
-        /* 1. LUA FLUTUANTE DE FUNDO (TAMANHO ASTRO + GIRO HORÁRIO CONTÍNUO) */
-        .lua-segundo-plano {
-            position: fixed;
-            top: 16%;
-            right: 8%;
-            width: 220px;
-            height: 220px;
-            z-index: -1;
-            pointer-events: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.85;
-            animation: flutuarLateralLua 8s ease-in-out infinite;
-        }
-
-        @keyframes flutuarLateralLua {
-            0%, 100% { transform: translate3d(0, 0, 0); }
-            50% { transform: translate3d(-35px, 20px, 0); }
-        }
-
-        .lua-girando {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            animation: girarHorarioLua 35s linear infinite;
-            filter: drop-shadow(0 0 35px rgba(105, 213, 195, 0.25));
-        }
-
-        @keyframes girarHorarioLua {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* 2. ANIMAÇÕES DE ENTRADA */
-        @keyframes appleFadeIn {
-            0% { opacity: 0; transform: translate3d(0, 25px, 0) scale(0.97); filter: blur(12px); }
-            100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0px); }
-        }
-        
-        .stage-container {
-            animation: appleFadeIn 0.7s var(--apple-ease) forwards;
-            transition: all 0.5s var(--apple-ease);
-            transform: translateZ(0);
-            max-width: 1200px;
-            margin: 3rem auto 5rem auto;
-            padding: 0 1.5rem;
-        }
-
-        .stage-container.page-exit {
-            opacity: 0 !important;
-            transform: translate3d(0, -20px, 0) scale(0.96) !important;
-            filter: blur(15px) !important;
-        }
-
-        /* 3. ESTRUTURA DO PALCO (COMPUTADOR) */
-        .content-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 4rem;
-            width: 100%;
-        }
-
-        .astro-container { flex-shrink: 0; }
-        .astro {
-            width: 320px;
-            height: auto;
-            animation: flutuarAstro 6s ease-in-out infinite;
-            filter: drop-shadow(0 20px 30px rgba(105, 213, 195, 0.25));
-        }
-        
-        @keyframes flutuarAstro {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(2deg); }
-        }
-
-        .dialog-column { flex-grow: 1; max-width: 650px; }
-
-        /* 4. CABEÇALHO E NAVEGAÇÃO */
-        .nav-links-desktop {
-            background: rgba(10, 20, 35, 0.55);
-            backdrop-filter: var(--liquid-blur); -webkit-backdrop-filter: var(--liquid-blur);
-            border: var(--liquid-border); box-shadow: var(--liquid-shadow);
-            padding: 0.5rem 0.8rem; border-radius: 50px;
-            display: flex; gap: 0.5rem;
-        }
-
-        .nav-links-desktop .nav-item {
-            color: var(--cinza-claro); padding: 0.6rem 1.4rem;
-            border-radius: 40px; font-weight: 600;
-            transition: all 0.4s var(--apple-ease); text-decoration: none;
-        }
-        .nav-links-desktop .nav-item:hover, .nav-links-desktop .nav-item.active {
-            color: #FFFFFF; background: linear-gradient(135deg, rgba(105, 213, 195, 0.25) 0%, rgba(255, 255, 255, 0.1) 100%);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 4px 15px rgba(105, 213, 195, 0.2);
-            transform: translate3d(0, -2px, 0);
-        }
-
-        .btn-top-entre {
-            background: linear-gradient(135deg, var(--verde-aurora) 0%, #4bc2ad 100%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 10px 25px rgba(105, 213, 195, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.7);
-            color: var(--preto-espacial); border-radius: 50px;
-            padding: 0.8rem 2.2rem; font-weight: 800; text-decoration: none;
-            display: inline-flex; align-items: center; gap: 0.6rem;
-            transition: all 0.4s var(--apple-ease);
-        }
-        .btn-top-entre:hover { transform: translate3d(0, -4px, 0) scale(1.05); }
-
-        /* 5. GAVETA MOBILE (ÁREA SEGURA) */
-        .mobile-menu-btn {
-            display: none; flex-direction: column; gap: 6px;
-            background: transparent; border: none; cursor: pointer; padding: 0.5rem;
-        }
-        .mobile-menu-btn span {
-            width: 28px; height: 3px; background: var(--verde-aurora);
-            border-radius: 3px; transition: all 0.3s ease;
-        }
-
-        .mobile-drawer {
-            position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
-            background: rgba(7, 14, 25, 0.98); backdrop-filter: blur(25px);
-            border-left: 1px solid rgba(105, 213, 195, 0.2); z-index: 9999;
-            transition: right 0.5s var(--apple-ease); padding: 2.5rem 2rem;
-            display: flex; flex-direction: column; box-shadow: -15px 0 40px rgba(0,0,0,0.8);
-        }
-        .mobile-drawer.open { right: 0; }
-        
-        .drawer-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); z-index: 9998;
-            opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
-        }
-        .drawer-overlay.active { opacity: 1; pointer-events: all; }
-        
-        .drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; }
-        .drawer-logo { width: 110px; }
-        .btn-close-drawer { background: transparent; border: none; color: #fff; font-size: 1.8rem; cursor: pointer; }
-        
-        .drawer-links { display: flex; flex-direction: column; gap: 1.2rem; }
-        .drawer-links a { color: var(--cinza-claro); text-decoration: none; font-size: 1.2rem; font-weight: 600; transition: color 0.3s ease; }
-        .drawer-links a:hover, .drawer-links a.drawer-active { color: var(--verde-aurora); }
-
-        .btn-mobile-conta {
-            background: rgba(105, 213, 195, 0.1); border: 1px solid var(--verde-aurora);
-            color: var(--verde-aurora) !important; padding: 1rem; border-radius: 30px;
-            text-align: center; font-weight: 800 !important; margin-bottom: 1rem;
-        }
-
-        /* 6. CAIXA DE DIÁLOGO */
-        .dialog-box {
-            background: linear-gradient(135deg, rgba(15, 28, 48, 0.65) 0%, rgba(7, 14, 25, 0.75) 100%);
-            backdrop-filter: blur(40px) saturate(200%); -webkit-backdrop-filter: blur(40px) saturate(200%);
-            border: 1px solid rgba(105, 213, 195, 0.3); border-radius: 32px; padding: 3rem;
-            position: relative; overflow: hidden; transition: all 0.5s var(--apple-ease);
-            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.3);
-        }
-        .dialog-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent); }
-        .badge-astro { color: #69D5C3; background: rgba(105, 213, 195, 0.15); border: 1px solid rgba(105, 213, 195, 0.5); padding: 0.5rem 1.2rem; border-radius: 30px; font-size: 0.85rem; font-weight: 800; letter-spacing: 1.5px; display: inline-block; margin-bottom: 1.5rem; text-transform: uppercase; }
-        .dialog-box .greeting { color: #FFFFFF; font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
-        .dialog-box .intro-text { color: rgba(255, 255, 255, 0.85); font-size: 1.1rem; line-height: 1.7; }
-        .dialog-box .intro-text strong { color: var(--verde-aurora); }
-
-        /* 7. BOTÕES INFERIORES */
-        .moon-actions {
-            background: rgba(10, 20, 35, 0.5); backdrop-filter: var(--liquid-blur);
-            border: var(--liquid-border); box-shadow: var(--liquid-shadow);
-            padding: 0.6rem; border-radius: 50px; display: flex; gap: 0.8rem; margin-top: 1.5rem;
-        }
-        .btn-moon {
-            border-radius: 40px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center;
-            gap: 0.6rem; padding: 1.1rem 2rem; text-decoration: none; width: 100%; transition: all 0.4s var(--apple-ease);
-        }
-        .btn-moon-entre { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #FFFFFF; }
-        .btn-moon-entre:hover { background: rgba(255, 255, 255, 0.15); transform: translate3d(0, -3px, 0) scale(1.02); }
-        .btn-moon-criar { background: linear-gradient(135deg, var(--verde-aurora) 0%, #4bc2ad 100%); color: var(--preto-espacial); box-shadow: 0 10px 30px rgba(105, 213, 195, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.6); }
-        .btn-moon-criar:hover { transform: translate3d(0, -3px, 0) scale(1.04); box-shadow: 0 15px 35px rgba(105, 213, 195, 0.7), inset 0 1px 1px #FFFFFF; }
-
-        /* ==========================================================================
-           RESPONSIVIDADE CELULAR (MOBILE FIRST)
-           ========================================================================== */
-        @media (max-width: 850px) {
-            .nav-links-desktop { display: none !important; }
-            .auth-top .btn-top-entre { display: none !important; }
-            .mobile-menu-btn { display: flex !important; }
-            
-            /* Garante que a lua fique visível no celular em escala proporcional */
-            .lua-segundo-plano {
-                top: 12%;
-                right: 4%;
-                width: 150px;
-                height: 150px;
-                opacity: 0.75;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        navy: {
+                            800: '#0B192C',
+                            900: '#060E1A',
+                        },
+                        vibrant: {
+                            blue: '#1E88E5',
+                            gold: '#FFB200',
+                            amber: '#FF9100',
+                            red: '#E53935',
+                            green: '#00C853',
+                            cyan: '#00D2FF',
+                        }
+                    }
+                }
             }
+        }
+    </script>
 
-            .content-wrapper { flex-direction: column; text-align: center; gap: 2rem; }
-            .astro { width: 230px; margin-top: 1rem; }
-            .dialog-box { padding: 2rem !important; border-radius: 24px; }
-            .dialog-box .greeting { font-size: 1.8rem; }
-            .moon-actions { flex-direction: column !important; border-radius: 24px !important; padding: 1rem !important; background: transparent !important; box-shadow: none !important; border: none !important; gap: 1rem; }
-            .btn-moon { padding: 1.2rem !important; }
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC;
+            color: #0F172A;
+        }
+        /* Chart container constraint as per technical guidelines */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 360px;
+            }
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
         }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 text-slate-900 antialiased selection:bg-amber-400 selection:text-slate-900">
 
-    <!-- Fundo Estrelado -->
-    <canvas id="space-canvas"></canvas>
+<!-- Color Palette Chosen: Energetic Corporate & Vibrant Gold (High Contrast) [Navy: #0B192C, Blue: #1E88E5, Gold: #FFB200, Amber: #FF9100, Red: #E53935, Neutral BG: #F8FAFC] -->
 
-    <!-- CABEÇALHO DESKTOP / MOBILE -->
-    <header class="navbar">
-        <div class="logo-container">
-            <a href="index.html" class="nav-link-liquid"><img src="assets/astas-logo.png" alt="ASTAS Logo" class="logo"></a>
-        </div>
-        
-        <nav class="nav-links-desktop">
-            <a href="index.html" class="nav-item nav-link-liquid active">Início</a>
-            <a href="astro.html" class="nav-item nav-link-liquid">Astro</a>
-            <a href="servicos.html" class="nav-item nav-link-liquid">Serviços</a>
-            <a href="portfolio.html" class="nav-item nav-link-liquid">Portfólio</a>
-        </nav>
+<!-- Narrative Plan: 
+  1. Sticky Navigation & Executive Hero with High-Impact KPI Cards.
+  2. Section 1: Financial Paradox (2024-2025 Record Revenue vs Net Losses & Working Capital Deficit).
+  3. Section 2: Deep Dive into the 3 Key Drivers of Insolvency (Amortization/Payroll, FX Exposure, Working Capital).
+  4. Section 3: Strategic SWOT Analysis Matrix (Interactive Grid).
+  5. Section 4: Industry Benchmarking (Flamengo, Palmeiras, Fortaleza, Bayern Munich, Real Madrid).
+  6. Section 5: The 4-Vector Action Plan (RJ Restructuring, FX Hedge, Salary Cap, Estádio 365).
+  7. Section 6: Financial Forecast & Turnaround Simulation (2025-2029).
+  8. Section 7: Executive Summary & Governance Roadmap.
+-->
 
-        <div class="auth-top">
-            <a href="login.html" class="btn-top-entre nav-link-liquid">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                <span>Entre</span>
-            </a>
-            <button class="mobile-menu-btn" id="btn-open-menu" aria-label="Abrir Menu">
-                <span></span><span></span><span></span>
-            </button>
+<!-- Visualization Choices:
+  - Chart 1: Combo Bar & Line Chart (Chart.js) -> Faturamento Bruto vs Prejuízo Líquido vs Capital Circulante Líquido (Goal: Compare & Change).
+  - Chart 2: Stacked Bar Chart (Chart.js) -> Composição das Fontes de Receita 2024 vs 2025 (Goal: Categorical Composition).
+  - Chart 3: Donut Chart (Chart.js) -> Estrutura de Custos & Perdas Operacionais 2025 (Goal: Inform / Ratio).
+  - Chart 4: Horizontal Bar Chart (Chart.js) -> Benchmarking de Rácio Salário/Receita (%) vs Pares Globais (Goal: Organize / Ranking).
+  - Chart 5: Line Chart with Multi-axis (Chart.js) -> Trajetória Financeira e Projeções de Lucro 2025-2029 (Goal: Trend / Projections).
+  All visualizations render via Chart.js on Canvas. HTML/CSS Tailwind structure used for diagrams and SWOT. NO SVG OR MERMAID JS USED.
+-->
+
+<!-- EXPLICIT CONFIRMATION: NEITHER Mermaid JS NOR SVG graphics were used anywhere in this single-page application output. All charts use Chart.js Canvas rendering, and all UI elements, icons, and process diagrams are built strictly using HTML, CSS, Tailwind utility classes, and web font styling. -->
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-navy-800 text-white shadow-lg border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-lg bg-vibrant-gold flex items-center justify-center font-black text-navy-800 text-xl shadow-md">
+                    B
+                </div>
+                <div>
+                    <span class="font-bold text-lg tracking-tight text-white block leading-none">BOTAFOGO SAF</span>
+                    <span class="text-xs text-amber-400 font-medium">Relatório Estratégico & Infográfico (2024-2029)</span>
+                </div>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#paradox" class="text-slate-300 hover:text-vibrant-gold transition-colors">O Paradoxo</a>
+                <a href="#drivers" class="text-slate-300 hover:text-vibrant-gold transition-colors">Drenos Financeiros</a>
+                <a href="#swot" class="text-slate-300 hover:text-vibrant-gold transition-colors">Análise SWOT</a>
+                <a href="#benchmarks" class="text-slate-300 hover:text-vibrant-gold transition-colors">Benchmarking</a>
+                <a href="#strategy" class="text-slate-300 hover:text-vibrant-gold transition-colors">Plano de Ação</a>
+                <a href="#projections" class="text-slate-300 hover:text-vibrant-gold transition-colors">Projeções 2029</a>
+            </nav>
+            <div class="flex items-center">
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-red-500/20 text-red-400 border border-red-500/40">
+                    <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> Recuperação Judicial
+                </span>
+            </div>
         </div>
     </header>
 
-    <!-- MENU GAVETA MOBILE BLINDADO -->
-    <div class="mobile-drawer" id="mobile-drawer">
-        <div class="drawer-header">
-            <img src="assets/astas-logo.png" alt="ASTAS Logo" class="drawer-logo">
-            <button class="btn-close-drawer" id="btn-close-menu">✕</button>
-        </div>
-        <nav class="drawer-links">
-            <a href="login.html" id="btn-mobile-conta" class="nav-link-liquid btn-mobile-conta">✦ Entrar na Conta</a>
-            <a href="portfolio.html" class="nav-link-liquid">Portfólio</a>
-            <a href="servicos.html" class="nav-link-liquid">Serviços</a>
-            <a href="astro.html" class="nav-link-liquid">Astro</a>
-            <a href="index.html" class="drawer-active nav-link-liquid">Início</a>
-        </nav>
-    </div>
-    <div class="drawer-overlay" id="drawer-overlay"></div>
-
-    <!-- LUA DE SEGUNDO PLANO (ATUALIZADA) -->
-    <div class="lua-segundo-plano">
-        <img src="assets/lua-base.png" alt="Lua no Céu" class="lua-girando">
-    </div>
-
-    <!-- PALCO PRINCIPAL -->
-    <main class="stage-container" id="main-stage">
-        
-        <div class="content-wrapper">
-            
-            <!-- Coluna 1: O ASTRO -->
-            <div class="astro-container">
-                <img src="assets/astro-neutro.png" alt="ASTRO" id="astro-img" class="astro">
-            </div>
-
-            <!-- Coluna 2: Diálogo + Botões -->
-            <div class="dialog-column">
-                
-                <div class="dialog-box">
-                    <span class="badge-astro">✦ COMPANHEIRO CRIATIVO</span>
-                    <h1 class="greeting" id="home-greeting">Olá, Astronauta! Que bom ter você aqui.</h1>
-                    <p class="intro-text">
-                        Eu sou o <strong>ASTRO</strong>, o seu companheiro de jornada nesse universo.<br><br>
-                        Sei que toda grande marca começa como um pequeno pensamento flutuando na mente... Que tal começarmos a explorar e dar vida à sua próxima grande ideia agora mesmo?
+    <!-- Hero / Title Section -->
+    <section class="bg-navy-800 text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-slate-700 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="md:flex md:items-center md:justify-between">
+                <div class="md:w-2/3">
+                    <span class="inline-block px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider bg-vibrant-blue/20 text-vibrant-cyan border border-vibrant-blue/30 mb-3">
+                        Diagnóstico Financeiro e Reestruturação Corporativa
+                    </span>
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                        Desafio Financeiro Botafogo SAF: <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-vibrant-gold to-amber-500">
+                            Do Colapso da Liquidez à Sustentabilidade
+                        </span>
+                    </h1>
+                    <p class="mt-4 text-base sm:text-lg text-slate-300 max-w-3xl leading-relaxed">
+                        Análise exaustiva do modelo econômico-financeiro da SAF Botafogo. Entenda como receitas recordes de R$ 720 milhões coexistiram com prejuízos acumulados e um passivo de R$ 2,6 bilhões que exigiu a Recuperação Judicial em 2026, e confira a simulação do plano de virada até 2029.
                     </p>
                 </div>
-
-                <div class="moon-actions" id="home-action-box">
-                    <a href="login.html" class="btn-moon btn-moon-entre nav-link-liquid">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span>Entre</span>
-                    </a>
-                    <a href="cadastro.html" class="btn-moon btn-moon-criar nav-link-liquid">
-                        ✦ Criar uma conta
-                    </a>
+                <div class="mt-8 md:mt-0 md:w-1/3 flex justify-end">
+                    <div class="bg-navy-900/80 p-6 rounded-2xl border border-slate-700 shadow-2xl w-full max-w-sm text-center">
+                        <i class="fa-solid fa-file-invoice-dollar text-4xl text-vibrant-gold mb-2"></i>
+                        <div class="text-xs text-slate-400 uppercase tracking-widest font-semibold">Passivo em RJ (Abril/2026)</div>
+                        <div class="text-3xl sm:text-4xl font-black text-white my-1">R$ 2,61 B</div>
+                        <p class="text-xs text-slate-400">Processo concursal sob as Leis nº 11.101/05 e nº 14.193/21</p>
+                    </div>
                 </div>
-
             </div>
 
+            <!-- KPI Summary Cards -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mt-10">
+                <div class="bg-slate-900/90 p-5 rounded-xl border border-slate-700 shadow-lg">
+                    <div class="flex items-center justify-between text-slate-400 text-xs font-semibold uppercase">
+                        <span>Receita Recorde (2024)</span>
+                        <i class="fa-solid fa-chart-line text-vibrant-green"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-extrabold text-white mt-2">R$ 720 M</div>
+                    <p class="text-xs text-slate-400 mt-1">Impulsionada por premiações e Libertadores</p>
+                </div>
+
+                <div class="bg-slate-900/90 p-5 rounded-xl border border-slate-700 shadow-lg">
+                    <div class="flex items-center justify-between text-slate-400 text-xs font-semibold uppercase">
+                        <span>Prejuízo Líquido (2025)</span>
+                        <i class="fa-solid fa-arrow-trend-down text-vibrant-red"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-extrabold text-red-400 mt-2">R$ 290,8 M</div>
+                    <p class="text-xs text-slate-400 mt-1">Agravamento frente aos R$ 266,8M em 2024</p>
+                </div>
+
+                <div class="bg-slate-900/90 p-5 rounded-xl border border-slate-700 shadow-lg">
+                    <div class="flex items-center justify-between text-slate-400 text-xs font-semibold uppercase">
+                        <span>Perda Cambial (2025)</span>
+                        <i class="fa-solid fa-coins text-amber-400"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-extrabold text-amber-400 mt-2">R$ 322,2 M</div>
+                    <p class="text-xs text-slate-400 mt-1">Variação passiva sem cobertura (hedge)</p>
+                </div>
+
+                <div class="bg-slate-900/90 p-5 rounded-xl border border-slate-700 shadow-lg">
+                    <div class="flex items-center justify-between text-slate-400 text-xs font-semibold uppercase">
+                        <span>Meta Lucro (2029)</span>
+                        <i class="fa-solid fa-shield-halved text-vibrant-cyan"></i>
+                    </div>
+                    <div class="text-2xl sm:text-3xl font-extrabold text-vibrant-cyan mt-2">R$ 250,0 M</div>
+                    <p class="text-xs text-slate-400 mt-1">Com teto salarial e modelo Estádio 365</p>
+                </div>
+            </div>
         </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+
+        <!-- SECTION 1: O PARADOXO FINANCEIRO -->
+        <section id="paradox" class="space-y-6">
+            <div class="border-l-4 border-vibrant-gold pl-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-navy-800">1. O Paradoxo Financeiro: Faturamento Recorde vs. Insolvência</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-1">
+                    Como um faturamento histórico superior a R$ 720 milhões gerou um colapso patrimonial de R$ 431,9 milhões e capital de giro negativo.
+                </p>
+            </div>
+
+            <!-- Introductory Paragraph Requirement -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 leading-relaxed text-slate-700 text-sm sm:text-base">
+                A transformação jurídica promovida pela Lei nº 14.193/2021 estabeleceu as Sociedades Anônimas do Futebol (SAF) com a promessa de rigor fiscal e governança. No entanto, o desempenho da SAF Botafogo entre 2024 e 2025 demonstra que o sucesso desportivo e o aumento de faturamento não asseguram equilíbrio financeiro por si sós. Embora o clube tenha atingido faturamentos brutos sem precedentes (R$ 720M em 2024 e R$ 655M recorrentes em 2025), a rigidez dos custos operacionais, os gastos desmedidos com aquisição de atletas e os encargos financeiros absorveram integralmente as margens operacionais, gerando prejuízos expressivos e um Capital Circulante Líquido negativo de R$ 943,1 milhões.
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Chart 1: Revenue vs Net Loss vs Working Capital -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-navy-800 text-lg">Evolução Patrimonial e Resultados (2024-2025)</h3>
+                            <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded font-mono">Em R$ Milhões</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-4">
+                            Comparativo entre a receita bruta, prejuízos líquidos sucessivos e a deterioração do Capital Circulante Líquido (CCL).
+                        </p>
+                        <div class="chart-container">
+                            <canvas id="chartParadox"></canvas>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-slate-50 rounded-lg text-xs text-slate-600 border border-slate-200">
+                        <strong class="text-navy-800">Contexto Analítico:</strong> O Capital Circulante Líquido (CCL) degradou-se 76,7% em apenas 12 meses, passando de -R$ 533,6M para -R$ 943,1M em 2025, comprovando a inviabilidade de honrar compromissos de curto prazo sem reestruturação concursal.
+                    </div>
+                </div>
+
+                <!-- Chart 2: Revenue Composition -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-navy-800 text-lg">Composição das Fontes de Receita (2024 vs 2025)</h3>
+                            <span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded font-mono">Em R$ Milhares</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-4">
+                            Desagregação das receitas por categoria operacional, demonstrando a volatilidade do modelo.
+                        </p>
+                        <div class="chart-container">
+                            <canvas id="chartRevenueBreakdown"></canvas>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-slate-50 rounded-lg text-xs text-slate-600 border border-slate-200">
+                        <strong class="text-navy-800">Contexto Analítico:</strong> A receita de vendas de atletas cresceu expressivamente para R$ 733,3M em 2025 (puxada por Luiz Henrique e Thiago Almada), mas os custos operacionais diretos associados a essas transferências consumiram R$ 448M da transação.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: OS TRÊS DRENOS FINANCEIROS -->
+        <section id="drivers" class="space-y-6">
+            <div class="border-l-4 border-vibrant-red pl-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-navy-800">2. Diagnóstico dos Três Drenos Críticos da Tesouraria</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-1">
+                    A dissecação dos fatores que colapsaram a lucratividade da SAF Botafogo e culminaram no pedido de Recuperação Judicial.
+                </p>
+            </div>
+
+            <!-- Introductory Paragraph -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 leading-relaxed text-slate-700 text-sm sm:text-base">
+                O colapso da liquidez do Botafogo não resultou de falhas na captação de torcedores ou marcas comerciais, mas de uma arquitetura financeira vulnerável a três drenos principais. Em primeiro lugar, o ritmo acelerado de contratações inflou a rubrica de amortização de intangíveis e a folha de pagamento. Em segundo lugar, a ausência de mecanismos de proteção contra oscilações cambiais (hedge) expôs os contratos dolarizados a perdas massivas com a desvalorização do Real. Por fim, o estrangulamento do fundo de maneio e a perda de benefícios fiscais (PERSE) inviabilizaram a gestão ordinária de caixa.
+            </div>
+
+            <!-- 3 Pillar Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Driver 1 -->
+                <div class="bg-white p-6 rounded-xl border-t-4 border-vibrant-red shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-lg bg-red-100 text-vibrant-red flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-users-slash"></i>
+                    </div>
+                    <h3 class="font-bold text-navy-800 text-lg mb-2">1. Elenco & Amortização</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                        A expansão do ativo intangível para <strong>R$ 814,2M</strong> gerou uma despesa inelástica de amortização de <strong>R$ 236,8M</strong> em 2025, somada a <strong>R$ 232,5M</strong> de folha salarial. As contas a pagar por transferências superaram R$ 1,1 bilhão.
+                    </p>
+                    <div class="p-3 bg-red-50 rounded-lg text-xs text-red-800 font-semibold border border-red-200">
+                        Custo Anual do Elenco: R$ 469,3 Milhões
+                    </div>
+                </div>
+
+                <!-- Driver 2 -->
+                <div class="bg-white p-6 rounded-xl border-t-4 border-amber-500 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-[#FF9100] fa-dollar-sign"></i>
+                    </div>
+                    <h3 class="font-bold text-navy-800 text-lg mb-2">2. Despesa Cambial Sem Hedge</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                        O resultado financeiro líquido foi negativo em <strong>R$ 307,6M</strong> em 2025. O grande ofensor foi a variação cambial passiva desprovida de derivativos de proteção, gerando uma perda isolada de <strong>R$ 322,2M</strong>.
+                    </p>
+                    <div class="p-3 bg-amber-50 rounded-lg text-amber-800 font-semibold border border-amber-200 text-xs">
+                        Impacto Cambial Direto: -R$ 322,2 Milhões
+                    </div>
+                </div>
+
+                <!-- Driver 3 -->
+                <div class="bg-white p-6 rounded-xl border-t-4 border-navy-800 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-lg bg-slate-100 text-navy-800 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <h3 class="font-bold text-navy-800 text-lg mb-2">3. Asfixia & PERSE</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-4">
+                        A rescisão do programa PERSE em abril de 2026 reativou integralmente dívidas tributárias históricas. A BDO emitiu "Abstenção de Opinião" na auditoria devido a litígios com a Eagle Football e passivos a descoberto.
+                    </p>
+                    <div class="p-3 bg-slate-100 rounded-lg text-navy-800 font-semibold border border-slate-300 text-xs">
+                        Capital Circulante Líquido: -R$ 943,1 Milhões
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chart 3: Expense Breakdown Donut Chart -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="md:flex md:items-center md:justify-between">
+                    <div class="md:w-1/2">
+                        <h3 class="font-bold text-navy-800 text-lg mb-2">Composição dos Custos & Perdas Financeiras (2025)</h3>
+                        <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                            Visualização gráfica dos principais geradores de despesas e perdas operacionais que inviabilizaram o resultado líquido da SAF no exercício de 2025.
+                        </p>
+                        <div class="space-y-3 text-xs text-slate-600 pr-4">
+                            <div class="flex items-center justify-between p-2 bg-slate-50 rounded border">
+                                <span class="font-semibold text-slate-800">Perda Cambial Não Protegida:</span>
+                                <span class="font-mono font-bold text-red-600">R$ 322,2 M (25,9%)</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-slate-50 rounded border">
+                                <span class="font-semibold text-slate-800">Amortização de Atletas:</span>
+                                <span class="font-mono font-bold text-slate-800">R$ 236,8 M (19,0%)</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-slate-50 rounded border">
+                                <span class="font-semibold text-slate-800">Salários e Encargos do Futebol:</span>
+                                <span class="font-mono font-bold text-slate-800">R$ 232,5 M (18,7%)</span>
+                            </div>
+                            <div class="flex items-center justify-between p-2 bg-slate-50 rounded border">
+                                <span class="font-semibold text-slate-800">Custos Diretos das Transações:</span>
+                                <span class="font-mono font-bold text-slate-800">R$ 448,0 M (36,0%)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 md:mt-0 md:w-1/2">
+                        <div class="chart-container">
+                            <canvas id="chartExpenses"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: ANÁLISE SWOT ESTRATÉGICA -->
+        <section id="swot" class="space-y-6">
+            <div class="border-l-4 border-vibrant-blue pl-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-navy-800">3. Matriz de Análise SWOT Estratégica</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-1">
+                    Mapeamento das forças operacionais endógenas e vulnerabilidades exógenas sob as diretrizes de governança do IBGC.
+                </p>
+            </div>
+
+            <!-- Introductory Paragraph -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 leading-relaxed text-slate-700 text-sm sm:text-base">
+                A formulação de um plano de reestruturação sustentável exige o diagnóstico preciso dos fatores internos e externos que afetam a SAF Botafogo. A matriz SWOT a seguir sintetiza os ativos operacionais do clube — como o programa de sócios em expansão e a visibilidade competitiva — e os contrapõe às fragilidades de balanço e aos riscos regulatórios e judiciais.
+            </div>
+
+            <!-- SWOT 2x2 Grid using pure Tailwind HTML/CSS -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Strengths -->
+                <div class="bg-white p-6 rounded-xl border-l-4 border-vibrant-green shadow-sm space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full bg-green-100 text-vibrant-green flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="font-bold text-navy-800 text-lg">Forças (Strengths)</h3>
+                    </div>
+                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4 leading-relaxed">
+                        <li><strong>Sócio-Torcedor "Camisa 7":</strong> Mais de 81 mil sócios ativos gerando R$ 52,5M anuais recorrentes.</li>
+                        <li><strong>Valorização de Direitos Televisivos:</strong> Títulos da Libertadores e Brasileirão aumentaram a receita de mídia.</li>
+                        <li><strong>Rede Eagle Football:</strong> Plataforma internacional para captação e vitrine de talentos globais.</li>
+                    </ul>
+                </div>
+
+                <!-- Weaknesses -->
+                <div class="bg-white p-6 rounded-xl border-l-4 border-vibrant-red shadow-sm space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full bg-red-100 text-vibrant-red flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-bug"></i>
+                        </div>
+                        <h3 class="font-bold text-navy-800 text-lg">Fraquezas (Weaknesses)</h3>
+                    </div>
+                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4 leading-relaxed">
+                        <li><strong>Passivo a Descoberto:</strong> Patrimônio líquido negativo de R$ 431,9M anulando a capacidade de crédito.</li>
+                        <li><strong>Negligência em Riscos Cambiais:</strong> Inexistência de instrumentos derivativos para dívidas em moeda estrangeira.</li>
+                        <li><strong>Abstenção de Auditoria:</strong> Ressalvas graves da auditoria BDO referente a saldos intra-grupo.</li>
+                    </ul>
+                </div>
+
+                <!-- Opportunities -->
+                <div class="bg-white p-6 rounded-xl border-l-4 border-vibrant-blue shadow-sm space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 text-vibrant-blue flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                        <h3 class="font-bold text-navy-800 text-lg">Oportunidades (Opportunities)</h3>
+                    </div>
+                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4 leading-relaxed">
+                        <li><strong>Recuperação Judicial (RJ):</strong> Ferramenta legal para repactuar a dívida cível com deságio (haircut) relevante.</li>
+                        <li><strong>Contrato LFU:</strong> Comercialização de direitos de transmissão a longo prazo (50 anos).</li>
+                        <li><strong>SAF Base Ltda:</strong> Captar recursos via Lei de Incentivo ao Desporto em entidade segregada para formação.</li>
+                    </ul>
+                </div>
+
+                <!-- Threats -->
+                <div class="bg-white p-6 rounded-xl border-l-4 border-vibrant-amber shadow-sm space-y-3">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full bg-amber-100 text-vibrant-amber flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <h3 class="font-bold text-navy-800 text-lg">Ameaças (Threats)</h3>
+                    </div>
+                    <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4 leading-relaxed">
+                        <li><strong>Volatilidade de Desempenho:</strong> Eliminações precoces podem reduzir a receita de premiações em até 40%.</li>
+                        <li><strong>Impugnações na Assembleia de Credores:</strong> Risco de contestações judiciais ao plano de recuperação.</li>
+                        <li><strong>Contingências Fiscais PERSE:</strong> Cobrança compulsória e imediata de passivos tributários do clube social.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: BENCHMARKING E FAIR PLAY FINANCEIRO -->
+        <section id="benchmarks" class="space-y-6">
+            <div class="border-l-4 border-vibrant-gold pl-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-navy-800">4. Benchmarking Corporativo e Modelos de Excelência</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-1">
+                    Análise comparativa com instituições nacionais e europeias que implementaram reestruturação rigorosa.
+                </p>
+            </div>
+
+            <!-- Introductory Paragraph -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 leading-relaxed text-slate-700 text-sm sm:text-base">
+                O saneamento financeiro da SAF Botafogo exige a incorporação de práticas comprovadas no futebol global. Casos como o do Flamengo (reestruturação via PROFUT e disciplina orçamentária), Palmeiras (substituição de dívida onerosa por capital estruturado), Fortaleza (rigor orçamentário e salário em dia), Bayern de Munique (teto de gastos salariais em 41,7%) e Real Madrid (monetização contínua do estádio nos 365 dias do ano) servem como pilares de orientação estratégica.
+            </div>
+
+            <!-- Benchmark Peer Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <div class="font-bold text-navy-800 text-sm mb-1">CR Flamengo</div>
+                    <span class="text-[10px] uppercase font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded">PROFUT & Austeridade</span>
+                    <p class="text-xs text-slate-500 mt-2">Adesão fiscal rígida a partir de 2013 e redução de R$ 1 bilhão em passivos, alcançando faturamento > R$ 1B.</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <div class="font-bold text-navy-800 text-sm mb-1">SE Palmeiras</div>
+                    <span class="text-[10px] uppercase font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded">Perfil de Dívida</span>
+                    <p class="text-xs text-slate-500 mt-2">Troca de passivos caros por aportes a juros baixos, somada à alavancagem do programa Avanti.</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <div class="font-bold text-navy-800 text-sm mb-1">Fortaleza EC</div>
+                    <span class="text-[10px] uppercase font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded">Gestão Orgânica</span>
+                    <p class="text-xs text-slate-500 mt-2">Maximização com orçamento restrito. "Salário em dia como grande camisa 10" sem endividamento bancário.</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <div class="font-bold text-navy-800 text-sm mb-1">FC Bayern Munique</div>
+                    <span class="text-[10px] uppercase font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded">Rácio de 41,7%</span>
+                    <p class="text-xs text-slate-500 mt-2">Teto estrito de folha salarial frente à receita bruta, assegurando lucros operacionais consecutivos.</p>
+                </div>
+
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm text-center">
+                    <div class="font-bold text-navy-800 text-sm mb-1">Real Madrid CF</div>
+                    <span class="text-[10px] uppercase font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded">Estádio 365</span>
+                    <p class="text-xs text-slate-500 mt-2">Modernização do Bernabéu para receitas não esportivas diárias, desacoplando o caixa dos resultados em campo.</p>
+                </div>
+            </div>
+
+            <!-- Chart 4: Wage-to-Revenue Ratio Benchmarking -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="md:flex md:items-center md:justify-between">
+                    <div class="md:w-1/2 pr-4">
+                        <h3 class="font-bold text-navy-800 text-lg mb-2">Benchmarking: Custo de Elenco / Receita Bruta (%)</h3>
+                        <p class="text-xs text-slate-500 mb-4 leading-relaxed">
+                            O gráfico demonstra o desequilíbrio crítico da SAF Botafogo em 2025, comprometendo 103% da sua receita orgânica com despesas de futebol (folha + amortização), comparado à meta do plano de ação (60%) e referências mundiais.
+                        </p>
+                        <div class="p-3 bg-amber-50 rounded-lg text-xs text-amber-800 border border-amber-200">
+                            <strong>Indicador-Chave:</strong> A Uefa e o IBGC recomendam que o rácio salários/amortizações não ultrapasse 65-70% da receita operacional.
+                        </div>
+                    </div>
+                    <div class="mt-6 md:mt-0 md:w-1/2">
+                        <div class="chart-container">
+                            <canvas id="chartWageRatio"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: PLANO DE AÇÃO ESTRATÉGICO (OS 4 VETORES) -->
+        <section id="strategy" class="space-y-6">
+            <div class="border-l-4 border-vibrant-green pl-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-navy-800">5. Plano de Intervenção Estrutural (4 Vetores)</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-1">
+                    Programa de ação corporativa para estancar perdas e restabelecer a liquidez operacional.
+                </p>
+            </div>
+
+            <!-- Introductory Paragraph -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 leading-relaxed text-slate-700 text-sm sm:text-base">
+                Para responder ao desafio de sanear as finanças sem destruir a competitividade dentro de campo, desenhou-se um plano estruturado em quatro eixos. A estratégia combina o alívio legal do passivo via Recuperação Judicial, a proteção cambial derivativa, a imposição de um Fair Play Financeiro interno e a monetização imobiliária do Estádio Nilton Santos.
+            </div>
+
+            <!-- Structured Flow Diagram (Pure Tailwind CSS HTML Layout - NO MERMAID / NO SVG) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Action 1 -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-vibrant-blue text-white px-3 py-1 rounded-bl-lg text-xs font-bold">
+                        Vetor 1
+                    </div>
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-blue-100 text-vibrant-blue flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+                        <h3 class="font-bold text-navy-800 text-lg">Reequilíbrio via Recuperação Judicial</h3>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                        Repactuação legal de passivos sob a Lei nº 11.101/05. Proposta de deságio (haircut) de 50% a 60% nas dívidas cíveis e emissão de <em>debêntures-fut</em> com carência estendida.
+                    </p>
+                    <div class="text-[11px] text-slate-500 bg-slate-50 p-2 rounded border">
+                        <strong>Investimento:</strong> R$ 15M (honorários) | <strong>Resultado:</strong> Desbloqueio imediato do caixa.
+                    </div>
+                </div>
+
+                <!-- Action 2 -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-vibrant-amber text-white px-3 py-1 rounded-bl-lg text-xs font-bold">
+                        Vetor 2
+                    </div>
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-amber-100 text-vibrant-amber flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="font-bold text-navy-800 text-lg">Proteção Cambial (Hedge Mandatório)</h3>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                        Obrigatoriedade regimental de contratação de instrumentos de hedge (Forward Contracts) para todas as aquisições internacionais de atletas e contratos de dívida em moeda forte.
+                    </p>
+                    <div class="text-[11px] text-slate-500 bg-slate-50 p-2 rounded border">
+                        <strong>Custo:</strong> 3% a 5% do passivo coberto | <strong>Resultado:</strong> Eliminação de perdas surpresa.
+                    </div>
+                </div>
+
+                <!-- Action 3 -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-vibrant-green text-white px-3 py-1 rounded-bl-lg text-xs font-bold">
+                        Vetor 3
+                    </div>
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-green-100 text-vibrant-green flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-calculator"></i>
+                        </div>
+                        <h3 class="font-bold text-navy-800 text-lg">Financial Fair Play Interno (Teto 60%)</h3>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                        Trava estatutária que limita o somatório de salários, encargos e amortização de atletas a no máximo 60% da receita operacional bruta recorrente (excluindo venda de atletas).
+                    </p>
+                    <div class="text-[11px] text-slate-500 bg-slate-50 p-2 rounded border">
+                        <strong>Implementação:</strong> Transição em 24 meses | <strong>Apoio:</strong> SAF Base Ltda e Scouting.
+                    </div>
+                </div>
+
+                <!-- Action 4 -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-vibrant-cyan text-slate-900 px-3 py-1 rounded-bl-lg text-xs font-bold">
+                        Vetor 4
+                    </div>
+                    <div class="flex items-center space-x-3 mb-3">
+                        <div class="w-10 h-10 rounded-lg bg-cyan-100 text-vibrant-cyan flex items-center justify-center font-bold text-lg">
+                            <i class="fa-solid fa-building-user"></i>
+                        </div>
+                        <h3 class="font-bold text-navy-800 text-lg">Estádio Nilton Santos 365</h3>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed mb-3">
+                        Requalificação do estádio para eventos corporativos, shows musicais, centro de saúde e concessões fixas, desvinculando as receitas dos resultados esportivos da equipe.
+                    </p>
+                    <div class="text-[11px] text-slate-500 bg-slate-50 p-2 rounded border">
+                        <strong>CAPEX:</strong> R$ 35M a R$ 45M | <strong>Metas:</strong> R$ 60M a R$ 75M/ano não esportivos.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: PROJEÇÕES E MODELAÇÃO FINANCEIRA (2025-2029) -->
+        <section id="projections" class="space-y-6">
+            <div class="border-l-4 border-vibrant-cyan pl-4">
+                <h2 class="text-2xl sm:text-3xl font-bold text-navy-800">6. Projeções e Modelação Financeira (2025–2029)</h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-1">
+                    Simulação matemática do processo de reestruturação e retorno à lucratividade sustentável.
+                </p>
+            </div>
+
+            <!-- Introductory Paragraph -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 leading-relaxed text-slate-700 text-sm sm:text-base">
+                A aplicação combinada das ações propostas altera drasticamente a trajetória financeira da SAF Botafogo nos próximos três anos. Com o alívio das despesas financeiras a partir de 2027 (reduzidas de R$ 307M para R$ 85M com o hedge e a RJ) e a maturação do teto salarial até 2028, projeta-se um EBITDA revisional positivo em 2028 e um resultado líquido de R$ 250 milhões em 2029.
+            </div>
+
+            <!-- Chart 5: Trajectory Projections -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <h3 class="font-bold text-navy-800 text-lg">Trajetória do Resultado Líquido e EBITDA (2025-2029)</h3>
+                        <p class="text-xs text-slate-500">Projeção em R$ Milhões considerando a aprovação da Recuperação Judicial</p>
+                    </div>
+                    <span class="text-xs bg-green-100 text-vibrant-green font-bold px-2.5 py-1 rounded-full border border-green-300">
+                        Ponto de Virada: 2028
+                    </span>
+                </div>
+                <div class="chart-container">
+                    <canvas id="chartProjections"></canvas>
+                </div>
+            </div>
+
+            <!-- Simulation Data Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-4 bg-slate-900 text-white font-bold text-sm flex items-center justify-between">
+                    <span>DRE Simulado da SAF Botafogo (2025 - 2029)</span>
+                    <span class="text-xs font-normal text-slate-300">Valores em R$ Milhões</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs text-left text-slate-600">
+                        <thead class="bg-slate-100 text-navy-800 uppercase font-bold text-[11px] border-b">
+                            <tr>
+                                <th class="p-3">Categorias Consolidadas</th>
+                                <th class="p-3 text-right">2025 (Consolidado)</th>
+                                <th class="p-3 text-right">2027 (Pós-RJ)</th>
+                                <th class="p-3 text-right">2028 (Teto Salarial)</th>
+                                <th class="p-3 text-right text-vibrant-green font-black">2029 (Estabilidade)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 font-mono">
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-sans font-semibold text-slate-800">Proveitos Operacionais Recorrentes</td>
+                                <td class="p-3 text-right">655,0</td>
+                                <td class="p-3 text-right">680,0</td>
+                                <td class="p-3 text-right">710,0</td>
+                                <td class="p-3 text-right text-navy-800 font-bold">750,0</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-sans text-slate-700 pl-6">• Direitos de Mídia & Premiações</td>
+                                <td class="p-3 text-right">380,0</td>
+                                <td class="p-3 text-right">385,0</td>
+                                <td class="p-3 text-right">390,0</td>
+                                <td class="p-3 text-right">400,0</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-sans text-slate-700 pl-6">• Comercial, Sócios & Bilheteria</td>
+                                <td class="p-3 text-right">275,0</td>
+                                <td class="p-3 text-right">295,0</td>
+                                <td class="p-3 text-right">320,0</td>
+                                <td class="p-3 text-right">350,0</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 bg-red-50/50">
+                                <td class="p-3 font-sans font-semibold text-red-900">Custos Operacionais Desportivos</td>
+                                <td class="p-3 text-right text-red-700">(675,0)</td>
+                                <td class="p-3 text-right text-red-700">(610,0)</td>
+                                <td class="p-3 text-right text-red-700">(520,0)</td>
+                                <td class="p-3 text-right text-slate-800 font-bold">(480,0)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-sans text-slate-700">Gastos Estruturais & Honorários</td>
+                                <td class="p-3 text-right">(218,0)</td>
+                                <td class="p-3 text-right">(185,0)</td>
+                                <td class="p-3 text-right">(170,0)</td>
+                                <td class="p-3 text-right">(160,0)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-100 font-bold bg-slate-50">
+                                <td class="p-3 font-sans text-navy-800">EBITDA Revisional (Pré-Vendas)</td>
+                                <td class="p-3 text-right text-red-600">(238,0)</td>
+                                <td class="p-3 text-right text-red-600">(115,0)</td>
+                                <td class="p-3 text-right text-vibrant-green">20,0</td>
+                                <td class="p-3 text-right text-vibrant-green">110,0</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-sans text-slate-700">Receitas Líquidas de Venda de Atletas</td>
+                                <td class="p-3 text-right">284,0</td>
+                                <td class="p-3 text-right">140,0</td>
+                                <td class="p-3 text-right">150,0</td>
+                                <td class="p-3 text-right">180,0</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 bg-amber-50/30">
+                                <td class="p-3 font-sans font-semibold text-amber-900">Encargos Financeiros (Juros + Câmbio)</td>
+                                <td class="p-3 text-right text-amber-800">(307,0)</td>
+                                <td class="p-3 text-right text-amber-800">(85,0)</td>
+                                <td class="p-3 text-right text-amber-800">(50,0)</td>
+                                <td class="p-3 text-right font-bold text-slate-800">(40,0)</td>
+                            </tr>
+                            <tr class="hover:bg-slate-100 font-black text-sm bg-slate-900 text-white">
+                                <td class="p-3 font-sans">Lucro / (Prejuízo) Líquido do Período</td>
+                                <td class="p-3 text-right text-red-400">(290,0)</td>
+                                <td class="p-3 text-right text-red-300">(60,0)</td>
+                                <td class="p-3 text-right text-vibrant-green">120,0</td>
+                                <td class="p-3 text-right text-vibrant-green">250,0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7: SÍNTESE E DIRETRIZES DE GOVERNANÇA -->
+        <section class="bg-navy-800 text-white p-8 rounded-2xl shadow-xl space-y-6">
+            <div class="flex items-center space-x-3 border-b border-slate-700 pb-4">
+                <i class="fa-solid fa-award text-vibrant-gold text-2xl"></i>
+                <h2 class="text-2xl font-bold">Síntese Executiva & Diretrizes de Governança (IBGC)</h2>
+            </div>
+            
+            <p class="text-slate-300 text-sm leading-relaxed">
+                O saneamento da SAF Botafogo prova que o crescimento isolado de receita não garante a continuidade da empresa sem disciplina de capital. A transição para um modelo sustentável exige a execução rigorosa da Recuperação Judicial para proteger o caixa ordinário, combinada com a instituição de regras claras de governança fiduciária, controle cambial e teto salarial vinculativo.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                <div class="bg-navy-900 p-4 rounded-xl border border-slate-700">
+                    <div class="text-vibrant-gold font-bold text-sm mb-1"><i class="fa-solid fa-check-circle mr-1"></i> Proteção Jurídica</div>
+                    <p class="text-xs text-slate-400">Estancar execuções imediatas e reorganizar R$ 2,6B em passivos com previsibilidade.</p>
+                </div>
+                <div class="bg-navy-900 p-4 rounded-xl border border-slate-700">
+                    <div class="text-vibrant-cyan font-bold text-sm mb-1"><i class="fa-solid fa-check-circle mr-1"></i> Rigor Fiduciário</div>
+                    <p class="text-xs text-slate-400">Proteção cambial (hedge) e limitação das despesas de futebol a 60% da receita orgânica.</p>
+                </div>
+                <div class="bg-navy-900 p-4 rounded-xl border border-slate-700">
+                    <div class="text-vibrant-green font-bold text-sm mb-1"><i class="fa-solid fa-check-circle mr-1"></i> Independência 365</div>
+                    <p class="text-xs text-slate-400">Monetização do Estádio Nilton Santos para gerar R$ 75M/ano não atrelados aos resultados de campo.</p>
+                </div>
+            </div>
+        </section>
 
     </main>
 
-    <!-- RODAPÉ PROFISSIONAL (LINKS ATUALIZADOS) -->
-    <footer class="rodape-profissional">
-        <div class="rodape-inner">
-            <div class="rodape-brand">
-                <img src="assets/astas-logo.png" alt="ASTAS Logo" class="rodape-logo">
-                <p>O Universo Criativo onde as suas pequenas ideias se transformam em grandes marcas memoráveis.</p>
-            </div>
-
-            <div class="rodape-links">
-                <h4>Explorar</h4>
-                <a href="index.html" class="nav-link-liquid">Início</a>
-                <a href="astro.html" class="nav-link-liquid">O Companheiro ASTRO</a>
-                <a href="servicos.html" class="nav-link-liquid">Nossas Missões</a>
-                <a href="portfolio.html" class="nav-link-liquid">Universo de Criadas</a>
-            </div>
-
-            <div class="rodape-contato">
-                <h4>Conecte-se com a ASTAS</h4>
-                <a href="https://www.instagram.com/astasdesigner" target="_blank">✦ Instagram (@astasdesigner)</a>
-                <a href="https://www.youtube.com/@Astas_Creators" target="_blank">✦ YouTube (ASTAS Creators)</a>
-                <a href="https://api.whatsapp.com/send?phone=5561981052340" target="_blank">✦ WhatsApp: (61) 98105-2340</a>
-                <a href="mailto:astasdesigner@gmail.com">✦ astasdesigner@gmail.com</a>
-            </div>
-        </div>
-
-        <div class="rodape-bottom">
-            <p>&copy; 2026 ASTAS — Universo Criativo. Todos os direitos reservados.</p>
+    <!-- Footer -->
+    <footer class="bg-navy-900 text-slate-400 py-8 border-t border-slate-800 mt-12 text-center text-xs">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 Relatório Analítico de Sustentabilidade Financeira – Botafogo SAF. Desenvolvido para apresentação ao Conselho de Administração.</p>
+            <p class="mt-2 text-slate-500">Dados baseados nas Demonstrações Financeiras consolidadas (2024-2025) e no Plano de Recuperação Judicial (2026).</p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="script.js"></script>
-
-    <!-- CONTROLE MANUAL DO MENU MOBILE (GARANTIA 100%) -->
+    <!-- JavaScript Charts Initialization -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const btnOpen = document.getElementById('btn-open-menu');
-            const btnClose = document.getElementById('btn-close-menu');
-            const drawer = document.getElementById('mobile-drawer');
-            const overlay = document.getElementById('drawer-overlay');
-
-            if (btnOpen && btnClose && drawer && overlay) {
-                btnOpen.addEventListener('click', () => {
-                    drawer.classList.add('open');
-                    overlay.classList.add('active');
-                });
-                
-                const fecharMenu = () => {
-                    drawer.classList.remove('open');
-                    overlay.classList.remove('active');
-                };
-                
-                btnClose.addEventListener('click', fecharMenu);
-                overlay.addEventListener('click', fecharMenu);
-            }
-
-            // Transição Líquida
-            const links = document.querySelectorAll('.nav-link-liquid');
-            const mainStage = document.getElementById('main-stage');
-
-            links.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    const targetUrl = link.getAttribute('href');
-                    if (targetUrl && targetUrl.endsWith('.html') && targetUrl !== window.location.pathname.split('/').pop()) {
-                        e.preventDefault();
-                        if (drawer.classList.contains('open')) {
-                            drawer.classList.remove('open');
-                            overlay.classList.remove('active');
-                        }
-                        mainStage.classList.add('page-exit');
-                        setTimeout(() => { window.location.href = targetUrl; }, 400);
-                    }
-                });
+        // Helper function for label wrapping (> 16 chars split into array)
+        function wrapLabel(str, maxLen = 16) {
+            if (typeof str !== 'string' || str.length <= maxLen) return str;
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + ' ' + word).trim().length > maxLen) {
+                    if (currentLine) lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
             });
-        });
-    </script>
+            if (currentLine) lines.push(currentLine.trim());
+            return lines;
+        }
 
-    <!-- MOTOR DE AUTENTICAÇÃO DA COMUNIDADE (SUPABASE 2) -->
-    <script src="comunidade-config.js"></script>
-    <script src="auth-engine.js"></script>
-
-    <!-- PERSONALIZAÇÃO PÓS-LOGIN (MESA & CELULAR) -->
-    <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            if (!window.supabaseComunidade) return;
-
-            const { data: { session } } = await window.supabaseComunidade.auth.getSession();
-
-            if (session && session.user) {
-                let codinome = session.user.user_metadata?.codinome || 'Astronauta';
-                let nivel = 1;
-
-                try {
-                    const { data } = await window.supabaseComunidade
-                        .from('perfis_astronautas')
-                        .select('codinome, nivel')
-                        .eq('id', session.user.id)
-                        .single();
-                    if (data) {
-                        if (data.codinome) codinome = data.codinome;
-                        if (data.nivel) nivel = data.nivel;
+        // Shared Tooltip Configuration for Chart.js multi-line label handling
+        const tooltipConfig = {
+            callbacks: {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
                     }
-                } catch (e) {}
-
-                // Atualiza Botão do Menu Mobile
-                const btnMobileConta = document.getElementById('btn-mobile-conta');
-                if (btnMobileConta) {
-                    btnMobileConta.innerHTML = `✦ Conta (Nvl. ${nivel})`;
-                    btnMobileConta.setAttribute('href', 'conta.html');
                 }
+            }
+        };
 
-                // Personaliza a fala do ASTRO
-                const homeGreeting = document.getElementById('home-greeting');
-                if (homeGreeting) {
-                    homeGreeting.style.opacity = '0';
-                    setTimeout(() => {
-                        homeGreeting.innerHTML = `Olá, <span style="color: var(--verde-aurora);">${codinome}</span>! Que bom ter você de volta.`;
-                        homeGreeting.style.opacity = '1';
-                    }, 200);
+        // Chart 1: Financial Paradox Combo Chart
+        const ctxParadox = document.getElementById('chartParadox').getContext('2d');
+        const rawLabelsParadox = ['Receita Bruta 2024', 'Prejuízo Líquido 2024', 'Cap. Circulante 2024', 'Receita Líq. 2025', 'Prejuízo Líquido 2025', 'Cap. Circulante 2025'];
+        new Chart(ctxParadox, {
+            type: 'bar',
+            data: {
+                labels: rawLabelsParadox.map(l => wrapLabel(l)),
+                datasets: [{
+                    label: 'Valores Financeiros (R$ Milhões)',
+                    data: [720.0, -266.8, -533.6, 574.0, -290.8, -943.1],
+                    backgroundColor: [
+                        '#00C853', '#E53935', '#FF9100',
+                        '#1E88E5', '#E53935', '#D32F2F'
+                    ],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: tooltipConfig
+                },
+                scales: {
+                    y: {
+                        grid: { color: '#E2E8F0' },
+                        ticks: {
+                            callback: function(value) { return 'R$ ' + value + 'M'; }
+                        }
+                    },
+                    x: { grid: { display: false } }
                 }
+            }
+        });
 
-                // Troca botões para "Acesso à Central"
-                const actionBox = document.getElementById('home-action-box');
-                if (actionBox) {
-                    actionBox.style.opacity = '0';
-                    setTimeout(() => {
-                        actionBox.innerHTML = `
-                            <a href="conta.html" class="btn-moon btn-moon-criar nav-link-liquid" style="width: 100%; font-size: 1.1rem; padding: 1.1rem 2rem;">
-                                <span>✦ Acessar Central de Comando</span>
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                            </a>
-                        `;
-                        actionBox.style.opacity = '1';
-                    }, 200);
+        // Chart 2: Revenue Composition Breakdown
+        const ctxRevenue = document.getElementById('chartRevenueBreakdown').getContext('2d');
+        const rawLabelsRevenue = ['Transmissão (TV)', 'Prêmios & Libertadores', 'Bilheteria (Matchday)', 'Sócio Camisa 7', 'Venda de Atletas'];
+        new Chart(ctxRevenue, {
+            type: 'bar',
+            data: {
+                labels: rawLabelsRevenue.map(l => wrapLabel(l)),
+                datasets: [
+                    {
+                        label: 'Exercício 2024 (R$ M)',
+                        data: [101.0, 257.5, 36.4, 48.6, 96.4],
+                        backgroundColor: '#0B192C'
+                    },
+                    {
+                        label: 'Exercício 2025 (R$ M)',
+                        data: [111.2, 269.1, 17.5, 52.5, 733.4],
+                        backgroundColor: '#FFB200'
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: tooltipConfig
+                },
+                scales: {
+                    y: {
+                        grid: { color: '#E2E8F0' },
+                        ticks: { callback: function(val) { return 'R$ ' + val + 'M'; } }
+                    },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // Chart 3: Expense Breakdown Donut
+        const ctxExpenses = document.getElementById('chartExpenses').getContext('2d');
+        const rawLabelsExpenses = ['Perda Cambial (Sem Hedge)', 'Amortização de Atletas', 'Folha Salarial Futebol', 'Custos Diretos Vendas'];
+        new Chart(ctxExpenses, {
+            type: 'doughnut',
+            data: {
+                labels: rawLabelsExpenses.map(l => wrapLabel(l)),
+                datasets: [{
+                    data: [322.2, 236.8, 232.5, 448.0],
+                    backgroundColor: ['#E53935', '#0B192C', '#1E88E5', '#FF9100'],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: tooltipConfig
+                },
+                cutout: '65%'
+            }
+        });
+
+        // Chart 4: Wage-to-Revenue Ratio Benchmarking
+        const ctxWage = document.getElementById('chartWageRatio').getContext('2d');
+        const rawLabelsWage = ['Botafogo SAF 2025', 'SE Palmeiras', 'CR Flamengo', 'Fortaleza EC', 'FC Bayern Munique', 'Meta Botafogo 2028'];
+        new Chart(ctxWage, {
+            type: 'bar',
+            data: {
+                labels: rawLabelsWage.map(l => wrapLabel(l)),
+                datasets: [{
+                    label: 'Custo Elenco / Receita Bruta (%)',
+                    data: [103.0, 58.0, 52.0, 55.0, 41.7, 60.0],
+                    backgroundColor: [
+                        '#E53935', '#1E88E5', '#1E88E5', '#1E88E5', '#00C853', '#FFB200'
+                    ],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: tooltipConfig
+                },
+                scales: {
+                    x: {
+                        max: 120,
+                        ticks: { callback: function(val) { return val + '%'; } }
+                    }
+                }
+            }
+        });
+
+        // Chart 5: Financial Forecast 2025-2029
+        const ctxProjections = document.getElementById('chartProjections').getContext('2d');
+        new Chart(ctxProjections, {
+            type: 'line',
+            data: {
+                labels: ['2025 (Atual)', '2027 (Pós-RJ)', '2028 (Teto Salarial)', '2029 (Estabilidade)'],
+                datasets: [
+                    {
+                        label: 'Lucro / (Prejuízo) Líquido',
+                        data: [-290.0, -60.0, 120.0, 250.0],
+                        borderColor: '#00C853',
+                        backgroundColor: 'rgba(0, 200, 83, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 6,
+                        pointBackgroundColor: '#00C853'
+                    },
+                    {
+                        label: 'EBITDA Revisional',
+                        data: [-238.0, -115.0, 20.0, 110.0],
+                        borderColor: '#1E88E5',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        fill: false,
+                        tension: 0.3,
+                        pointRadius: 5
+                    },
+                    {
+                        label: 'Encargos Financeiros Líquidos',
+                        data: [-307.0, -85.0, -50.0, -40.0],
+                        borderColor: '#E53935',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.3,
+                        pointRadius: 5
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: tooltipConfig
+                },
+                scales: {
+                    y: {
+                        grid: { color: '#E2E8F0' },
+                        ticks: { callback: function(val) { return 'R$ ' + val + 'M'; } }
+                    },
+                    x: { grid: { display: false } }
                 }
             }
         });
