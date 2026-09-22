@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estratégia & Ação | Botafogo SAF</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-black text-white antialiased">
+
+    <!-- Navbar Oficial -->
+    <header class="navbar fixed top-0 w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="index.html">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Botafogo_Regatas_logo.png" alt="Escudo Botafogo" class="h-12 w-12 hover:scale-110 transition-transform">
+                </a>
+                <span class="font-heading font-black text-2xl tracking-widest uppercase">Botafogo</span>
+            </div>
+            <nav class="hidden md:flex space-x-8 font-heading text-sm font-semibold tracking-wide text-gray-400">
+                <a href="index.html" class="hover:text-white transition-colors">Início</a>
+                <a href="diagnostico.html" class="hover:text-white transition-colors">Diagnóstico</a>
+                <a href="estrategia.html" class="text-white border-b-2 border-white pb-1">Estratégia</a>
+                <!-- Link para a próxima página sugerida -->
+                <a href="projecoes.html" class="hover:text-white transition-colors text-gray-600">Projeções</a> 
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 space-y-24">
+        
+        <!-- SEÇÃO: Matriz SWOT -->
+        <section>
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="font-heading font-black text-3xl uppercase tracking-widest">Matriz SWOT Estratégica</h2>
+                <p class="text-gray-400 mt-2 max-w-2xl mx-auto">Mapeamento das variáveis endógenas e exógenas que moldam a competitividade da instituição, fundamentando o reposicionamento corporativo[cite: 3].</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Forças -->
+                <div class="dark-card p-8 border-l-4 border-white" data-aos="fade-right">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fa-solid fa-shield-halved text-2xl text-white"></i>
+                        <h3 class="font-heading font-bold text-xl uppercase">Forças</h3>
+                    </div>
+                    <ul class="text-gray-400 space-y-3 text-sm list-none">
+                        <li><i class="fa-solid fa-check text-gray-500 mr-2"></i> Elevado engajamento do programa "Camisa 7" com mais de 81 mil sócios[cite: 3].</li>
+                        <li><i class="fa-solid fa-check text-gray-500 mr-2"></i> Inserção no ecossistema "Eagle Football" para angariação de talentos[cite: 3].</li>
+                        <li><i class="fa-solid fa-check text-gray-500 mr-2"></i> Valorização internacional dos direitos televisivos[cite: 3].</li>
+                    </ul>
+                </div>
+
+                <!-- Fraquezas -->
+                <div class="dark-card p-8 border-l-4 border-gray-600" data-aos="fade-left">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fa-solid fa-bug text-2xl text-gray-500"></i>
+                        <h3 class="font-heading font-bold text-xl uppercase">Fraquezas</h3>
+                    </div>
+                    <ul class="text-gray-400 space-y-3 text-sm list-none">
+                        <li><i class="fa-solid fa-xmark text-gray-600 mr-2"></i> Patrimônio líquido negativo na ordem de R$ 431,9 milhões[cite: 3].</li>
+                        <li><i class="fa-solid fa-xmark text-gray-600 mr-2"></i> Negligência absoluta no controle de risco cambial[cite: 3].</li>
+                        <li><i class="fa-solid fa-xmark text-gray-600 mr-2"></i> Despesas de amortização desproporcionais à receita orgânica garantida[cite: 3].</li>
+                    </ul>
+                </div>
+
+                <!-- Oportunidades -->
+                <div class="dark-card p-8 border-l-4 border-white" data-aos="fade-right" data-aos-delay="100">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fa-solid fa-lightbulb text-2xl text-white"></i>
+                        <h3 class="font-heading font-bold text-xl uppercase">Oportunidades</h3>
+                    </div>
+                    <ul class="text-gray-400 space-y-3 text-sm list-none">
+                        <li><i class="fa-solid fa-arrow-right text-gray-500 mr-2"></i> Recuperação Judicial para promover um corte profundo (haircut) nas dívidas[cite: 3].</li>
+                        <li><i class="fa-solid fa-arrow-right text-gray-500 mr-2"></i> Estruturação da comercialização de direitos através da Liga Forte União (LFU)[cite: 3].</li>
+                        <li><i class="fa-solid fa-arrow-right text-gray-500 mr-2"></i> Uso da Lei de Incentivo ao Desporto via SAF Base Ltda[cite: 3].</li>
+                    </ul>
+                </div>
+
+                <!-- Ameaças -->
+                <div class="dark-card p-8 border-l-4 border-gray-600" data-aos="fade-left" data-aos-delay="100">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <i class="fa-solid fa-triangle-exclamation text-2xl text-gray-500"></i>
+                        <h3 class="font-heading font-bold text-xl uppercase">Ameaças</h3>
+                    </div>
+                    <ul class="text-gray-400 space-y-3 text-sm list-none">
+                        <li><i class="fa-solid fa-bolt text-gray-600 mr-2"></i> Risco de flutuação desportiva e dependência extrema de premiações[cite: 3].</li>
+                        <li><i class="fa-solid fa-bolt text-gray-600 mr-2"></i> Fim dos benefícios do regime PERSE e contingências tributárias[cite: 3].</li>
+                        <li><i class="fa-solid fa-bolt text-gray-600 mr-2"></i> Insegurança jurídica perante contestações na homologação da recuperação[cite: 3].</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: Benchmarking -->
+        <section>
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="font-heading font-black text-3xl uppercase tracking-widest">Benchmarking Corporativo</h2>
+                <p class="text-gray-400 mt-2 max-w-2xl mx-auto">Modelos de excelência e governança em clubes que superaram conjunturas críticas[cite: 3].</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6" data-aos="fade-right">
+                    <div class="dark-card p-5 border-l-2 border-white">
+                        <h4 class="font-bold text-white uppercase text-sm">CR Flamengo & SE Palmeiras</h4>
+                        <p class="text-xs text-gray-400 mt-1">Adesão ao Profut com austeridade absoluta (Flamengo) e captação de financiamentos a juros marginais para reestruturar dívida tóxica (Palmeiras)[cite: 3].</p>
+                    </div>
+                    <div class="dark-card p-5 border-l-2 border-white">
+                        <h4 class="font-bold text-white uppercase text-sm">Fortaleza EC</h4>
+                        <p class="text-xs text-gray-400 mt-1">Gestão orgânica e compromisso dogmático com o orçamento, sob a premissa de que "o camisa 10 do Fortaleza é o salário em dia"[cite: 3].</p>
+                    </div>
+                    <div class="dark-card p-5 border-l-2 border-white">
+                        <h4 class="font-bold text-white uppercase text-sm">Bayern de Munique & Real Madrid</h4>
+                        <p class="text-xs text-gray-400 mt-1">Preservação de rácio rigoroso da despesa laboral (Bayern confinado a 41,7%) e maximização de ativos físicos com a remodelação do estádio para gerar receitas os 365 dias do ano (Real Madrid)[cite: 3].</p>
+                    </div>
+                </div>
+
+                <div class="dark-card p-6" data-aos="fade-left">
+                    <h3 class="font-heading font-bold text-lg mb-4 text-center">Rácio Salário / Receita (%)</h3>
+                    <div class="chart-container" style="height: 280px;">
+                        <canvas id="chartBenchmark"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: Plano de Ação (4 Vetores) -->
+        <section>
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="font-heading font-black text-3xl uppercase tracking-widest">Plano de Intervenção Estrutural</h2>
+                <p class="text-gray-400 mt-2 max-w-2xl mx-auto">4 eixos focados na transparência, responsabilidade e prestação de contas (IBGC)[cite: 3].</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Vetor 1 -->
+                <div class="dark-card p-6 relative overflow-hidden group" data-aos="zoom-in" data-aos-delay="0">
+                    <div class="absolute top-0 right-0 bg-white text-black text-[10px] font-bold px-2 py-1 uppercase tracking-widest">Vetor 1</div>
+                    <i class="fa-solid fa-scale-balanced text-3xl text-white mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="font-bold uppercase text-sm mb-2">Reequilíbrio via RJ</h3>
+                    <p class="text-xs text-gray-400">Adequação legal dos fluxos exigíveis com deságio agressivo na ordem de 50% a 60% e emissão de debêntures-fut[cite: 3].</p>
+                </div>
+
+                <!-- Vetor 2 -->
+                <div class="dark-card p-6 relative overflow-hidden group" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="absolute top-0 right-0 bg-gray-600 text-white text-[10px] font-bold px-2 py-1 uppercase tracking-widest">Vetor 2</div>
+                    <i class="fa-solid fa-money-bill-transfer text-3xl text-gray-400 mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="font-bold uppercase text-sm mb-2">Hedge Cambial</h3>
+                    <p class="text-xs text-gray-400">Uso mandatório de Forward Contracts, fixando custo de dívida externa e isolando a gestão de perturbações cambiais[cite: 3].</p>
+                </div>
+
+                <!-- Vetor 3 -->
+                <div class="dark-card p-6 relative overflow-hidden group" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="absolute top-0 right-0 bg-white text-black text-[10px] font-bold px-2 py-1 uppercase tracking-widest">Vetor 3</div>
+                    <i class="fa-solid fa-percent text-3xl text-white mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="font-bold uppercase text-sm mb-2">Teto Salarial Endógeno</h3>
+                    <p class="text-xs text-gray-400">Institucionalização estatutária que limita despesas de futebol a 60% da receita operacional bruta, similar ao modelo bávaro[cite: 3].</p>
+                </div>
+
+                <!-- Vetor 4 -->
+                <div class="dark-card p-6 relative overflow-hidden group" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="absolute top-0 right-0 bg-gray-600 text-white text-[10px] font-bold px-2 py-1 uppercase tracking-widest">Vetor 4</div>
+                    <i class="fa-solid fa-stadium text-3xl text-gray-400 mb-4 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="font-bold uppercase text-sm mb-2">Estádio 365</h3>
+                    <p class="text-xs text-gray-400">Diversificação de ativos com eventos corporativos e saúde (câmara hiperbárica Oxy) para gerar de R$ 60M a 75M por ano[cite: 3].</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navegação para a Próxima Página -->
+        <div class="text-center pt-12 pb-20">
+            <a href="projecoes.html" class="inline-flex items-center px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-black transition-colors font-bold uppercase tracking-widest text-sm">
+                Avançar para Projeções 2027-2029 <i class="fa-solid fa-arrow-right ml-3"></i>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 50 });
+
+        // Gráfico de Benchmarking - Cores monocromáticas
+        Chart.defaults.color = '#888';
+        Chart.defaults.font.family = 'Inter';
+
+        const ctxBench = document.getElementById('chartBenchmark').getContext('2d');
+        new Chart(ctxBench, {
+            type: 'bar',
+            data: {
+                labels: ['Bayern', 'Flamengo', 'Fortaleza', 'Palmeiras', 'Meta Botafogo', 'Botafogo 2025'],
+                datasets: [{
+                    label: 'Comprometimento da Receita (%)',
+                    data: [41.7, 52.0, 55.0, 58.0, 60.0, 103.0],
+                    backgroundColor: [
+                        '#FFFFFF', // Bayern
+                        '#CCCCCC', // Fla
+                        '#999999', // Fortaleza
+                        '#777777', // Palmeiras
+                        '#444444', // Meta
+                        '#111111'  // Botafogo Atual (crítico)
+                    ],
+                    borderColor: '#FFFFFF',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: {
+                        grid: { color: '#333' },
+                        max: 110,
+                        ticks: { callback: function(val) { return val + '%'; } }
+                    },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

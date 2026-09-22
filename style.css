@@ -1,584 +1,93 @@
-/* --- PALETA DE CORES OFICIAL ASTAS --- */
-:root {
-    --azul-noturno: #07111F;        /* Fundo principal / Texto forte */
-    --preto-espacial: #04070D;      /* Fundos escuros e degradês */
-    --verde-aurora: #69D5C3;        /* Brilhos, botões, destaques neon */
-    --verde-aurora-claro: #8DE6D8;  /* Hover dos botões e brilhos */
-    --verde-aurora-escuro: #4AB8A5; /* Sombras luminosas */
-    --azul-profundo: #002C7D;       /* Conceitos de marca e destaques profundos */
-    --branco-suave: #F5F7FA;        /* Fundos claros / Textos em fundo escuro */
-    --cinza-claro: #B8C2CC;         /* Textos secundários */
-    
-    --pill-bg: rgba(7, 17, 31, 0.85);
-    --glass-border: rgba(245, 247, 250, 0.15);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&family=Inter:wght@400;500;700&display=swap');
 
 body {
-    background: linear-gradient(180deg, var(--preto-espacial) 0%, var(--azul-noturno) 100%);
-    color: var(--branco-suave);
+    font-family: 'Inter', sans-serif;
+    background-color: #000000;
+    color: #FFFFFF;
     overflow-x: hidden;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
-/* --- ESTRELAS DE FUNDO --- */
-#space-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -2;
-    pointer-events: none;
+h1, h2, h3, h4, .font-heading {
+    font-family: 'Montserrat', sans-serif;
 }
 
-/* --- ESTRELA CADENTE DINÂMICA (OTIMIZADA PARA MOBILE E DESKTOP) --- */
-.shooting-star {
-    position: fixed;
-    width: 360px;
-    height: 4px;
-    z-index: -1; /* Posicionada na frente do fundo espelhado e visível no mobile */
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    opacity: 0;
-    transform-origin: left center;
-}
-
-.star-tail {
-    flex: 1;
-    height: 2px;
-    background: linear-gradient(90deg, rgba(105, 213, 195, 0), rgba(105, 213, 195, 0.7), rgba(245, 247, 250, 0.95));
-    filter: drop-shadow(0 0 6px var(--verde-aurora));
-}
-
-.star-head {
-    width: 7px;
-    height: 7px;
-    background: var(--branco-suave);
-    border-radius: 50%;
-    box-shadow: 0 0 15px var(--branco-suave), 0 0 35px var(--verde-aurora), 0 0 60px var(--verde-aurora);
-    flex-shrink: 0;
-}
-
-.shoot {
-    animation: shootingAnimation 1.1s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
-}
-
-@keyframes shootingAnimation {
-    0% { transform: rotate(var(--angle)) translateX(0) scaleX(0.2); opacity: 1; }
-    65% { opacity: 1; }
-    100% { transform: rotate(var(--angle)) translateX(1500px) scaleX(1.5); opacity: 0; }
-}
-
-/* --- CABEÇALHO DESKTOP --- */
+/* Navbar estilo site oficial */
 .navbar {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 5%;
-    max-width: 1550px;
-    margin: 0 auto;
-    width: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    border-bottom: 1px solid #333;
+    backdrop-filter: blur(10px);
 }
 
-.logo {
-    height: 52px;
-    width: auto;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+/* Cards Escuros */
+.dark-card {
+    background: #111111;
+    border: 1px solid #222;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
-.logo:hover {
-    transform: scale(1.05);
+.dark-card:hover {
+    transform: translateY(-5px);
+    border-color: #555;
 }
 
-.nav-links-desktop {
-    display: flex;
-    background: var(--pill-bg);
-    backdrop-filter: blur(16px);
-    padding: 0.5rem;
-    border-radius: 50px;
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 8px 32px rgba(4, 7, 13, 0.6);
+/* --- ANIMAÇÕES --- */
+
+/* 1. Campo com movimento (Pan) */
+.campo-animado {
+    /* Imagem de um estádio/campo escurecida */
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.95)), url('https://images.unsplash.com/photo-1518605368461-1ee1252329bc?q=80&w=2000&auto=format&fit=crop') center/cover;
+    background-attachment: fixed;
+    animation: panField 30s linear infinite alternate;
 }
 
-.nav-item {
-    color: var(--cinza-claro);
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 0.7rem 2.5rem;
-    border-radius: 50px;
-    transition: all 0.3s ease;
+@keyframes panField {
+    from { background-position: 0% 50%; }
+    to { background-position: 100% 50%; }
 }
 
-.nav-item:hover {
-    color: var(--branco-suave);
-}
-
-.nav-item.active {
-    background-color: var(--verde-aurora);
-    color: var(--preto-espacial);
-    box-shadow: 0 0 20px rgba(105, 213, 195, 0.5);
-}
-
-.auth-top {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.btn-top-entre {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    background-color: var(--verde-aurora);
-    color: var(--preto-espacial);
-    padding: 0.8rem 2.2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 1rem;
-    box-shadow: 0 0 25px rgba(105, 213, 195, 0.4);
-    transition: all 0.3s ease;
-}
-
-.btn-top-entre:hover {
-    background-color: var(--verde-aurora-claro);
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 0 30px rgba(141, 230, 216, 0.8);
-}
-
-.mobile-menu-btn {
-    display: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    flex-direction: column;
-    gap: 6px;
-    padding: 5px;
-}
-
-.mobile-menu-btn span {
-    width: 28px;
-    height: 3px;
-    background-color: var(--branco-suave);
-    border-radius: 3px;
-    transition: 0.3s;
-}
-
-/* --- MENU GAVETA MOBILE --- */
-.mobile-drawer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: var(--verde-aurora);
-    z-index: 100;
-    transform: translateY(-100%);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 10px 30px rgba(4,7,13,0.7);
-}
-
-.mobile-drawer.open {
-    transform: translateY(0);
-}
-
-.drawer-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 6%;
-    border-bottom: 1px solid rgba(4,7,13,0.1);
-}
-
-.drawer-logo {
-    height: 45px;
-    filter: brightness(0.1);
-}
-
-.btn-close-drawer {
-    background: none;
-    border: none;
-    font-size: 2rem;
-    color: var(--preto-espacial);
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.drawer-links {
-    display: flex;
-    flex-direction: column;
-}
-
-.drawer-links a {
-    text-decoration: none;
-    color: var(--preto-espacial);
-    font-size: 1.3rem;
-    font-weight: 700;
-    padding: 1.4rem 6%;
-    border-bottom: 1px solid rgba(245, 247, 250, 0.3);
-    text-align: center;
-    transition: background 0.2s;
-}
-
-.drawer-links a:hover {
-    background: rgba(4,7,13,0.05);
-}
-
-.drawer-links a.drawer-active {
-    background-color: var(--azul-profundo);
-    color: var(--branco-suave);
-}
-
-.drawer-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(4,7,13,0.8);
-    z-index: 99;
+/* 2. Jogador entrando em cena */
+.jogador-animado {
     opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s;
+    animation: entrarJogador 1.5s ease-out 0.5s forwards;
+    filter: drop-shadow(0px 0px 15px rgba(255,255,255,0.1));
 }
 
-.drawer-overlay.open {
-    opacity: 1;
-    pointer-events: all;
+@keyframes entrarJogador {
+    from { transform: translateX(-50px) scale(0.95); opacity: 0; }
+    to { transform: translateX(0) scale(1); opacity: 1; }
 }
 
-/* --- NOVA LUA SATÉLITE (TAMANHO DO ASTRO + FLUTUAÇÃO + GIRO HORÁRIO) --- */
-.lua-segundo-plano {
-    position: fixed;
-    top: 16%;
-    right: 8%;         /* Posicionada como satélite visível no canto superior direito */
-    width: 220px;      /* Reduzida para o tamanho aproximado do ASTRO */
-    height: 220px;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0.85;
-    animation: flutuarLateralLua 8s ease-in-out infinite;
-}
-
-@keyframes flutuarLateralLua {
-    0%, 100% { transform: translate3d(0, 0, 0); }
-    50% { transform: translate3d(-35px, 20px, 0); } /* Flutua suavemente para os lados */
-}
-
-.lua-girando {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 0 30px rgba(105, 213, 195, 0.22));
-    animation: girarHorarioLua 35s linear infinite;
-}
-
-@keyframes girarHorarioLua {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); } /* Giro contínuo no sentido horário */
-}
-
-/* --- PALCO PRINCIPAL --- */
-.stage-container {
-    position: relative;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-height: 85vh;
-    padding-bottom: 100px;
-    z-index: 2;
-}
-
-/* --- ASTRO E DIÁLOGO --- */
-.content-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4rem;
-    max-width: 1150px;
-    width: 90%;
-    margin-bottom: 2rem;
-}
-
-.astro-container {
-    flex-shrink: 0;
-    width: 380px;
-    animation: zeroGravity 6s ease-in-out infinite;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.astro {
-    width: 100%;
-    height: auto;
-    filter: drop-shadow(0 0 15px rgba(105, 213, 195, 0.22)) drop-shadow(0 0 35px rgba(105, 213, 195, 0.08));
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
-}
-
-.astro-container:hover .astro {
-    transform: scale(1.05);
-    filter: drop-shadow(0 0 20px rgba(105, 213, 195, 0.35)) drop-shadow(0 0 45px rgba(105, 213, 195, 0.15));
-}
-
-@keyframes zeroGravity {
-    0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-    33% { transform: translateY(-16px) rotate(3deg) scale(1.02); }
-    66% { transform: translateY(-8px) rotate(-2deg) scale(0.99); }
-}
-
-.dialog-column {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    width: 100%;
-    max-width: 580px;
-}
-
-.dialog-box {
-    background: rgba(245, 247, 250, 0.92);
-    backdrop-filter: blur(25px);
-    border: 2px solid var(--verde-aurora);
-    padding: 2.8rem;
-    border-radius: 30px;
-    width: 100%;
-    box-shadow: 0 25px 60px rgba(4, 7, 13, 0.8), 0 0 30px rgba(105, 213, 195, 0.15);
-}
-
-.badge-astro {
-    display: inline-block;
-    font-size: 0.8rem;
-    letter-spacing: 2.5px;
-    color: var(--azul-profundo);
-    font-weight: 800;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    background: rgba(105, 213, 195, 0.25);
-    padding: 0.3rem 0.8rem;
-    border-radius: 8px;
-}
-
-.greeting {
-    color: var(--azul-noturno);
-    font-size: 2.2rem;
-    font-weight: 800;
-    margin-bottom: 1.2rem;
-    line-height: 1.25;
-}
-
-.intro-text {
-    color: #1e293b;
-    font-size: 1.15rem;
-    line-height: 1.7;
-    font-weight: 500;
-}
-
-.intro-text strong {
-    color: var(--azul-profundo);
-    font-weight: 800;
-    background: linear-gradient(180deg, transparent 60%, rgba(105, 213, 195, 0.4) 60%);
-    padding: 0 0.2rem;
-}
-
-.moon-actions {
-    display: flex;
-    gap: 1.2rem;
-    width: 100%;
-}
-
-.btn-moon {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.8rem;
-    padding: 1.1rem 1.5rem;
-    font-size: 1.05rem;
-    font-weight: 700;
-    border-radius: 50px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 12px 30px rgba(4,7,13,0.7);
-    text-align: center;
-}
-
-.btn-moon-entre {
-    background: var(--azul-noturno);
-    color: var(--branco-suave);
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.btn-moon-entre:hover {
-    background: var(--azul-profundo);
-    border-color: var(--verde-aurora);
-    transform: translateY(-3px);
-    box-shadow: 0 15px 35px rgba(0, 44, 125, 0.5);
-}
-
-.btn-moon-criar {
-    background-color: var(--verde-aurora);
-    color: var(--preto-espacial);
-    border: none;
-    box-shadow: 0 0 25px rgba(105, 213, 195, 0.4);
-}
-
-.btn-moon-criar:hover {
-    background-color: var(--verde-aurora-claro);
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 0 35px rgba(141, 230, 216, 0.8);
-}
-
-/* --- RODAPÉ PROFISSIONAL --- */
-.rodape-profissional {
-    position: relative;
-    z-index: 10;
-    background-color: var(--preto-espacial);
-    border-top: 1px solid rgba(245, 247, 250, 0.08);
-    padding: 4rem 6% 1.5rem 6%;
-    margin-top: auto;
-    width: 100%;
-}
-
-.rodape-inner {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1.5fr;
-    gap: 3rem;
-    max-width: 1300px;
-    margin: 0 auto 3rem auto;
-}
-
-.rodape-brand p {
-    color: var(--cinza-claro);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-top: 1rem;
-    max-width: 350px;
-}
-
-.rodape-logo {
-    height: 42px;
-}
-
-.rodape-links h4, .rodape-contato h4 {
-    color: var(--branco-suave);
-    font-size: 1.1rem;
-    margin-bottom: 1.2rem;
-    font-weight: 700;
-}
-
-.rodape-links, .rodape-contato {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-}
-
-.rodape-links a, .rodape-contato a {
-    color: var(--cinza-claro);
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: color 0.2s;
-}
-
-.rodape-links a:hover, .rodape-contato a:hover {
-    color: var(--verde-aurora);
-}
-
-.rodape-bottom {
-    text-align: center;
-    padding-top: 1.5rem;
-    border-top: 1px solid rgba(245, 247, 250, 0.05);
-    color: var(--cinza-claro);
-    font-size: 0.85rem;
-}
-
-/* --- RESPONSIVIDADE CELULAR --- */
-@media (max-width: 950px) {
-    .nav-links-desktop, .btn-top-entre { display: none; }
-    .mobile-menu-btn { display: flex; }
-
-    /* Garante a Lua visível no celular em tamanho proporcional e sem bugar a tela */
-    .lua-segundo-plano {
-        top: 12%;
-        right: 4%;
-        width: 150px;
-        height: 150px;
-        opacity: 0.75;
-    }
-
-    .content-wrapper {
-        flex-direction: column;
-        text-align: center;
-        gap: 2rem;
-    }
-
-    .astro-container { width: 280px; }
-    .dialog-box { padding: 2rem 1.5rem; }
-
-    .moon-actions {
-        flex-direction: column;
-        gap: 0.8rem;
-    }
-
-    .btn-moon { width: 100%; }
-
-    .rodape-inner {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        text-align: center;
-    }
-
-    .rodape-brand p { margin: 1rem auto 0 auto; }
-}
-
-/* --- TRANSICÕES SUAVES ENTRE PÁGINAS E LINKS --- */
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    animation: fadeInPage 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes fadeInPage {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-.nav-links-desktop .nav-item {
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.nav-links-desktop .nav-item::after {
-    content: '';
+/* 3. Bola rolando na tela */
+.bola-container {
     position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background: var(--verde-aurora);
-    transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    bottom: 5%;
+    left: -50px;
+    animation: atravessarTela 8s linear infinite;
+    z-index: 20;
 }
 
-.nav-links-desktop .nav-item:hover::after,
-.nav-links-desktop .nav-item.active::after {
+.bola-animada {
+    font-size: 2.5rem;
+    color: #FFF;
+    animation: girarBola 2s linear infinite;
+}
+
+@keyframes atravessarTela {
+    0% { left: -100px; }
+    100% { left: 100vw; }
+}
+
+@keyframes girarBola {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Ajuste de gráficos para o modo escuro */
+.chart-container {
+    position: relative;
     width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+    height: 320px;
 }

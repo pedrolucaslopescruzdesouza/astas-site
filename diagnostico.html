@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico | Botafogo SAF</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body class="bg-black text-white antialiased">
+
+    <!-- Navbar -->
+    <header class="navbar fixed top-0 w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="index.html">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Botafogo_Regatas_logo.png" alt="Escudo Botafogo" class="h-12 w-12 hover:scale-110 transition-transform">
+                </a>
+                <span class="font-heading font-black text-2xl tracking-widest uppercase">Botafogo</span>
+            </div>
+            <nav class="hidden md:flex space-x-8 font-heading text-sm font-semibold tracking-wide text-gray-400">
+                <a href="index.html" class="hover:text-white transition-colors">Início</a>
+                <a href="diagnostico.html" class="text-white">Diagnóstico</a>
+                <a href="estrategia.html" class="hover:text-white transition-colors">Estratégia</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 space-y-20">
+        
+        <!-- Título da Seção -->
+        <div class="text-center" data-aos="fade-up">
+            <h1 class="font-heading font-black text-4xl uppercase mb-4">O Paradoxo Financeiro</h1>
+            <p class="text-gray-400 max-w-2xl mx-auto">Faturamento recorde de R$ 720 milhões e sucesso em campo contrastando com um Capital Circulante Líquido negativo de R$ 943,1 milhões.</p>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="dark-card p-6 rounded-lg" data-aos="fade-right">
+                <h3 class="font-heading font-bold text-xl mb-4 text-white">Evolução Patrimonial</h3>
+                <div class="chart-container">
+                    <canvas id="chartParadox"></canvas>
+                </div>
+            </div>
+            
+            <div class="dark-card p-6 rounded-lg" data-aos="fade-left">
+                <h3 class="font-heading font-bold text-xl mb-4 text-white">Drenos Críticos (2025)</h3>
+                <div class="chart-container">
+                    <canvas id="chartExpenses"></canvas>
+                </div>
+                <div class="mt-4 text-xs text-gray-400 border-t border-gray-800 pt-4">
+                    * Impacto da Perda Cambial (-R$ 322,2M) e Custo Anual do Elenco (R$ 469,3M).
+                </div>
+            </div>
+        </div>
+
+        <!-- Botão de Avançar -->
+        <div class="text-center pt-10">
+            <a href="estrategia.html" class="inline-flex items-center px-6 py-3 border border-white text-white hover:bg-white hover:text-black transition-colors font-bold uppercase tracking-widest text-sm">
+                Ver Estratégia SWOT <i class="fa-solid fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </main>
+
+    <!-- Script dos Gráficos com Cores Escuras -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+        
+        // Cores adaptadas para o tema preto e branco do Botafogo
+        Chart.defaults.color = '#888';
+        Chart.defaults.font.family = 'Inter';
+
+        // Gráfico 1: Paradoxo
+        const ctxParadox = document.getElementById('chartParadox').getContext('2d');
+        new Chart(ctxParadox, {
+            type: 'bar',
+            data: {
+                labels: ['Rec. 2024', 'Prejuízo 24', 'Cap. Circ. 24', 'Rec. 2025', 'Prejuízo 25', 'Cap. Circ. 25'],
+                datasets: [{
+                    label: 'Valores (R$ Milhões)',
+                    data: [720.0, -266.8, -533.6, 574.0, -290.8, -943.1],
+                    backgroundColor: ['#FFFFFF', '#444444', '#222222', '#CCCCCC', '#555555', '#111111'],
+                    borderWidth: 1,
+                    borderColor: '#000'
+                }]
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: '#222' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+
+        // Gráfico 2: Despesas (Drenos)
+        const ctxExpenses = document.getElementById('chartExpenses').getContext('2d');
+        new Chart(ctxExpenses, {
+            type: 'doughnut',
+            data: {
+                labels: ['Perda Cambial', 'Amortização', 'Folha Salarial', 'Custos Vendas'],
+                datasets: [{
+                    data: [322.2, 236.8, 232.5, 448.0],
+                    backgroundColor: ['#FFFFFF', '#999999', '#555555', '#222222'],
+                    borderColor: '#000000',
+                    borderWidth: 3
+                }]
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: false, 
+                cutout: '70%',
+                plugins: { legend: { position: 'bottom', labels: { color: '#FFF' } } }
+            }
+        });
+    </script>
+</body>
+</html>
