@@ -8,6 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="bg-black text-white antialiased">
 
@@ -16,13 +17,14 @@
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <a href="index.html">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Botafogo_Regatas_logo.png" alt="Escudo Botafogo" class="h-12 w-12 hover:scale-110 transition-transform">
+                    <!-- Substitui pelo nome do teu ficheiro local -->
+                    <img src="logo-botafogo.png" alt="Escudo Botafogo" class="h-12 w-12 hover:scale-110 transition-transform">
                 </a>
                 <span class="font-heading font-black text-2xl tracking-widest uppercase">Botafogo</span>
             </div>
             <nav class="hidden md:flex space-x-8 font-heading text-sm font-semibold tracking-wide text-gray-400">
                 <a href="index.html" class="hover:text-white transition-colors">Início</a>
-                <a href="diagnostico.html" class="text-white">Diagnóstico</a>
+                <a href="diagnostico.html" class="text-white border-b-2 border-white pb-1">Diagnóstico</a>
                 <a href="estrategia.html" class="hover:text-white transition-colors">Estratégia</a>
             </nav>
         </div>
@@ -36,44 +38,80 @@
             <p class="text-gray-400 max-w-2xl mx-auto">Faturamento recorde de R$ 720 milhões e sucesso em campo contrastando com um Capital Circulante Líquido negativo de R$ 943,1 milhões.</p>
         </div>
 
+        <!-- NOVO: Benchmarking Comparativo (Baseado no PDF) -->
+        <section class="border-t border-gray-800 pt-16" data-aos="fade-up">
+            <div class="mb-10">
+                <h2 class="font-heading font-black text-2xl uppercase">Benchmarking: Modelos de Excelência</h2>
+                <p class="text-gray-400 mt-2 text-sm max-w-3xl">Avaliação de entidades desportivas que lograram ultrapassar conjunturas críticas e solidificaram pilares de estabilidade sustentável.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Flamengo -->
+                <div class="dark-card p-6 border-t-2 border-white" data-aos="zoom-in">
+                    <h4 class="font-bold text-white uppercase text-sm mb-3">CR Flamengo</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Adoção de um modelo austero irrepreensível com adesão rigorosa ao Profut. O investimento no plantel principal foi contido até que a tesouraria suportasse gastos sem endividamento pontual.</p>
+                </div>
+                
+                <!-- Palmeiras -->
+                <div class="dark-card p-6 border-t-2 border-gray-400" data-aos="zoom-in" data-aos-delay="100">
+                    <h4 class="font-bold text-white uppercase text-sm mb-3">SE Palmeiras</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Intervenção de capital estruturada para captar financiamentos bancários a juros marginais e repassá-los ao clube, liquidando passivos tóxicos e reduzindo drasticamente encargos financeiros.</p>
+                </div>
+
+                <!-- Fortaleza -->
+                <div class="dark-card p-6 border-t-2 border-gray-600" data-aos="zoom-in" data-aos-delay="200">
+                    <h4 class="font-bold text-white uppercase text-sm mb-3">Fortaleza EC</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Rigor absoluto no controlo das despesas sem o luxo do endividamento multimilionário. Maximização operacional fundada na premissa de que "o camisa 10 do Fortaleza é o salário em dia".</p>
+                </div>
+
+                <!-- Paradigmas Europeus -->
+                <div class="dark-card p-6 border-t-2 border-gray-800" data-aos="zoom-in" data-aos-delay="300">
+                    <h4 class="font-bold text-white uppercase text-sm mb-3">Paradigmas Europeus</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">O FC Bayern mantém um rácio rigoroso da despesa laboral. O Real Madrid destaca-se pela maximização profunda das instalações físicas para emancipar financeiramente o clube das vitórias em campo.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Gráficos -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="dark-card p-6 rounded-lg" data-aos="fade-right">
-                <h3 class="font-heading font-bold text-xl mb-4 text-white">Evolução Patrimonial</h3>
-                <div class="chart-container">
-                    <canvas id="chartParadox"></canvas>
+        <section class="border-t border-gray-800 pt-16">
+            <div class="mb-10">
+                <h2 class="font-heading font-black text-2xl uppercase">Diagnóstico Interno</h2>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="dark-card p-6 rounded-lg" data-aos="fade-right">
+                    <h3 class="font-heading font-bold text-xl mb-4 text-white">Evolução Patrimonial</h3>
+                    <div class="chart-container">
+                        <canvas id="chartParadox"></canvas>
+                    </div>
+                </div>
+                
+                <div class="dark-card p-6 rounded-lg" data-aos="fade-left">
+                    <h3 class="font-heading font-bold text-xl mb-4 text-white">Drenos Críticos (2025)</h3>
+                    <div class="chart-container">
+                        <canvas id="chartExpenses"></canvas>
+                    </div>
+                    <div class="mt-4 text-xs text-gray-400 border-t border-gray-800 pt-4">
+                        * O maior impacto reside na variação cambial passiva que subtraiu 322,2 milhões de reais, aliado aos custos de amortização de 236,8 milhões.
+                    </div>
                 </div>
             </div>
-            
-            <div class="dark-card p-6 rounded-lg" data-aos="fade-left">
-                <h3 class="font-heading font-bold text-xl mb-4 text-white">Drenos Críticos (2025)</h3>
-                <div class="chart-container">
-                    <canvas id="chartExpenses"></canvas>
-                </div>
-                <div class="mt-4 text-xs text-gray-400 border-t border-gray-800 pt-4">
-                    * Impacto da Perda Cambial (-R$ 322,2M) e Custo Anual do Elenco (R$ 469,3M).
-                </div>
-            </div>
-        </div>
+        </section>
 
         <!-- Botão de Avançar -->
-        <div class="text-center pt-10">
+        <div class="text-center pt-10 pb-10">
             <a href="estrategia.html" class="inline-flex items-center px-6 py-3 border border-white text-white hover:bg-white hover:text-black transition-colors font-bold uppercase tracking-widest text-sm">
-                Ver Estratégia SWOT <i class="fa-solid fa-arrow-right ml-2"></i>
+                Avançar para Estratégia <i class="fa-solid fa-arrow-right ml-2"></i>
             </a>
         </div>
     </main>
 
-    <!-- Script dos Gráficos com Cores Escuras -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init();
+        AOS.init({ once: true, offset: 50 });
         
-        // Cores adaptadas para o tema preto e branco do Botafogo
         Chart.defaults.color = '#888';
         Chart.defaults.font.family = 'Inter';
 
-        // Gráfico 1: Paradoxo
         const ctxParadox = document.getElementById('chartParadox').getContext('2d');
         new Chart(ctxParadox, {
             type: 'bar',
@@ -98,7 +136,6 @@
             }
         });
 
-        // Gráfico 2: Despesas (Drenos)
         const ctxExpenses = document.getElementById('chartExpenses').getContext('2d');
         new Chart(ctxExpenses, {
             type: 'doughnut',
