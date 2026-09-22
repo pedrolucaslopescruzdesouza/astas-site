@@ -12,94 +12,89 @@
 </head>
 <body class="bg-black text-white antialiased">
 
-    <!-- Navbar -->
     <header class="navbar fixed top-0 w-full z-50">
-        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <a href="index.html">
-                    <img src="logo-botafogo.png" alt="Escudo Botafogo" class="h-12 w-12 hover:scale-110 transition-transform cursor-pointer">
-                </a>
-                <span class="font-heading font-black text-2xl tracking-widest uppercase">Botafogo</span>
+        <div class="max-w-7xl mx-auto px-4 h-20 flex flex-col justify-center">
+            <div class="flex items-center justify-between w-full">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html">
+                        <img src="logo-botafogo.png" alt="Escudo Botafogo" class="h-10 w-10 hover:scale-110 transition-transform cursor-pointer">
+                    </a>
+                    <span class="font-heading font-black text-xl md:text-2xl tracking-widest uppercase hidden sm:block">Botafogo</span>
+                </div>
+                <nav class="flex space-x-6 font-heading text-xs md:text-sm font-semibold tracking-wide text-gray-400 overflow-x-auto hide-scrollbar">
+                    <a href="index.html" class="hover:text-white transition-colors whitespace-nowrap">Início</a>
+                    <a href="diagnostico.html" class="text-white border-b-2 border-white pb-1 whitespace-nowrap">Diagnóstico</a>
+                    <a href="estrategia.html" class="hover:text-white transition-colors whitespace-nowrap">Estratégia</a>
+                    <a href="projecoes.html" class="hover:text-white transition-colors whitespace-nowrap">Projeções</a>
+                </nav>
             </div>
-            <nav class="hidden md:flex space-x-8 font-heading text-sm font-semibold tracking-wide text-gray-400">
-                <a href="index.html" class="hover:text-white transition-colors">Início</a>
-                <a href="diagnostico.html" class="text-white border-b-2 border-white pb-1">Diagnóstico</a>
-                <a href="estrategia.html" class="hover:text-white transition-colors">Estratégia</a>
-                <a href="projecoes.html" class="hover:text-white transition-colors">Projeções</a>
-            </nav>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 space-y-20">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 space-y-16 md:space-y-20">
         
-        <!-- Título da Seção -->
-        <div class="text-center" data-aos="fade-up">
-            <h1 class="font-heading font-black text-4xl uppercase mb-4">O Paradoxo Financeiro</h1>
-            <p class="text-gray-400 max-w-2xl mx-auto">Faturamento recorde de R$ 720 milhões e sucesso em campo contrastando com um Capital Circulante Líquido negativo de R$ 943,1 milhões.</p>
+        <div class="text-center mt-10" data-aos="fade-down" data-aos-duration="1000">
+            <h1 class="font-heading font-black text-3xl md:text-4xl uppercase mb-4">Diagnóstico Financeiro (2024)</h1>
+            <p class="text-gray-400 max-w-3xl mx-auto text-sm md:text-base">
+                Faturamento recorde impulsionado pelas vitórias na Libertadores e Brasileirão (R$ 258 milhões em prêmios). Contudo, o clube sofreu prejuízo pela inflexibilidade dos custos e dívidas em moeda estrangeira sem proteção.
+            </p>
         </div>
 
-        <!-- Benchmarking Comparativo (Baseado no PDF) -->
-        <section class="border-t border-gray-800 pt-16" data-aos="fade-up">
-            <div class="mb-10">
-                <h2 class="font-heading font-black text-2xl uppercase">Benchmarking: Modelos de Excelência</h2>
-                <p class="text-gray-400 mt-2 text-sm max-w-3xl">Avaliação de entidades desportivas que lograram ultrapassar conjunturas críticas e solidificaram pilares de estabilidade sustentável[cite: 7].</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Flamengo -->
-                <div class="dark-card p-6 border-t-2 border-white" data-aos="zoom-in">
-                    <h4 class="font-bold text-white uppercase text-sm mb-3">CR Flamengo</h4>
-                    <p class="text-xs text-gray-400 leading-relaxed">Adoção de um modelo austero irrepreensível com adesão rigorosa ao Profut. O investimento no plantel principal foi contido até que a tesouraria suportasse gastos sem endividamento pontual[cite: 7].</p>
-                </div>
-                
-                <!-- Palmeiras -->
-                <div class="dark-card p-6 border-t-2 border-gray-400" data-aos="zoom-in" data-aos-delay="100">
-                    <h4 class="font-bold text-white uppercase text-sm mb-3">SE Palmeiras</h4>
-                    <p class="text-xs text-gray-400 leading-relaxed">Intervenção de capital estruturada para captar financiamentos bancários a juros marginais e repassá-los ao clube, liquidando passivos tóxicos e reduzindo drasticamente encargos financeiros[cite: 7].</p>
-                </div>
-
-                <!-- Fortaleza -->
-                <div class="dark-card p-6 border-t-2 border-gray-600" data-aos="zoom-in" data-aos-delay="200">
-                    <h4 class="font-bold text-white uppercase text-sm mb-3">Fortaleza EC</h4>
-                    <p class="text-xs text-gray-400 leading-relaxed">Rigor absoluto no controlo das despesas sem o luxo do endividamento multimilionário. Maximização operacional fundada na premissa de que "o camisa 10 do Fortaleza é o salário em dia"[cite: 7].</p>
-                </div>
-
-                <!-- Paradigmas Europeus -->
-                <div class="dark-card p-6 border-t-2 border-gray-800" data-aos="zoom-in" data-aos-delay="300">
-                    <h4 class="font-bold text-white uppercase text-sm mb-3">Paradigmas Europeus</h4>
-                    <p class="text-xs text-gray-400 leading-relaxed">O FC Bayern mantém um rácio rigoroso da despesa laboral. O Real Madrid destaca-se pela maximização profunda das instalações físicas para emancipar financeiramente o clube das vitórias em campo[cite: 7].</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Gráficos -->
         <section class="border-t border-gray-800 pt-16">
-            <div class="mb-10">
-                <h2 class="font-heading font-black text-2xl uppercase">Diagnóstico Interno</h2>
-            </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div class="dark-card p-6 rounded-lg" data-aos="fade-right">
-                    <h3 class="font-heading font-bold text-xl mb-4 text-white">Evolução Patrimonial</h3>
+                
+                <div class="dark-card p-6 rounded-lg" data-aos="fade-right" data-aos-duration="1000">
+                    <h3 class="font-heading font-bold text-xl mb-2 text-white">Receita vs Prejuízo (2024)</h3>
+                    <p class="text-xs text-gray-400 mb-4">Apesar da alta arrecadação, as despesas fixas superaram as receitas de premiações.</p>
                     <div class="chart-container">
                         <canvas id="chartParadox"></canvas>
                     </div>
                 </div>
                 
-                <div class="dark-card p-6 rounded-lg" data-aos="fade-left">
-                    <h3 class="font-heading font-bold text-xl mb-4 text-white">Drenos Críticos (2025)</h3>
-                    <div class="chart-container">
+                <div class="dark-card p-6 rounded-lg" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                    <h3 class="font-heading font-bold text-xl mb-2 text-white">Impacto da Moeda Estrangeira</h3>
+                    <p class="text-xs text-gray-400 mb-4">Sem proteção (hedge), a alta do Dólar e Euro causou um rombo massivo no balanço.</p>
+                    <div class="chart-container flex justify-center">
                         <canvas id="chartExpenses"></canvas>
                     </div>
-                    <div class="mt-4 text-xs text-gray-400 border-t border-gray-800 pt-4">
-                        * O maior impacto reside na variação cambial passiva que subtraiu 322,2 milhões de reais, aliado aos custos de amortização de 236,8 milhões[cite: 7].
+                    <div class="mt-4 text-xs text-gray-400 border-t border-gray-800 pt-4 text-center">
+                        <i class="fa-solid fa-triangle-exclamation text-yellow-500 mr-1"></i> A perda cambial de <strong>R$ 322 milhões</strong> obrigou a SAF a pedir Recuperação Judicial.
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Botão de Avançar -->
+        <section class="border-t border-gray-800 pt-16" data-aos="fade-up" data-aos-duration="1000">
+            <div class="mb-10 text-center md:text-left">
+                <h2 class="font-heading font-black text-2xl uppercase">Pesquisa de Mercado (Benchmarking)</h2>
+                <p class="text-gray-400 mt-2 text-sm max-w-3xl">Como outras instituições superaram crises financeiras profundas adotando disciplina administrativa.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="dark-card p-6 border-t-2 border-red-600" data-aos="zoom-in" data-aos-delay="0">
+                    <h4 class="font-bold text-white uppercase text-sm mb-3">CR Flamengo</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Modelo severo de corte de gastos e parcelamento de dívidas fiscais. Quitou passivos, passou a faturar mais de R$ 1 bilhão e voltou a ser campeão.</p>
+                </div>
+                
+                <div class="dark-card p-6 border-t-2 border-green-600" data-aos="zoom-in" data-aos-delay="100">
+                    <h4 class="font-bold text-white uppercase text-sm mb-3">SE Palmeiras</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Em crise em 2013, pegou empréstimos com juros muito baixos para pagar dívidas caras e focou no sócio-torcedor. Reduziu juros e iniciou era vitoriosa.</p>
+                </div>
+
+                <div class="dark-card p-6 border-t-2 border-blue-600" data-aos="zoom-in" data-aos-delay="200">
+                    <h4 class="font-bold text-white uppercase text-sm mb-3">Fortaleza EC</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Cresceu adotando a regra de nunca gastar mais do que arrecada, priorizando o pagamento em dia em vez de contratações inflacionadas.</p>
+                </div>
+
+                <div class="dark-card p-6 border-t-2 border-white" data-aos="zoom-in" data-aos-delay="300">
+                    <h4 class="font-bold text-white uppercase text-sm mb-3">Bayern & Real Madrid</h4>
+                    <p class="text-xs text-gray-400 leading-relaxed">Bayern limita sua folha a 41,7% das receitas. Real Madrid reformou o estádio para faturar 365 dias/ano com eventos, desvinculando-se dos jogos.</p>
+                </div>
+            </div>
+        </section>
+
         <div class="text-center pt-10 pb-10">
-            <a href="estrategia.html" class="inline-flex items-center px-6 py-3 border border-white text-white hover:bg-white hover:text-black transition-colors font-bold uppercase tracking-widest text-sm">
+            <a href="estrategia.html" class="inline-flex items-center justify-center px-6 py-4 border border-white text-white hover:bg-white hover:text-black transition-colors font-bold uppercase tracking-widest text-sm w-full md:w-auto">
                 Avançar para Estratégia <i class="fa-solid fa-arrow-right ml-2"></i>
             </a>
         </div>
@@ -107,7 +102,7 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ once: true, offset: 50 });
+        AOS.init({ once: false, offset: 100 });
         
         Chart.defaults.color = '#888';
         Chart.defaults.font.family = 'Inter';
@@ -116,19 +111,26 @@
         new Chart(ctxParadox, {
             type: 'bar',
             data: {
-                labels: ['Rec. 2024', 'Prejuízo 24', 'Cap. Circ. 24', 'Rec. 2025', 'Prejuízo 25', 'Cap. Circ. 25'],
+                labels: ['Faturamento Total', 'Prêmios (Liberta/BR)', 'Prejuízo Final'],
                 datasets: [{
-                    label: 'Valores (R$ Milhões)',
-                    data: [720.0, -266.8, -533.6, 574.0, -290.8, -943.1],
-                    backgroundColor: ['#FFFFFF', '#444444', '#222222', '#CCCCCC', '#555555', '#111111'],
+                    label: 'Valores em R$ Milhões (2024)',
+                    data: [720, 258, -300],
+                    backgroundColor: ['#FFFFFF', '#888888', '#FF4444'],
                     borderWidth: 1,
-                    borderColor: '#000'
+                    borderRadius: 4
                 }]
             },
             options: { 
                 responsive: true, 
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
+                plugins: { 
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) { return 'R$ ' + context.parsed.y + ' Milhões'; }
+                        }
+                    }
+                },
                 scales: {
                     y: { grid: { color: '#222' } },
                     x: { grid: { display: false } }
@@ -138,21 +140,27 @@
 
         const ctxExpenses = document.getElementById('chartExpenses').getContext('2d');
         new Chart(ctxExpenses, {
-            type: 'doughnut',
+            type: 'pie',
             data: {
-                labels: ['Perda Cambial', 'Amortização', 'Folha Salarial', 'Custos Vendas'],
+                labels: ['Perda Cambial (Dólar/Euro)', 'Outras Despesas e Custos Fixos'],
                 datasets: [{
-                    data: [322.2, 236.8, 232.5, 448.0],
-                    backgroundColor: ['#FFFFFF', '#999999', '#555555', '#222222'],
+                    data: [322, 398],
+                    backgroundColor: ['#FF4444', '#333333'],
                     borderColor: '#000000',
-                    borderWidth: 3
+                    borderWidth: 2
                 }]
             },
             options: { 
                 responsive: true, 
                 maintainAspectRatio: false, 
-                cutout: '70%',
-                plugins: { legend: { position: 'bottom', labels: { color: '#FFF' } } }
+                plugins: { 
+                    legend: { position: 'bottom', labels: { color: '#FFF' } },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) { return 'R$ ' + context.parsed + ' Milhões'; }
+                        }
+                    }
+                }
             }
         });
     </script>

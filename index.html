@@ -3,59 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Botafogo SAF | Estratégia Corporativa</title>
+    <title>Botafogo SAF | Relatório Financeiro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-black text-white selection:bg-white selection:text-black antialiased overflow-hidden">
+<body class="bg-black text-white selection:bg-white selection:text-black antialiased overflow-x-hidden">
 
-    <!-- Navbar Oficial -->
+    <!-- Navbar Responsiva -->
     <header class="navbar fixed top-0 w-full z-50">
-        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <a href="index.html">
-                    <img src="logo-botafogo.png" alt="Escudo Botafogo" class="h-12 w-12 hover:scale-110 transition-transform cursor-pointer">
-                </a>
-                <span class="font-heading font-black text-2xl tracking-widest uppercase">Botafogo</span>
+        <div class="max-w-7xl mx-auto px-4 h-20 flex flex-col justify-center">
+            <div class="flex items-center justify-between w-full">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html">
+                        <img src="logo-botafogo.png" alt="Escudo Botafogo" class="h-10 w-10 hover:scale-110 transition-transform cursor-pointer">
+                    </a>
+                    <span class="font-heading font-black text-xl md:text-2xl tracking-widest uppercase">Botafogo</span>
+                </div>
+                <nav class="flex space-x-6 font-heading text-xs md:text-sm font-semibold tracking-wide text-gray-400 overflow-x-auto hide-scrollbar">
+                    <a href="index.html" class="text-white border-b-2 border-white pb-1 whitespace-nowrap">Início</a>
+                    <a href="diagnostico.html" class="hover:text-white transition-colors whitespace-nowrap">Diagnóstico</a>
+                    <a href="estrategia.html" class="hover:text-white transition-colors whitespace-nowrap">Estratégia</a>
+                    <a href="projecoes.html" class="hover:text-white transition-colors whitespace-nowrap">Projeções</a> 
+                </nav>
             </div>
-            <nav class="hidden md:flex space-x-8 font-heading text-sm font-semibold tracking-wide text-gray-400">
-                <a href="index.html" class="text-white border-b-2 border-white pb-1">Início</a>
-                <a href="diagnostico.html" class="hover:text-white transition-colors">Diagnóstico</a>
-                <a href="estrategia.html" class="hover:text-white transition-colors">Estratégia</a>
-                <a href="projecoes.html" class="hover:text-white transition-colors">Projeções</a> 
-            </nav>
         </div>
     </header>
 
-    <!-- Seção Principal com Campo Animado -->
-    <main class="campo-animado h-screen w-full flex items-center relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center z-10 pt-20">
+    <!-- Seção Principal -->
+    <main class="campo-animado min-h-screen w-full flex items-center relative pt-24 md:pt-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center z-10">
             
-            <!-- Texto de Impacto -->
-            <div data-aos="fade-up" data-aos-duration="1000">
-                <h2 class="text-gray-400 font-heading tracking-[0.2em] text-sm uppercase mb-4">Relatório Executivo 2024-2029</h2>
-                <h1 class="font-heading font-black text-5xl md:text-6xl lg:text-7xl leading-tight mb-6 uppercase">
-                    O Desafio <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-500">Financeiro</span> <br>
-                    Da SAF.
+            <div data-aos="fade-up" data-aos-duration="1200">
+                <h2 class="text-gray-400 font-heading tracking-[0.2em] text-xs md:text-sm uppercase mb-4">Relatório de Sustentabilidade Financeira</h2>
+                <h1 class="font-heading font-black text-4xl md:text-6xl lg:text-7xl leading-tight mb-6 uppercase">
+                    Botafogo <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-500">SAF 2026</span>
                 </h1>
-                <p class="text-gray-300 text-lg mb-8 max-w-lg font-light">
-                    Do paradoxo entre receitas recordes e o colapso de liquidez ao plano definitivo de reestruturação corporativa.
+                <p class="text-gray-300 text-base md:text-lg mb-8 max-w-lg font-light">
+                    O paradoxo do faturamento recorde de <strong>R$ 720 milhões</strong> ofuscado por um prejuízo próximo a <strong>R$ 300 milhões</strong> devido a custos inflexíveis e exposição cambial. O plano definitivo para a Recuperação Judicial.
                 </p>
-                <a href="diagnostico.html" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-black bg-white hover:bg-gray-200 transition-colors uppercase tracking-wider rounded-none">
+                <a href="diagnostico.html" class="inline-flex items-center justify-center px-6 py-4 text-sm md:text-base font-bold text-black bg-white hover:bg-gray-200 transition-colors uppercase tracking-wider rounded-none w-full md:w-auto text-center">
                     Iniciar Apresentação <i class="fa-solid fa-arrow-right ml-3"></i>
                 </a>
             </div>
 
-            <!-- Logo Gigante Proporcionalmente Maior e Animada -->
-            <div class="relative h-full hidden md:flex justify-end items-center" data-aos="zoom-in" data-aos-delay="300">
-                <img src="logo-botafogo.png" alt="Logo Botafogo Gigante" class="max-h-[75vh] object-contain transition-all duration-500 hover:scale-110 hover:rotate-3 hover:drop-shadow-[0_0_45px_rgba(255,255,255,0.25)] cursor-pointer">
+            <!-- Coluna da Imagem com Movimento Lento -->
+            <div class="relative h-full hidden md:flex justify-end items-center" data-aos="zoom-in" data-aos-delay="400" data-aos-duration="1500">
+                <!-- Alterado para imagem-1 e adicionada a classe imagem-flutuante -->
+                <img src="imagem-1.png" alt="Imagem Destaque" class="imagem-flutuante max-h-[65vh] object-contain drop-shadow-[0_0_300px_rgba(255,255,255,0.15)]">
             </div>
         </div>
 
-        <!-- Bola Rolando -->
         <div class="bola-container">
             <i class="fa-solid fa-futbol bola-animada"></i>
         </div>

@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&family=Inter:wght@400;500;700&display=swap');
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: #000000;
@@ -11,14 +15,23 @@ h1, h2, h3, h4, .font-heading {
     font-family: 'Montserrat', sans-serif;
 }
 
-/* Navbar estilo site oficial */
+/* Navbar adaptada para mobile */
 .navbar {
     background-color: rgba(0, 0, 0, 0.95);
     border-bottom: 1px solid #333;
     backdrop-filter: blur(10px);
 }
 
-/* Cards Escuros */
+/* Esconde barra de rolagem no menu mobile mas permite rolar */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Cards Escuros com Efeito Profissional */
 .dark-card {
     background: #111111;
     border: 1px solid #222;
@@ -31,11 +44,8 @@ h1, h2, h3, h4, .font-heading {
     border-color: #555;
 }
 
-/* --- ANIMAÇÕES --- */
-
-/* 1. Campo com movimento (Pan) */
+/* --- ANIMAÇÕES DE FUNDO --- */
 .campo-animado {
-    /* Imagem de um estádio/campo escurecida */
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.95)), url('https://images.unsplash.com/photo-1518605368461-1ee1252329bc?q=80&w=2000&auto=format&fit=crop') center/cover;
     background-attachment: fixed;
     animation: panField 30s linear infinite alternate;
@@ -46,31 +56,19 @@ h1, h2, h3, h4, .font-heading {
     to { background-position: 100% 50%; }
 }
 
-/* 2. Jogador entrando em cena */
-.jogador-animado {
-    opacity: 0;
-    animation: entrarJogador 1.5s ease-out 0.5s forwards;
-    filter: drop-shadow(0px 0px 15px rgba(255,255,255,0.1));
-}
-
-@keyframes entrarJogador {
-    from { transform: translateX(-50px) scale(0.95); opacity: 0; }
-    to { transform: translateX(0) scale(1); opacity: 1; }
-}
-
-/* 3. Bola rolando na tela */
+/* Bola rolando na tela */
 .bola-container {
     position: absolute;
     bottom: 5%;
     left: -50px;
-    animation: atravessarTela 8s linear infinite;
+    animation: atravessarTela 10s linear infinite;
     z-index: 20;
 }
 
 .bola-animada {
     font-size: 2.5rem;
     color: #FFF;
-    animation: girarBola 2s linear infinite;
+    animation: girarBola 2.5s linear infinite;
 }
 
 @keyframes atravessarTela {
@@ -83,11 +81,23 @@ h1, h2, h3, h4, .font-heading {
     100% { transform: rotate(360deg); }
 }
 
-/* Ajuste de gráficos para o modo escuro */
+/* Ajuste Responsivo dos Gráficos */
 .chart-container {
     position: relative;
     width: 100%;
-    max-width: 650px;
+    max-width: 100%;
     margin: 0 auto;
-    height: 320px;
+    height: 300px;
+}
+
+/* --- NOVA ANIMAÇÃO: IMAGEM LATERAL LENTA --- */
+@keyframes moverLateralLento {
+    0% { transform: translateX(-15px); }
+    50% { transform: translateX(15px); }
+    100% { transform: translateX(-15px); }
+}
+
+.imagem-flutuante {
+    /* O tempo de '12s' deixa o movimento incrivelmente suave e lento */
+    animation: moverLateralLento 12s ease-in-out infinite;
 }
