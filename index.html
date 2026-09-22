@@ -32,10 +32,15 @@
     </header>
 
     <!-- Seção Principal -->
-    <main class="campo-animado min-h-screen w-full flex items-center relative pt-24 md:pt-0">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center z-10">
+    <main class="campo-animado h-screen w-full flex items-center relative overflow-hidden">
+        
+        <!-- Motor de Fumaça (Z-20) -->
+        <canvas id="smokeCanvas" class="absolute top-0 left-0 w-full h-full z-20 pointer-events-none"></canvas>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full pt-20">
             
-            <div data-aos="fade-up" data-aos-duration="1200">
+            <!-- Coluna do Texto (Z-30) -->
+            <div data-aos="fade-up" data-aos-duration="1200" class="pb-10 md:pb-0 relative z-30">
                 <h2 class="text-gray-400 font-heading tracking-[0.2em] text-xs md:text-sm uppercase mb-4">Relatório de Sustentabilidade Financeira</h2>
                 <h1 class="font-heading font-black text-4xl md:text-6xl lg:text-7xl leading-tight mb-6 uppercase">
                     Botafogo <br>
@@ -49,19 +54,152 @@
                 </a>
             </div>
 
-            <!-- Coluna da Imagem com Movimento Lento -->
-            <div class="relative h-full hidden md:flex justify-end items-center" data-aos="zoom-in" data-aos-delay="400" data-aos-duration="1500">
-                <!-- Alterado para imagem-1 e adicionada a classe imagem-flutuante -->
-                <img src="imagem-1.png" alt="Imagem Destaque" class="imagem-flutuante max-h-[65vh] object-contain drop-shadow-[0_0_300px_rgba(255,255,255,0.15)]">
+            <!-- Coluna da Imagem (Z-10) -->
+            <div class="h-full hidden md:flex justify-center items-end relative z-10">
+                <img src="imagem-1.png" alt="Imagem Destaque" class="imagem-flutuante max-h-[90vh] w-auto object-contain object-bottom drop-shadow-[0_0_50px_rgba(255,255,255,0.05)] pointer-events-none">
             </div>
         </div>
 
-        <div class="bola-container">
-            <i class="fa-solid fa-futbol bola-animada"></i>
+        <!-- Bola Rolando com SVG Realista -->
+        <div class="bola-container cursor-pointer z-50">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" alt="Bola" class="bola-animada w-12 h-12 opacity-90 drop-shadow-xl">
         </div>
     </main>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>AOS.init();</script>
+    <script>
+        AOS.init();
+
+        // 1. LÓGICA DO CHUTE INTERATIVO NA BOLA
+        const bolaContainer = document.querySelector('.bola-container');
+        const bolaIcon = document.querySelector('.bola-animada');
+
+        if(bolaContainer && bolaIcon) {
+            bolaContainer.addEventListener('mouseenter', () => {
+                if (bolaContainer.classList.contains('chutada')) return;
+
+                const rect = bolaContainer.getBoundingClientRect();
+                bolaContainer.style.animation = 'none';
+                bolaIcon.style.animation = 'none';
+                bolaContainer.style.left = rect.left + 'px';
+                
+                void bolaContainer.offsetWidth;
+                
+                bolaContainer.classList.add('chutada');
+                bolaIcon.classList.add('chutada-giro');
+
+                setTimeout(() => {
+                    bolaContainer.classList.remove('chutada');
+                    bolaIcon.classList.remove('chutada-giro');
+                    bolaContainer.style.left = '-50px';
+                    bolaContainer.style.animation = ''; 
+                    bolaIcon.style.animation = '';
+                }, 800);
+            });
+        }
+
+        // 2. SISTEMA DE FUMAÇA FINA E DETALHADA
+        const canvas = document.getElementById('smokeCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: -1000, y: -1000 };
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        window.addEventListener('mouseleave', () => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        });
+
+        class Particle {
+            constructor() {
+                let isMobile = canvas.width < 768;
+                let centerX = isMobile ? canvas.width / 2 : canvas.width * 0.75;
+                let spread = isMobile ? canvas.width : canvas.width * 0.6;
+                
+                this.x = centerX + (Math.random() * spread - spread / 2);
+                this.y = canvas.height + Math.random() * 100; 
+                
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() * -0.8) - 0.2; 
+                
+                this.size = Math.random() * 30 + 10; 
+                this.life = 0;
+                this.maxLife = Math.random() * 500 + 200; 
+                this.opacity = Math.random() * 0.08 + 0.01; 
+            }
+            update() {
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                let repelRadius = 250; 
+                
+                if (dist < repelRadius) {
+                    let force = (repelRadius - dist) / repelRadius;
+                    this.vx -= (dx / dist) * force * 0.04; 
+                    this.vy -= (dy / dist) * force * 0.04;
+                }
+
+                this.vx *= 0.99;
+                this.vy -= 0.001; 
+
+                this.x += this.vx;
+                this.y += this.vy;
+                this.size += 0.1; 
+                this.life++;
+            }
+            draw() {
+                let progress = this.life / this.maxLife;
+                let currentOpacity = this.opacity;
+                
+                if (progress < 0.2) {
+                    currentOpacity *= (progress / 0.2);
+                } else if (progress > 0.8) {
+                    currentOpacity *= (1 - (progress - 0.8) / 0.2);
+                }
+                if (currentOpacity < 0) currentOpacity = 0;
+
+                let gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+                gradient.addColorStop(0, `rgba(230, 235, 240, ${currentOpacity})`);
+                gradient.addColorStop(0.4, `rgba(190, 200, 210, ${currentOpacity * 0.5})`);
+                gradient.addColorStop(1, `rgba(180, 190, 200, 0)`);
+
+                ctx.beginPath();
+                ctx.fillStyle = gradient;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (particles.length < 700) {
+                particles.push(new Particle());
+                particles.push(new Particle()); 
+            }
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                if (particles[i].life >= particles[i].maxLife || particles[i].y < -150) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 </body>
 </html>

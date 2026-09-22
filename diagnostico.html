@@ -10,7 +10,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="bg-black text-white antialiased">
+<body class="bg-black text-white antialiased overflow-x-hidden relative">
 
     <header class="navbar fixed top-0 w-full z-50">
         <div class="max-w-7xl mx-auto px-4 h-20 flex flex-col justify-center">
@@ -31,7 +31,7 @@
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 space-y-16 md:space-y-20">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 space-y-16 md:space-y-20 relative z-10">
         
         <div class="text-center mt-10" data-aos="fade-down" data-aos-duration="1000">
             <h1 class="font-heading font-black text-3xl md:text-4xl uppercase mb-4">Diagnóstico Financeiro (2024)</h1>
@@ -93,12 +93,17 @@
             </div>
         </section>
 
-        <div class="text-center pt-10 pb-10">
+        <div class="text-center pt-10 pb-10 relative z-20">
             <a href="estrategia.html" class="inline-flex items-center justify-center px-6 py-4 border border-white text-white hover:bg-white hover:text-black transition-colors font-bold uppercase tracking-widest text-sm w-full md:w-auto">
                 Avançar para Estratégia <i class="fa-solid fa-arrow-right ml-2"></i>
             </a>
         </div>
     </main>
+
+    <!-- Bola Rolando com SVG Realista -->
+    <div class="bola-container cursor-pointer z-50 fixed bottom-[5%]">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" alt="Bola" class="bola-animada w-12 h-12 opacity-90 drop-shadow-xl">
+    </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -163,6 +168,30 @@
                 }
             }
         });
+
+        // LÓGICA DO CHUTE INTERATIVO NA BOLA
+        const bolaContainer = document.querySelector('.bola-container');
+        const bolaIcon = document.querySelector('.bola-animada');
+
+        if(bolaContainer && bolaIcon) {
+            bolaContainer.addEventListener('mouseenter', () => {
+                if (bolaContainer.classList.contains('chutada')) return;
+                const rect = bolaContainer.getBoundingClientRect();
+                bolaContainer.style.animation = 'none';
+                bolaIcon.style.animation = 'none';
+                bolaContainer.style.left = rect.left + 'px';
+                void bolaContainer.offsetWidth;
+                bolaContainer.classList.add('chutada');
+                bolaIcon.classList.add('chutada-giro');
+                setTimeout(() => {
+                    bolaContainer.classList.remove('chutada');
+                    bolaIcon.classList.remove('chutada-giro');
+                    bolaContainer.style.left = '-50px';
+                    bolaContainer.style.animation = ''; 
+                    bolaIcon.style.animation = '';
+                }, 800);
+            });
+        }
     </script>
 </body>
 </html>

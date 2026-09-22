@@ -56,21 +56,32 @@ h1, h2, h3, h4, .font-heading {
     to { background-position: 100% 50%; }
 }
 
-/* Bola rolando na tela */
+/* --- BOLA DE FUTEBOL E CHUTE --- */
 .bola-container {
     position: absolute;
     bottom: 5%;
     left: -50px;
-    animation: atravessarTela 10s linear infinite;
-    z-index: 20;
+    animation: atravessarTela 12s linear infinite;
+    z-index: 50; /* Aumentado para garantir a interação do clique/mouse */
 }
 
 .bola-animada {
     font-size: 2.5rem;
     color: #FFF;
     animation: girarBola 2.5s linear infinite;
+    display: block;
 }
 
+/* Classe ativada via JavaScript quando passa o mouse */
+.bola-container.chutada {
+    animation: chuteVolta 0.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards !important;
+}
+
+.bola-animada.chutada-giro {
+    animation: girarBolaReverso 0.8s linear forwards !important;
+}
+
+/* A bola rolando normalmente */
 @keyframes atravessarTela {
     0% { left: -100px; }
     100% { left: 100vw; }
@@ -81,7 +92,18 @@ h1, h2, h3, h4, .font-heading {
     100% { transform: rotate(360deg); }
 }
 
-/* Ajuste Responsivo dos Gráficos */
+/* Animação do Chute (Vai pra cima e some rápido para a esquerda) */
+@keyframes chuteVolta {
+    0% { transform: translateX(0) scale(1) translateY(0); opacity: 1; }
+    100% { transform: translateX(-800px) scale(0.5) translateY(-200px); opacity: 0; }
+}
+
+@keyframes girarBolaReverso {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-1080deg); } /* Gira freneticamente para trás */
+}
+
+/* --- AJUSTE RESPONSIVO DOS GRÁFICOS --- */
 .chart-container {
     position: relative;
     width: 100%;
@@ -90,14 +112,15 @@ h1, h2, h3, h4, .font-heading {
     height: 300px;
 }
 
-/* --- NOVA ANIMAÇÃO: IMAGEM LATERAL LENTA --- */
+/* --- ANIMAÇÃO: IMAGEM LATERAL LENTA --- */
 @keyframes moverLateralLento {
-    0% { transform: translateX(-15px); }
-    50% { transform: translateX(15px); }
-    100% { transform: translateX(-15px); }
+    0% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    100% { transform: translateX(-10px); }
 }
 
 .imagem-flutuante {
     /* O tempo de '12s' deixa o movimento incrivelmente suave e lento */
     animation: moverLateralLento 12s ease-in-out infinite;
+    transform-origin: bottom center; /* Garante que a base da foto não desgrude do chão ao mover */
 }
