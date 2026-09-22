@@ -15,14 +15,16 @@
     <header class="navbar fixed top-0 w-full z-50">
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-4">
-                <!-- Logo Oficial do Botafogo -->
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Botafogo_Regatas_logo.png" alt="Escudo Botafogo" class="h-12 w-12 hover:scale-110 transition-transform">
+                <a href="index.html">
+                    <img src="logo-botafogo.png" alt="Escudo Botafogo" class="h-12 w-12 hover:scale-110 transition-transform cursor-pointer">
+                </a>
                 <span class="font-heading font-black text-2xl tracking-widest uppercase">Botafogo</span>
             </div>
             <nav class="hidden md:flex space-x-8 font-heading text-sm font-semibold tracking-wide text-gray-400">
-                <a href="index.html" class="text-white">Início</a>
+                <a href="index.html" class="text-white border-b-2 border-white pb-1">Início</a>
                 <a href="diagnostico.html" class="hover:text-white transition-colors">Diagnóstico</a>
                 <a href="estrategia.html" class="hover:text-white transition-colors">Estratégia</a>
+                <a href="projecoes.html" class="hover:text-white transition-colors">Projeções</a> 
             </nav>
         </div>
     </header>
@@ -47,10 +49,9 @@
                 </a>
             </div>
 
-            <!-- Imagem do Jogador Animado -->
-            <div class="relative h-full hidden md:flex justify-end items-end">
-                <!-- Se você tiver um PNG recortado de um jogador (ex: Luiz Henrique), mude o link aqui! -->
-                <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=600&auto=format&fit=crop" style="mix-blend-mode: luminosity; mask-image: linear-gradient(to bottom, black 50%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);" alt="Jogador" class="jogador-animado max-h-[80vh] object-contain">
+            <!-- Logo Gigante Proporcionalmente Maior e Animada -->
+            <div class="relative h-full hidden md:flex justify-end items-center" data-aos="zoom-in" data-aos-delay="300">
+                <img src="logo-botafogo.png" alt="Logo Botafogo Gigante" class="max-h-[75vh] object-contain transition-all duration-500 hover:scale-110 hover:rotate-3 hover:drop-shadow-[0_0_45px_rgba(255,255,255,0.25)] cursor-pointer">
             </div>
         </div>
 

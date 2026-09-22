@@ -17,7 +17,7 @@
         <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
             <div class="flex items-center space-x-4">
                 <a href="index.html">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Botafogo_Regatas_logo.png" alt="Escudo Botafogo" class="h-12 w-12 hover:scale-110 transition-transform">
+                    <img src="logo-botafogo.png" alt="Escudo Botafogo" class="h-12 w-12 hover:scale-110 transition-transform cursor-pointer">
                 </a>
                 <span class="font-heading font-black text-2xl tracking-widest uppercase">Botafogo</span>
             </div>
@@ -173,7 +173,6 @@
     <script>
         AOS.init({ once: true, offset: 50 });
 
-        // Gráfico de Projeções - Tema Escuro
         Chart.defaults.color = '#888';
         Chart.defaults.font.family = 'Inter';
 
@@ -185,7 +184,7 @@
                 datasets: [
                     {
                         label: 'Lucro Líquido (R$ M)',
-                        data: [-290, -60, 120, 250], //[cite: 4]
+                        data: [-290, -60, 120, 250],
                         borderColor: '#FFFFFF',
                         backgroundColor: 'rgba(255, 255, 255, 0.1)',
                         borderWidth: 3,
@@ -196,7 +195,7 @@
                     },
                     {
                         label: 'EBITDA (R$ M)',
-                        data: [-238, -115, 20, 110], //[cite: 4]
+                        data: [-238, -115, 20, 110],
                         borderColor: '#666666',
                         borderWidth: 2,
                         borderDash: [5, 5],
