@@ -10,7 +10,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-black text-white antialiased selection:bg-white selection:text-black overflow-x-hidden relative">
+<body class="bg-black text-white antialiased selection:bg-white selection:text-black overflow-x-hidden relative min-h-[100dvh]">
 
     <header class="navbar fixed top-0 w-full z-50">
         <div class="max-w-7xl mx-auto px-4 h-20 flex flex-col justify-center">
@@ -21,7 +21,7 @@
                     </a>
                     <span class="font-heading font-black text-xl md:text-2xl tracking-widest uppercase hidden sm:block">Botafogo</span>
                 </div>
-                <nav class="flex space-x-6 font-heading text-xs md:text-sm font-semibold tracking-wide text-gray-400 overflow-x-auto hide-scrollbar">
+                <nav class="flex space-x-6 font-heading text-xs md:text-sm font-semibold tracking-wide text-gray-400 overflow-x-auto hide-scrollbar py-2">
                     <a href="index.html" class="hover:text-white transition-colors whitespace-nowrap">Início</a>
                     <a href="diagnostico.html" class="hover:text-white transition-colors whitespace-nowrap">Diagnóstico</a>
                     <a href="estrategia.html" class="hover:text-white transition-colors whitespace-nowrap">Estratégia</a>
@@ -32,21 +32,21 @@
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 space-y-24 relative z-10">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 md:py-32 space-y-24 relative z-10">
         
         <section>
-            <div class="text-center mb-12 mt-10" data-aos="fade-up" data-aos-duration="1000">
+            <div class="text-center mb-12" data-aos="fade-up" data-aos-duration="1000">
                 <h2 class="font-heading font-black text-3xl md:text-4xl uppercase tracking-widest">Simulação Financeira</h2>
                 <p class="text-gray-400 mt-2 max-w-3xl mx-auto text-sm md:text-base">
-                    Projeção oficial da tesouraria demonstrando a queda das despesas financeiras (pós-RJ) e o alcance da estabilidade rumo a um lucro expressivo em 2029.
+                    Projeção oficial demonstrando a queda das despesas financeiras (pós-RJ) e o alcance da estabilidade em 2029.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 mb-12">
                 <div class="dark-card p-6 rounded-xl" data-aos="fade-up" data-aos-duration="1200">
-                    <h3 class="font-heading font-bold text-xl uppercase mb-2 text-center">Trajetória do Resultado Final (2025 - 2029)</h3>
-                    <p class="text-xs text-gray-400 mb-6 text-center">A escalada que reverte um prejuízo operacional para um lucro de R$ 250 milhões com os 4 Pilares em ação.</p>
-                    <div class="chart-container" style="height: 350px;">
+                    <h3 class="font-heading font-bold text-xl uppercase mb-2 text-center">Trajetória do Resultado Final</h3>
+                    <p class="text-xs text-gray-400 mb-6 text-center">Reversão de prejuízo para lucro expressivo com os Pilares em ação.</p>
+                    <div class="chart-container" style="height: 300px md:height: 350px;">
                         <canvas id="chartProjections"></canvas>
                     </div>
                 </div>
@@ -54,14 +54,14 @@
 
             <div class="dark-card rounded-xl overflow-hidden border border-gray-800" data-aos="fade-up" data-aos-duration="1000">
                 <div class="p-4 bg-[#111] border-b border-gray-800 flex justify-between items-center">
-                    <span class="font-heading font-bold uppercase text-xs md:text-sm">Fluxo de Caixa Projetado (Em Milhões de R$)</span>
+                    <span class="font-heading font-bold uppercase text-xs md:text-sm">Fluxo de Caixa (Milhões de R$)</span>
                 </div>
                 <div class="overflow-x-auto hide-scrollbar">
                     <table class="w-full text-xs md:text-sm text-left text-gray-300 min-w-[600px]">
                         <thead class="bg-black text-gray-400 uppercase font-bold text-[10px] md:text-xs">
                             <tr>
-                                <th class="p-4 border-b border-gray-800">Indicadores Financeiros</th>
-                                <th class="p-4 text-right border-b border-gray-800">2025 (Cenário Real)</th>
+                                <th class="p-4 border-b border-gray-800">Indicadores</th>
+                                <th class="p-4 text-right border-b border-gray-800">2025 (Real)</th>
                                 <th class="p-4 text-right border-b border-gray-800">2027 (Pós-RJ)</th>
                                 <th class="p-4 text-right border-b border-gray-800 text-white">2029 (Estabilidade)</th>
                             </tr>
@@ -74,13 +74,13 @@
                                 <td class="p-4 text-right text-green-400 font-bold">750</td>
                             </tr>
                             <tr class="hover:bg-gray-900/50 transition-colors">
-                                <td class="p-4 font-sans text-gray-400">Custos Operacionais do Futebol</td>
+                                <td class="p-4 font-sans text-gray-400">Custos do Futebol</td>
                                 <td class="p-4 text-right text-red-400">(675)</td>
                                 <td class="p-4 text-right text-red-400">(610)</td>
                                 <td class="p-4 text-right text-gray-300 font-bold">(480)</td>
                             </tr>
                             <tr class="hover:bg-gray-900/50 transition-colors">
-                                <td class="p-4 font-sans text-gray-400">Despesas Financeiras (Juros/Câmbio)</td>
+                                <td class="p-4 font-sans text-gray-400">Despesas Financ.</td>
                                 <td class="p-4 text-right text-red-500">(307)</td>
                                 <td class="p-4 text-right text-yellow-500">(85)</td>
                                 <td class="p-4 text-right text-gray-400">(40)</td>
@@ -100,26 +100,24 @@
         <section class="border-t border-gray-800 pt-16">
             <div class="text-center mb-12" data-aos="zoom-in" data-aos-duration="1000">
                 <h2 class="font-heading font-black text-2xl uppercase tracking-widest">O Plano Final</h2>
-                <p class="text-gray-400 mt-4 max-w-4xl mx-auto leading-relaxed">
-                    Para reduzir o prejuízo e manter a competitividade, o Botafogo precisa aplicar regras rigorosas de transparência. A <strong class="text-white">Recuperação Judicial</strong> é o escudo necessário para estancar a perda de dinheiro no curto prazo. Para o futuro, o clube deve parar de assumir dívidas em moeda estrangeira sem segurança, fixar um limite de gastos com previsões (teto salarial) e transformar o estádio em um centro comercial independente do futebol.
+                <p class="text-gray-400 mt-4 max-w-4xl mx-auto leading-relaxed text-sm md:text-base">
+                    Para reduzir o prejuízo e manter a competitividade, o Botafogo precisa aplicar regras rigorosas de transparência. A <strong class="text-white">Recuperação Judicial</strong> é o escudo necessário para estancar a perda de dinheiro no curto prazo. 
                 </p>
-                <p class="text-gray-300 mt-6 max-w-4xl mx-auto font-bold">
-                    Projeta-se que o clube voltará a dar um lucro de R$ 250 milhões em 2029, sustentando elencos fortes através de sua base e operando de forma saudável.
+                <p class="text-gray-300 mt-6 max-w-4xl mx-auto font-bold text-sm md:text-base">
+                    Projeta-se que o clube voltará a dar um lucro de R$ 250 milhões em 2029, sustentando elencos fortes e operando de forma saudável.
                 </p>
             </div>
         </section>
 
         <!-- NOVO FOOTER COM BOTÃO GRANDÃO DO QUIZ -->
-        <footer class="pt-16 pb-16 text-center border-t border-gray-800 relative z-20 flex flex-col items-center" data-aos="fade-up">
+        <footer class="pt-12 pb-16 text-center border-t border-gray-800 relative z-20 flex flex-col items-center" data-aos="fade-up">
             
-            <h3 class="text-gray-400 text-sm tracking-widest uppercase mb-4">Finalizou a leitura?</h3>
+            <h3 class="text-gray-400 text-xs md:text-sm tracking-widest uppercase mb-4">Finalizou a leitura?</h3>
             
-            <!-- Botão Grandão -->
-            <a href="quiz.html" class="inline-flex items-center justify-center px-8 md:px-12 py-5 md:py-6 bg-white text-black text-lg md:text-2xl font-black uppercase tracking-widest hover:bg-gray-200 hover:scale-105 transition-all duration-300 w-full md:w-auto mb-8 shadow-[0_0_40px_rgba(255,255,255,0.2)]">
-                <i class="fa-solid fa-flag-checkered mr-4"></i> Fazer o Quiz Final
+            <a href="quiz.html" class="inline-flex items-center justify-center px-6 md:px-12 py-5 bg-white text-black text-base md:text-2xl font-black uppercase tracking-widest hover:bg-gray-200 transition-all duration-300 w-full md:w-auto mb-8 shadow-[0_0_40px_rgba(255,255,255,0.2)]">
+                <i class="fa-solid fa-flag-checkered mr-3"></i> Fazer o Quiz Final
             </a>
 
-            <!-- Botão Secundário -->
             <a href="index.html" class="inline-flex items-center px-6 py-3 border border-gray-600 text-gray-400 hover:text-white hover:border-white transition-colors font-bold uppercase tracking-widest text-xs">
                 <i class="fa-solid fa-rotate-left mr-2"></i> Reiniciar Apresentação
             </a>
@@ -128,14 +126,14 @@
 
     </main>
 
-    <!-- Bola Rolando com SVG Realista -->
+    <!-- Bola Rolando com Suporte Touch Mobile -->
     <div class="bola-container cursor-pointer z-50 fixed bottom-[5%]">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" alt="Bola" class="bola-animada w-12 h-12 opacity-90 drop-shadow-xl">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" alt="Bola" class="bola-animada w-12 h-12 opacity-90 drop-shadow-xl pointer-events-none">
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ once: false, offset: 100 });
+        AOS.init({ once: false, offset: 50 });
 
         Chart.defaults.color = '#888';
         Chart.defaults.font.family = 'Inter';
@@ -144,17 +142,16 @@
         new Chart(ctxProj, {
             type: 'line',
             data: {
-                labels: ['2025 (Real)', '2027 (Pós-RJ)', '2029 (Estabilidade)'],
+                labels: ['2025', '2027', '2029'],
                 datasets: [
                     {
-                        label: 'Resultado Líquido (R$ Milhões)',
+                        label: 'Líquido (Milhões)',
                         data: [-290, -60, 250],
                         borderColor: '#FFFFFF',
                         backgroundColor: 'rgba(255, 255, 255, 0.1)',
                         borderWidth: 3,
                         pointBackgroundColor: ['#FF4444', '#FFBB33', '#00C851'],
-                        pointRadius: 6,
-                        pointHoverRadius: 8,
+                        pointRadius: 5,
                         fill: true,
                         tension: 0.4
                     }
@@ -164,25 +161,7 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { position: 'bottom', labels: { color: '#FFF' } },
-                    tooltip: { 
-                        mode: 'index', 
-                        intersect: false,
-                        callbacks: {
-                            label: function(context) { return 'R$ ' + context.parsed.y + ' Milhões'; }
-                        } 
-                    }
-                },
-                scales: {
-                    y: { 
-                        grid: { color: '#222' },
-                        ticks: {
-                            callback: function(value) {
-                                return value;
-                            }
-                        }
-                    },
-                    x: { grid: { display: false } }
+                    legend: { position: 'bottom', labels: { color: '#FFF' } }
                 }
             }
         });
@@ -191,24 +170,28 @@
         const bolaContainer = document.querySelector('.bola-container');
         const bolaIcon = document.querySelector('.bola-animada');
 
+        function chutarBola(e) {
+            if (e && e.type === 'touchstart') e.preventDefault();
+            if (bolaContainer.classList.contains('chutada')) return;
+            const rect = bolaContainer.getBoundingClientRect();
+            bolaContainer.style.animation = 'none';
+            bolaIcon.style.animation = 'none';
+            bolaContainer.style.left = rect.left + 'px';
+            void bolaContainer.offsetWidth;
+            bolaContainer.classList.add('chutada');
+            bolaIcon.classList.add('chutada-giro');
+            setTimeout(() => {
+                bolaContainer.classList.remove('chutada');
+                bolaIcon.classList.remove('chutada-giro');
+                bolaContainer.style.left = '-50px';
+                bolaContainer.style.animation = ''; 
+                bolaIcon.style.animation = '';
+            }, 800);
+        }
+
         if(bolaContainer && bolaIcon) {
-            bolaContainer.addEventListener('mouseenter', () => {
-                if (bolaContainer.classList.contains('chutada')) return;
-                const rect = bolaContainer.getBoundingClientRect();
-                bolaContainer.style.animation = 'none';
-                bolaIcon.style.animation = 'none';
-                bolaContainer.style.left = rect.left + 'px';
-                void bolaContainer.offsetWidth;
-                bolaContainer.classList.add('chutada');
-                bolaIcon.classList.add('chutada-giro');
-                setTimeout(() => {
-                    bolaContainer.classList.remove('chutada');
-                    bolaIcon.classList.remove('chutada-giro');
-                    bolaContainer.style.left = '-50px';
-                    bolaContainer.style.animation = ''; 
-                    bolaIcon.style.animation = '';
-                }, 800);
-            });
+            bolaContainer.addEventListener('mouseenter', chutarBola);
+            bolaContainer.addEventListener('touchstart', chutarBola, {passive: false});
         }
     </script>
 </body>

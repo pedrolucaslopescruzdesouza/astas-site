@@ -9,9 +9,8 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-black text-white antialiased selection:bg-white selection:text-black overflow-x-hidden relative">
+<body class="bg-black text-white antialiased selection:bg-white selection:text-black overflow-x-hidden relative min-h-[100dvh]">
 
-    <!-- Navbar Oficial -->
     <header class="navbar fixed top-0 w-full z-50">
         <div class="max-w-7xl mx-auto px-4 h-20 flex flex-col justify-center">
             <div class="flex items-center justify-between w-full">
@@ -21,7 +20,7 @@
                     </a>
                     <span class="font-heading font-black text-xl md:text-2xl tracking-widest uppercase hidden sm:block">Botafogo</span>
                 </div>
-                <nav class="flex space-x-6 font-heading text-xs md:text-sm font-semibold tracking-wide text-gray-400 overflow-x-auto hide-scrollbar">
+                <nav class="flex space-x-6 font-heading text-xs md:text-sm font-semibold tracking-wide text-gray-400 overflow-x-auto hide-scrollbar py-2">
                     <a href="index.html" class="hover:text-white transition-colors whitespace-nowrap">Início</a>
                     <a href="diagnostico.html" class="hover:text-white transition-colors whitespace-nowrap">Diagnóstico</a>
                     <a href="estrategia.html" class="hover:text-white transition-colors whitespace-nowrap">Estratégia</a>
@@ -32,97 +31,91 @@
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 relative z-10">
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 md:py-32 relative z-10">
         
-        <div class="text-center mb-12 mt-6" data-aos="fade-down" data-aos-duration="1000">
+        <div class="text-center mb-12" data-aos="fade-down" data-aos-duration="1000">
             <h1 class="font-heading font-black text-3xl md:text-5xl uppercase tracking-widest mb-4">Teste seus Conhecimentos</h1>
-            <p class="text-gray-400 text-sm md:text-base">Responda às 5 perguntas sobre o relatório estratégico da SAF e veja seu resultado.</p>
+            <p class="text-gray-400 text-sm md:text-base">Responda às 5 perguntas sobre o relatório estratégico e veja seu resultado.</p>
         </div>
 
-        <!-- Container do Quiz -->
-        <div id="quiz-container" class="space-y-8" data-aos="fade-up" data-aos-duration="1200">
+        <div id="quiz-container" class="space-y-6 md:space-y-8" data-aos="fade-up" data-aos-duration="1200">
             <!-- As perguntas serão geradas aqui via JavaScript -->
         </div>
 
-        <!-- Botão Finalizar -->
         <div id="submit-section" class="text-center mt-12 hidden" data-aos="zoom-in">
-            <button onclick="finalizarQuiz()" class="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-black transition-colors font-bold uppercase tracking-widest text-sm w-full md:w-auto">
+            <button onclick="finalizarQuiz()" class="inline-flex items-center justify-center px-8 py-5 border-2 border-white text-white hover:bg-white hover:text-black transition-colors font-bold uppercase tracking-widest text-sm w-full md:w-auto shadow-lg">
                 <i class="fa-solid fa-flag-checkered mr-3"></i> Finalizar Quiz
             </button>
         </div>
 
-        <!-- Container do Resultado (Escondido por padrão) -->
-        <div id="result-container" class="hidden text-center dark-card p-10 rounded-xl mt-10 border border-gray-800">
-            <h2 id="result-title" class="font-heading font-black text-4xl md:text-5xl uppercase mb-4"></h2>
-            <div id="result-score" class="text-2xl font-bold mb-4 text-gray-300"></div>
-            <p id="result-msg" class="text-gray-400 mb-8 max-w-2xl mx-auto"></p>
+        <div id="result-container" class="hidden text-center dark-card p-6 md:p-10 rounded-xl mt-10 border border-gray-800">
+            <h2 id="result-title" class="font-heading font-black text-3xl md:text-5xl uppercase mb-4"></h2>
+            <div id="result-score" class="text-xl md:text-2xl font-bold mb-4 text-gray-300"></div>
+            <p id="result-msg" class="text-gray-400 mb-8 max-w-2xl mx-auto text-sm md:text-base"></p>
             
             <div id="mistakes-container" class="text-left space-y-4 mb-10 hidden">
                 <h3 class="font-bold text-lg text-red-400 border-b border-gray-700 pb-2 mb-4">Onde você errou:</h3>
                 <ul id="mistakes-list" class="space-y-4 text-sm text-gray-300"></ul>
             </div>
 
-            <button onclick="location.reload()" class="inline-flex items-center justify-center px-6 py-3 border border-gray-600 text-gray-400 hover:bg-white hover:text-black hover:border-white transition-colors font-bold uppercase tracking-widest text-xs">
+            <button onclick="location.reload()" class="inline-flex items-center justify-center px-6 py-4 border border-gray-600 text-gray-400 hover:bg-white hover:text-black hover:border-white transition-colors font-bold uppercase tracking-widest text-xs w-full md:w-auto">
                 <i class="fa-solid fa-rotate-left mr-2"></i> Refazer Quiz
             </button>
         </div>
 
     </main>
 
-    <!-- Bola Rolando com SVG Realista -->
+    <!-- Bola Rolando com Suporte Touch Mobile -->
     <div class="bola-container cursor-pointer z-50 fixed bottom-[5%]">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" alt="Bola" class="bola-animada w-12 h-12 opacity-90 drop-shadow-xl">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" alt="Bola" class="bola-animada w-12 h-12 opacity-90 drop-shadow-xl pointer-events-none">
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ once: true, offset: 50 });
 
-        // ==========================================
-        // 1. DADOS DO QUIZ
-        // ==========================================
         const questoes = [
             {
                 pergunta: "1. Por que o Botafogo teve prejuízo em 2024 mesmo com faturamento recorde?",
                 opcoes: [
                     "Falta de patrocínio master na camisa.",
-                    "Custos inflexíveis e perda de dinheiro com a alta do Dólar/Euro.",
-                    "Punições e multas aplicadas pela CBF."
+                    "Custos inflexíveis e perda cambial (Dólar/Euro).",
+                    "Punições e multas da CBF."
                 ],
-                correta: 1 // Índice da resposta certa (0, 1, 2)
+                correta: 1 
             },
             {
-                pergunta: "2. Qual é o objetivo principal de entrar em Recuperação Judicial?",
+                pergunta: "2. Qual é o objetivo principal da Recuperação Judicial?",
                 opcoes: [
-                    "Paralisar cobranças e renegociar as dívidas com até 50% de desconto.",
-                    "Comprar novos jogadores estrangeiros sem pagar impostos.",
-                    "Vender o clube para um novo fundo de investimentos."
+                    "Paralisar cobranças e renegociar dívidas com descontos.",
+                    "Comprar novos jogadores sem pagar impostos.",
+                    "Vender o clube para um fundo de investimentos."
                 ],
                 correta: 0
             },
             {
-                pergunta: "3. O que propõe o 'Teto Salarial Interno' na estratégia do Botafogo?",
+                pergunta: "3. O que propõe o 'Teto Salarial Interno'?",
                 opcoes: [
-                    "Cortar 100% dos salários das categorias de base.",
-                    "Dobrar o salário dos jogadores se ganharem a Libertadores.",
-                    "Limitar os gastos a 60% das receitas fixas para sobrar dinheiro."
+                    "Cortar 100% dos salários da base.",
+                    "Dobrar salário em caso de títulos.",
+                    "Limitar gastos a 60% das receitas fixas."
                 ],
                 correta: 2
             },
             {
                 pergunta: "4. O que é o plano 'Estádio 365'?",
                 opcoes: [
-                    "Usar o Nilton Santos todos os dias do ano para shows e eventos.",
-                    "Obrigar o time a jogar 365 partidas no ano.",
-                    "Vender os direitos de nome do estádio por 365 milhões."
+                    "Usar o Nilton Santos todos os dias para shows.",
+                    "Obrigar o time a jogar 365 partidas.",
+                    "Vender os direitos de nome do estádio."
                 ],
                 correta: 0
             },
             {
-                pergunta: "5. Qual é a projeção oficial de lucro final da SAF para o ano de 2029?",
+                pergunta: "5. Qual é a projeção de lucro da SAF para 2029?",
                 opcoes: [
                     "Empate (Zero prejuízo e zero lucro).",
-                    "Lucro de R$ 250 milhões operando de forma saudável.",
+                    "Lucro de R$ 250 milhões operando saudável.",
                     "Prejuízo controlado de R$ 60 milhões."
                 ],
                 correta: 1
@@ -131,9 +124,6 @@
 
         let respostasUsuario = new Array(questoes.length).fill(null);
 
-        // ==========================================
-        // 2. RENDERIZAR O QUIZ NA TELA
-        // ==========================================
         const quizContainer = document.getElementById('quiz-container');
         const submitSection = document.getElementById('submit-section');
 
@@ -142,16 +132,16 @@
                 let opcoesHTML = '';
                 q.opcoes.forEach((opcao, optIndex) => {
                     opcoesHTML += `
-                        <div onclick="selecionarOpcao(${index}, ${optIndex})" id="op-${index}-${optIndex}" class="opcao-btn border border-gray-700 rounded p-4 text-sm md:text-base cursor-pointer hover:bg-gray-800 transition-all text-gray-300">
+                        <div onclick="selecionarOpcao(${index}, ${optIndex})" id="op-${index}-${optIndex}" class="opcao-btn border border-gray-700 rounded-lg p-4 md:p-5 text-sm md:text-base cursor-pointer hover:bg-gray-800 transition-all text-gray-300">
                             ${String.fromCharCode(65 + optIndex)}) ${opcao}
                         </div>
                     `;
                 });
 
                 const cardHTML = `
-                    <div class="dark-card p-6 md:p-8 rounded-lg border-l-4 border-white">
-                        <h3 class="font-bold text-lg md:text-xl mb-6 text-white">${q.pergunta}</h3>
-                        <div class="space-y-3">
+                    <div class="dark-card p-5 md:p-8 rounded-lg border-l-4 border-white">
+                        <h3 class="font-bold text-base md:text-lg mb-5 text-white">${q.pergunta}</h3>
+                        <div class="space-y-3 md:space-y-4">
                             ${opcoesHTML}
                         </div>
                     </div>
@@ -161,27 +151,19 @@
             submitSection.classList.remove('hidden');
         }
 
-        // ==========================================
-        // 3. LÓGICA DE SELEÇÃO E RESULTADO
-        // ==========================================
         function selecionarOpcao(qIndex, optIndex) {
             respostasUsuario[qIndex] = optIndex;
-            
-            // Remove a seleção anterior
             for(let i=0; i<3; i++) {
                 const btn = document.getElementById(`op-${qIndex}-${i}`);
                 btn.classList.remove('bg-white', 'text-black', 'font-bold');
                 btn.classList.add('text-gray-300');
             }
-            
-            // Aplica o visual de selecionado
             const selecionado = document.getElementById(`op-${qIndex}-${optIndex}`);
             selecionado.classList.remove('text-gray-300');
             selecionado.classList.add('bg-white', 'text-black', 'font-bold');
         }
 
         function finalizarQuiz() {
-            // Verifica se respondeu tudo
             if (respostasUsuario.includes(null)) {
                 alert("Por favor, responda todas as perguntas antes de finalizar!");
                 return;
@@ -196,18 +178,18 @@
                 } else {
                     errosHTML += `
                         <li class="bg-red-900/20 p-4 rounded border border-red-900/50">
-                            <strong>${questoes[index].pergunta}</strong><br>
-                            <span class="text-red-400 block mt-1"><i class="fa-solid fa-xmark mr-1"></i> Sua resposta: ${questoes[index].opcoes[resposta]}</span>
+                            <strong class="text-white">${questoes[index].pergunta}</strong><br>
+                            <span class="text-red-400 block mt-2"><i class="fa-solid fa-xmark mr-1"></i> Sua resposta: ${questoes[index].opcoes[resposta]}</span>
                             <span class="text-green-400 block mt-1"><i class="fa-solid fa-check mr-1"></i> Correta: ${questoes[index].opcoes[questoes[index].correta]}</span>
                         </li>
                     `;
                 }
             });
 
-            // Oculta o Quiz e mostra o Resultado
             quizContainer.classList.add('hidden');
             submitSection.classList.add('hidden');
             document.getElementById('result-container').classList.remove('hidden');
+            window.scrollTo(0, 0); // Sobe pro topo pra pessoa ver o resultado no celular
             
             const resultTitle = document.getElementById('result-title');
             const resultMsg = document.getElementById('result-msg');
@@ -215,55 +197,54 @@
             
             resultScore.innerHTML = `Você acertou <span class="text-white">${acertos}</span> de 5 perguntas.`;
 
-            // Lógica das mensagens (Golaço, Na Trave, Bola Fora)
             if (acertos === 5) {
                 resultTitle.innerHTML = 'Golaço!!! <i class="fa-solid fa-futbol text-green-500"></i>';
-                resultTitle.className = "font-heading font-black text-4xl md:text-5xl uppercase mb-4 text-green-500";
+                resultTitle.className = "font-heading font-black text-3xl md:text-5xl uppercase mb-4 text-green-500";
                 resultMsg.innerText = "Perfeito! Você dominou a apresentação e está totalmente por dentro do planejamento financeiro da SAF.";
             } else if (acertos >= 3) {
                 resultTitle.innerHTML = 'Na Trave! <i class="fa-solid fa-exclamation text-yellow-500"></i>';
-                resultTitle.className = "font-heading font-black text-4xl md:text-5xl uppercase mb-4 text-yellow-500";
+                resultTitle.className = "font-heading font-black text-3xl md:text-5xl uppercase mb-4 text-yellow-500";
                 resultMsg.innerText = "Foi quase um golaço! Faltou muito pouco para a perfeição. Veja abaixo os detalhes que escaparam.";
             } else {
                 resultTitle.innerHTML = 'Bola Fora! <i class="fa-solid fa-xmark text-red-500"></i>';
-                resultTitle.className = "font-heading font-black text-4xl md:text-5xl uppercase mb-4 text-red-500";
+                resultTitle.className = "font-heading font-black text-3xl md:text-5xl uppercase mb-4 text-red-500";
                 resultMsg.innerText = "O chute passou longe! Vale a pena dar uma revisada rápida nos slides antes da apresentação. Confira os erros:";
             }
 
-            // Se houve erros, mostra a lista
             if (acertos < 5) {
                 document.getElementById('mistakes-container').classList.remove('hidden');
                 document.getElementById('mistakes-list').innerHTML = errosHTML;
             }
         }
 
-        // Inicia carregando as perguntas
         carregarQuiz();
 
-        // ==========================================
-        // 4. LÓGICA DO CHUTE INTERATIVO NA BOLA
-        // ==========================================
+        // LÓGICA DO CHUTE INTERATIVO NA BOLA (Touch e Mouse)
         const bolaContainer = document.querySelector('.bola-container');
         const bolaIcon = document.querySelector('.bola-animada');
 
+        function chutarBola(e) {
+            if (e && e.type === 'touchstart') e.preventDefault();
+            if (bolaContainer.classList.contains('chutada')) return;
+            const rect = bolaContainer.getBoundingClientRect();
+            bolaContainer.style.animation = 'none';
+            bolaIcon.style.animation = 'none';
+            bolaContainer.style.left = rect.left + 'px';
+            void bolaContainer.offsetWidth;
+            bolaContainer.classList.add('chutada');
+            bolaIcon.classList.add('chutada-giro');
+            setTimeout(() => {
+                bolaContainer.classList.remove('chutada');
+                bolaIcon.classList.remove('chutada-giro');
+                bolaContainer.style.left = '-50px';
+                bolaContainer.style.animation = ''; 
+                bolaIcon.style.animation = '';
+            }, 800);
+        }
+
         if(bolaContainer && bolaIcon) {
-            bolaContainer.addEventListener('mouseenter', () => {
-                if (bolaContainer.classList.contains('chutada')) return;
-                const rect = bolaContainer.getBoundingClientRect();
-                bolaContainer.style.animation = 'none';
-                bolaIcon.style.animation = 'none';
-                bolaContainer.style.left = rect.left + 'px';
-                void bolaContainer.offsetWidth;
-                bolaContainer.classList.add('chutada');
-                bolaIcon.classList.add('chutada-giro');
-                setTimeout(() => {
-                    bolaContainer.classList.remove('chutada');
-                    bolaIcon.classList.remove('chutada-giro');
-                    bolaContainer.style.left = '-50px';
-                    bolaContainer.style.animation = ''; 
-                    bolaIcon.style.animation = '';
-                }, 800);
-            });
+            bolaContainer.addEventListener('mouseenter', chutarBola);
+            bolaContainer.addEventListener('touchstart', chutarBola, {passive: false});
         }
     </script>
 </body>

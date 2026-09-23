@@ -10,7 +10,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body class="bg-black text-white antialiased overflow-x-hidden relative">
+<body class="bg-black text-white antialiased overflow-x-hidden relative min-h-[100dvh]">
 
     <header class="navbar fixed top-0 w-full z-50">
         <div class="max-w-7xl mx-auto px-4 h-20 flex flex-col justify-center">
@@ -21,19 +21,20 @@
                     </a>
                     <span class="font-heading font-black text-xl md:text-2xl tracking-widest uppercase hidden sm:block">Botafogo</span>
                 </div>
-                <nav class="flex space-x-6 font-heading text-xs md:text-sm font-semibold tracking-wide text-gray-400 overflow-x-auto hide-scrollbar">
+                <nav class="flex space-x-6 font-heading text-xs md:text-sm font-semibold tracking-wide text-gray-400 overflow-x-auto hide-scrollbar py-2">
                     <a href="index.html" class="hover:text-white transition-colors whitespace-nowrap">Início</a>
                     <a href="diagnostico.html" class="text-white border-b-2 border-white pb-1 whitespace-nowrap">Diagnóstico</a>
                     <a href="estrategia.html" class="hover:text-white transition-colors whitespace-nowrap">Estratégia</a>
                     <a href="projecoes.html" class="hover:text-white transition-colors whitespace-nowrap">Projeções</a>
+                    <a href="quiz.html" class="hover:text-white transition-colors whitespace-nowrap">Quiz</a>
                 </nav>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 space-y-16 md:space-y-20 relative z-10">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 md:py-32 space-y-16 md:space-y-20 relative z-10">
         
-        <div class="text-center mt-10" data-aos="fade-down" data-aos-duration="1000">
+        <div class="text-center" data-aos="fade-down" data-aos-duration="1000">
             <h1 class="font-heading font-black text-3xl md:text-4xl uppercase mb-4">Diagnóstico Financeiro (2024)</h1>
             <p class="text-gray-400 max-w-3xl mx-auto text-sm md:text-base">
                 Faturamento recorde impulsionado pelas vitórias na Libertadores e Brasileirão (R$ 258 milhões em prêmios). Contudo, o clube sofreu prejuízo pela inflexibilidade dos custos e dívidas em moeda estrangeira sem proteção.
@@ -100,14 +101,14 @@
         </div>
     </main>
 
-    <!-- Bola Rolando com SVG Realista -->
+    <!-- Bola Rolando com Suporte Touch Mobile -->
     <div class="bola-container cursor-pointer z-50 fixed bottom-[5%]">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" alt="Bola" class="bola-animada w-12 h-12 opacity-90 drop-shadow-xl">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Soccerball.svg" alt="Bola" class="bola-animada w-12 h-12 opacity-90 drop-shadow-xl pointer-events-none">
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ once: false, offset: 100 });
+        AOS.init({ once: false, offset: 50 });
         
         Chart.defaults.color = '#888';
         Chart.defaults.font.family = 'Inter';
@@ -116,7 +117,7 @@
         new Chart(ctxParadox, {
             type: 'bar',
             data: {
-                labels: ['Faturamento Total', 'Prêmios (Liberta/BR)', 'Prejuízo Final'],
+                labels: ['Faturamento', 'Prêmios', 'Prejuízo'],
                 datasets: [{
                     label: 'Valores em R$ Milhões (2024)',
                     data: [720, 258, -300],
@@ -132,7 +133,7 @@
                     legend: { display: false },
                     tooltip: {
                         callbacks: {
-                            label: function(context) { return 'R$ ' + context.parsed.y + ' Milhões'; }
+                            label: function(context) { return 'R$ ' + context.parsed.y + ' Mi'; }
                         }
                     }
                 },
@@ -147,7 +148,7 @@
         new Chart(ctxExpenses, {
             type: 'pie',
             data: {
-                labels: ['Perda Cambial (Dólar/Euro)', 'Outras Despesas e Custos Fixos'],
+                labels: ['Perda Cambial', 'Custos Fixos'],
                 datasets: [{
                     data: [322, 398],
                     backgroundColor: ['#FF4444', '#333333'],
@@ -159,38 +160,37 @@
                 responsive: true, 
                 maintainAspectRatio: false, 
                 plugins: { 
-                    legend: { position: 'bottom', labels: { color: '#FFF' } },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) { return 'R$ ' + context.parsed + ' Milhões'; }
-                        }
-                    }
+                    legend: { position: 'bottom', labels: { color: '#FFF' } }
                 }
             }
         });
 
-        // LÓGICA DO CHUTE INTERATIVO NA BOLA
+        // LÓGICA DO CHUTE INTERATIVO NA BOLA (Touch e Mouse)
         const bolaContainer = document.querySelector('.bola-container');
         const bolaIcon = document.querySelector('.bola-animada');
 
+        function chutarBola(e) {
+            if (e && e.type === 'touchstart') e.preventDefault();
+            if (bolaContainer.classList.contains('chutada')) return;
+            const rect = bolaContainer.getBoundingClientRect();
+            bolaContainer.style.animation = 'none';
+            bolaIcon.style.animation = 'none';
+            bolaContainer.style.left = rect.left + 'px';
+            void bolaContainer.offsetWidth;
+            bolaContainer.classList.add('chutada');
+            bolaIcon.classList.add('chutada-giro');
+            setTimeout(() => {
+                bolaContainer.classList.remove('chutada');
+                bolaIcon.classList.remove('chutada-giro');
+                bolaContainer.style.left = '-50px';
+                bolaContainer.style.animation = ''; 
+                bolaIcon.style.animation = '';
+            }, 800);
+        }
+
         if(bolaContainer && bolaIcon) {
-            bolaContainer.addEventListener('mouseenter', () => {
-                if (bolaContainer.classList.contains('chutada')) return;
-                const rect = bolaContainer.getBoundingClientRect();
-                bolaContainer.style.animation = 'none';
-                bolaIcon.style.animation = 'none';
-                bolaContainer.style.left = rect.left + 'px';
-                void bolaContainer.offsetWidth;
-                bolaContainer.classList.add('chutada');
-                bolaIcon.classList.add('chutada-giro');
-                setTimeout(() => {
-                    bolaContainer.classList.remove('chutada');
-                    bolaIcon.classList.remove('chutada-giro');
-                    bolaContainer.style.left = '-50px';
-                    bolaContainer.style.animation = ''; 
-                    bolaIcon.style.animation = '';
-                }, 800);
-            });
+            bolaContainer.addEventListener('mouseenter', chutarBola);
+            bolaContainer.addEventListener('touchstart', chutarBola, {passive: false});
         }
     </script>
 </body>
